@@ -5,7 +5,7 @@ using MenuChanger.Extensions;
 using RandomizerMod.Menu;
 using UnityEngine.SceneManagement;
 
-namespace RandoContentEnforcer
+namespace RandoPlus
 {
     public class MenuHolder
     {
@@ -40,7 +40,7 @@ namespace RandoContentEnforcer
         private void ConstructMenu(MenuPage landingPage)
         {
             RandoContentEnforcerPage = new MenuPage("Enforce Content", landingPage);
-            rceMEF = new(RandoContentEnforcerPage, RandoContentEnforcer.GS);
+            rceMEF = new(RandoContentEnforcerPage, RandoPlus.GS);
             rceVIP = new(RandoContentEnforcerPage, new(0, 300), 50f, false, rceMEF.Elements);
         }
     }

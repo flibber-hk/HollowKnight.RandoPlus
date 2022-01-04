@@ -3,7 +3,7 @@ using System;
 using ItemChanger.Extensions;
 using HutongGames.PlayMaker.Actions;
 
-namespace RandoContentEnforcer.Items
+namespace RandoPlus.Items
 {
     public class NoTearModule : ItemChanger.Modules.Module
     {

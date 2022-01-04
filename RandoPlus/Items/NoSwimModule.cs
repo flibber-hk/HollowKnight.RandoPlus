@@ -4,7 +4,7 @@ using ItemChanger;
 using ItemChanger.Extensions;
 using ItemChanger.FsmStateActions;
 
-namespace RandoContentEnforcer.Items
+namespace RandoPlus.Items
 {
     public class NoSwimModule : ItemChanger.Modules.Module
     {

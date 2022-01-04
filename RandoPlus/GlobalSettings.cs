@@ -1,4 +1,4 @@
-﻿namespace RandoContentEnforcer
+﻿namespace RandoPlus
 {
     public class GlobalSettings
     {

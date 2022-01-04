@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ItemChanger;
 
-namespace RandoContentEnforcer
+namespace RandoPlus
 {
     public static class Consts
     {

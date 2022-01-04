@@ -12,7 +12,7 @@ using RandomizerCore.StringLogic;
 using RandomizerMod.RC;
 using RandomizerMod.Settings;
 
-namespace RandoContentEnforcer
+namespace RandoPlus
 {
     public static class LogicPatcher
     {
@@ -25,7 +25,7 @@ namespace RandoContentEnforcer
 
         private static void ExternalModifyLogic(GenerationSettings gs, LogicManagerBuilder lmb)
         {
-            if (!RandoContentEnforcer.GS.Any) return;
+            if (!RandoPlus.GS.Any) return;
 
             string directory = Path.Combine(Path.GetDirectoryName(typeof(LogicPatcher).Assembly.Location), "Logic");
             try
@@ -56,13 +56,13 @@ namespace RandoContentEnforcer
             }
             catch (Exception e)
             {
-                RandoContentEnforcer.instance.LogError("Error fetching local logic changes:\n" + e);
+                RandoPlus.instance.LogError("Error fetching local logic changes:\n" + e);
             }
         }
 
         private static void InternalModifyLogic(GenerationSettings gs, LogicManagerBuilder lmb)
         {
-            if (!RandoContentEnforcer.GS.Any) return;
+            if (!RandoPlus.GS.Any) return;
 
             void ProvideLogicSubstitution(string name, string pre, string post)
             {
@@ -101,7 +101,7 @@ namespace RandoContentEnforcer
 
         private static void DefineTermsAndItems(GenerationSettings gs, LogicManagerBuilder lmb)
         {
-            if (!RandoContentEnforcer.GS.Any) return;
+            if (!RandoPlus.GS.Any) return;
 
             Term noLanternTerm = lmb.GetOrAddTerm("NOLANTERN");
             lmb.AddItem(new CappedItem(Consts.NoLantern, new TermValue[] { new(noLanternTerm, 1) }, new(noLanternTerm, 1)));

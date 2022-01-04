@@ -2,8 +2,8 @@
   <PropertyGroup>
     <ProjectGuid>{6B091FCD-F844-4858-B61C-74C86E6CD747}</ProjectGuid>
     <TargetFramework>net472</TargetFramework>
-    <RootNamespace>RandoContentEnforcer</RootNamespace>
-    <AssemblyTitle>RandoContentEnforcer</AssemblyTitle>
+    <RootNamespace>RandoPlus</RootNamespace>
+    <AssemblyTitle>RandoPlus</AssemblyTitle>
     <AssemblyVersion>0.9.0</AssemblyVersion>
     <Deterministic>true</Deterministic>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>

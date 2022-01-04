@@ -4,7 +4,7 @@ using ItemChanger.Extensions;
 using ItemChanger.FsmStateActions;
 using System;
 
-namespace RandoContentEnforcer.Items
+namespace RandoPlus.Items
 {
     public class NoLanternModule : ItemChanger.Modules.Module
     {

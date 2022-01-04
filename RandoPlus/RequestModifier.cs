@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using ItemChanger;
 using RandomizerMod.RC;
 
-namespace RandoContentEnforcer
+namespace RandoPlus
 {
     public static class RequestModifier
     {
@@ -19,10 +19,10 @@ namespace RandoContentEnforcer
 
         private static void RemoveLantern(RequestBuilder rb)
         {
-            if (!RandoContentEnforcer.GS.NoLantern) return;
+            if (!RandoPlus.GS.NoLantern) return;
             if (!rb.gs.SkipSettings.DarkRooms)
             {
-                RandoContentEnforcer.instance.LogError("Dark room skips required!");
+                RandoPlus.instance.LogError("Dark room skips required!");
                 return;
             }
             rb.ReplaceItem(ItemNames.Lumafly_Lantern, Consts.NoLantern);
@@ -39,10 +39,10 @@ namespace RandoContentEnforcer
 
         private static void RemoveTear(RequestBuilder rb)
         {
-            if (!RandoContentEnforcer.GS.NoTear) return;
+            if (!RandoPlus.GS.NoTear) return;
             if (!rb.gs.SkipSettings.AcidSkips)
             {
-                RandoContentEnforcer.instance.LogError("Acid skips required!");
+                RandoPlus.instance.LogError("Acid skips required!");
                 return;
             }
             rb.ReplaceItem(ItemNames.Ismas_Tear, Consts.NoTear);
@@ -59,10 +59,10 @@ namespace RandoContentEnforcer
 
         private static void RemoveSwim(RequestBuilder rb)
         {
-            if (!RandoContentEnforcer.GS.NoSwim) return;
+            if (!RandoPlus.GS.NoSwim) return;
             if (!rb.gs.SkipSettings.AcidSkips)
             {
-                RandoContentEnforcer.instance.LogError("Acid skips required!");
+                RandoPlus.instance.LogError("Acid skips required!");
                 return;
             }
             rb.ReplaceItem(ItemNames.Swim, Consts.NoSwim);

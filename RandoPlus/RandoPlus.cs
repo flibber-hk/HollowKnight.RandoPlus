@@ -4,17 +4,17 @@ using System.Linq;
 using Modding;
 using UnityEngine;
 
-namespace RandoContentEnforcer
+namespace RandoPlus
 {
-    public class RandoContentEnforcer : Mod, IGlobalSettings<GlobalSettings>
+    public class RandoPlus : Mod, IGlobalSettings<GlobalSettings>
     {
-        internal static RandoContentEnforcer instance;
+        internal static RandoPlus instance;
 
         public static GlobalSettings GS = new();
         public void OnLoadGlobal(GlobalSettings gs) => GS = gs;
         public GlobalSettings OnSaveGlobal() => GS;
 
-        public RandoContentEnforcer() : base(null)
+        public RandoPlus() : base(null)
         {
             instance = this;
         }
