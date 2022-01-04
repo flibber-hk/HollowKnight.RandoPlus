@@ -4,7 +4,7 @@ using ItemChanger.Extensions;
 using ItemChanger.FsmStateActions;
 using System;
 
-namespace RandoPlus.Items
+namespace RandoPlus.RemoveUsefulItems.Items
 {
     public class NoLanternModule : ItemChanger.Modules.Module
     {

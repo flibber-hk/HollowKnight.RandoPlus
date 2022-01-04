@@ -31,7 +31,7 @@ namespace RandoPlus
 
         private bool HandleButton(MenuPage landingPage, out SmallButton button)
         {
-            JumpToRCEButton = new(landingPage, "Enforce Content");
+            JumpToRCEButton = new(landingPage, "RandoPlus");
             JumpToRCEButton.AddHideAndShowEvent(landingPage, RandoContentEnforcerPage);
             button = JumpToRCEButton;
             return true;
@@ -39,7 +39,7 @@ namespace RandoPlus
 
         private void ConstructMenu(MenuPage landingPage)
         {
-            RandoContentEnforcerPage = new MenuPage("Enforce Content", landingPage);
+            RandoContentEnforcerPage = new MenuPage("RandoPlus", landingPage);
             rceMEF = new(RandoContentEnforcerPage, RandoPlus.GS);
             rceVIP = new(RandoContentEnforcerPage, new(0, 300), 50f, false, rceMEF.Elements);
         }

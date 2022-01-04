@@ -2,7 +2,7 @@
 using ItemChanger.Items;
 using ItemChanger.UIDefs;
 
-namespace RandoPlus.Items
+namespace RandoPlus.RemoveUsefulItems.Items
 {
     public static class ItemDefinition
     {

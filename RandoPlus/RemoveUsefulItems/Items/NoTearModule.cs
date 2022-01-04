@@ -3,7 +3,7 @@ using System;
 using ItemChanger.Extensions;
 using HutongGames.PlayMaker.Actions;
 
-namespace RandoPlus.Items
+namespace RandoPlus.RemoveUsefulItems.Items
 {
     public class NoTearModule : ItemChanger.Modules.Module
     {

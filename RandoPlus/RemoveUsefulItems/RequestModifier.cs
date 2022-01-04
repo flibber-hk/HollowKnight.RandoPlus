@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using ItemChanger;
 using RandomizerMod.RC;
 
-namespace RandoPlus
+namespace RandoPlus.RemoveUsefulItems
 {
     public static class RequestModifier
     {

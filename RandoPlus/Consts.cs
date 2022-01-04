@@ -12,5 +12,7 @@ namespace RandoPlus
         public const string NoLantern = $"Not_{ItemNames.Lumafly_Lantern}";
         public const string NoTear = $"Not_{ItemNames.Ismas_Tear}";
         public const string NoSwim = $"Not_{ItemNames.Swim}";
+
+        public const float LOGICPRIORITY = 50f;
     }
 }

@@ -32,9 +32,9 @@ namespace RandoPlus
             bool ic = ModHooks.GetMod("ItemChangerMod") is Mod;
 
             if (rando) MenuHolder.Hook();
-            if (rando) LogicPatcher.Hook();
-            if (rando) RequestModifier.Hook();
-            if (ic) Items.ItemDefinition.DefineItems();
+            RemoveUsefulItems.RemoveUsefulItems.Hook(rando, ic);
+
+            if (rando) ExternalLogicModification.Hook();
         }
     }
 }

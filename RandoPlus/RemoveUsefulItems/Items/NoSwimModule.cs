@@ -4,7 +4,7 @@ using ItemChanger;
 using ItemChanger.Extensions;
 using ItemChanger.FsmStateActions;
 
-namespace RandoPlus.Items
+namespace RandoPlus.RemoveUsefulItems.Items
 {
     public class NoSwimModule : ItemChanger.Modules.Module
     {
