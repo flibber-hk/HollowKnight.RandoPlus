@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ItemChanger;
+using RandomizerMod.RandomizerData;
 using RandomizerMod.RC;
 
 namespace RandoPlus.RemoveUsefulItems
@@ -22,7 +23,7 @@ namespace RandoPlus.RemoveUsefulItems
             if (!RandoPlus.GS.NoLantern) return;
             if (!rb.gs.SkipSettings.DarkRooms)
             {
-                RandoPlus.instance.LogError("Dark room skips required!");
+                RandoPlus.instance.LogError("Dark room skips required for no Lantern");
                 return;
             }
             rb.ReplaceItem(ItemNames.Lumafly_Lantern, Consts.NoLantern);
@@ -35,6 +36,17 @@ namespace RandoPlus.RemoveUsefulItems
                 rb.Vanilla.RemoveAll(req);
                 rb.Vanilla.Add(new(Consts.NoLantern, req.Location));
             }
+
+            rb.EditItemRequest(Consts.NoLantern, info =>
+            {
+                info.getItemDef = () => new ItemDef()
+                {
+                    Name = Consts.NoLantern,
+                    Pool = Consts.RemoveUsefulItems,
+                    MajorItem = false,
+                    PriceCap = 500
+                };
+            });
         }
 
         private static void RemoveTear(RequestBuilder rb)
@@ -42,7 +54,7 @@ namespace RandoPlus.RemoveUsefulItems
             if (!RandoPlus.GS.NoTear) return;
             if (!rb.gs.SkipSettings.AcidSkips)
             {
-                RandoPlus.instance.LogError("Acid skips required!");
+                RandoPlus.instance.LogError("Acid skips required for no Tear");
                 return;
             }
             rb.ReplaceItem(ItemNames.Ismas_Tear, Consts.NoTear);
@@ -55,6 +67,17 @@ namespace RandoPlus.RemoveUsefulItems
                 rb.Vanilla.RemoveAll(req);
                 rb.Vanilla.Add(new(Consts.NoTear, req.Location));
             }
+
+            rb.EditItemRequest(Consts.NoTear, info =>
+            {
+                info.getItemDef = () => new ItemDef()
+                {
+                    Name = Consts.NoTear,
+                    Pool = Consts.RemoveUsefulItems,
+                    MajorItem = false,
+                    PriceCap = 500
+                };
+            });
         }
 
         private static void RemoveSwim(RequestBuilder rb)
@@ -62,7 +85,7 @@ namespace RandoPlus.RemoveUsefulItems
             if (!RandoPlus.GS.NoSwim) return;
             if (!rb.gs.SkipSettings.AcidSkips)
             {
-                RandoPlus.instance.LogError("Acid skips required!");
+                RandoPlus.instance.LogError("Acid skips required for no Swim");
                 return;
             }
             rb.ReplaceItem(ItemNames.Swim, Consts.NoSwim);
@@ -75,6 +98,17 @@ namespace RandoPlus.RemoveUsefulItems
                 rb.Vanilla.RemoveAll(req);
                 rb.Vanilla.Add(new(Consts.NoSwim, req.Location));
             }
+
+            rb.EditItemRequest(Consts.NoSwim, info =>
+            {
+                info.getItemDef = () => new ItemDef()
+                {
+                    Name = Consts.NoSwim,
+                    Pool = Consts.RemoveUsefulItems,
+                    MajorItem = false,
+                    PriceCap = 500
+                };
+            });
         }
     }
 }
