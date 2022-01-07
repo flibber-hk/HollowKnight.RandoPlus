@@ -32,16 +32,11 @@ namespace RandoPlus.RemoveUsefulItems
                 lcb.Subst(lmb.LP.GetTermToken(pre), new LogicClause(post, lmb.LP));
                 lmb.LogicLookup[name] = new(lcb);
             }
-            void ProvideMacroSubstitution(string name, string pre, string post)
-            {
-                LogicClauseBuilder lcb = new(lmb.LP.GetMacro(name));
-                lcb.Subst(lmb.LP.GetTermToken(pre), new LogicClause(post, lmb.LP));
-                lmb.LP.SetMacro(name, new LogicClause(lcb));
-            }
 
             // Lantern
             ProvideLogicSubstitution("Mines_33[right1]", "LANTERN", "LANTERN | NOLANTERN + DARKROOMS");
             ProvideLogicSubstitution("Mines_33[left1]", "LANTERN", "LANTERN | NOLANTERN + DARKROOMS");
+            ProvideLogicSubstitution("Defeated_No_Eyes", "LANTERN", "LANTERN | NOLANTERN + DARKROOMS");
             ProvideLogicSubstitution(LocationNames.Boss_Essence_No_Eyes, "LANTERN", "LANTERN | NOLANTERN + DARKROOMS");
             ProvideLogicSubstitution(LocationNames.Geo_Rock_Crystal_Peak_Entrance, "LANTERN", "LANTERN | NOLANTERN + DARKROOMS");
             ProvideLogicSubstitution(LocationNames.Geo_Rock_Crystal_Peak_Entrance_Dupe_1, "LANTERN", "LANTERN | NOLANTERN + DARKROOMS");
@@ -49,13 +44,11 @@ namespace RandoPlus.RemoveUsefulItems
 
             // Isma's
             ProvideLogicSubstitution("Fungus2_06[left2]", "ACID", "ACID | NOACID + WINGS + (LEFTDASH | (RIGHTCLAW + LEFTSUPERDASH))");
-            ProvideMacroSubstitution("Fungus2_06", "ACID", "ACID | NOACID + RIGHTDASH + (WINGS | RIGHTCLAW)");
+            ProvideLogicSubstitution("Fungus2_06", "ACID", "ACID | NOACID + RIGHTDASH + (WINGS | RIGHTCLAW)");
             ProvideLogicSubstitution("Fungus1_26[left1]", "ACID", "ACID | NOACID + LEFTSUPERDASH + LEFTDASH + WINGS");
-            ProvideMacroSubstitution("Deepnest_East_04", "ACID", "ACID | RIGHTSKIPACID");
+            ProvideLogicSubstitution("Deepnest_East_04", "ACID", "ACID | NOACID + RIGHTSKIPACID");
             ProvideLogicSubstitution("Deepnest_East_04[left1]", "ACID", "ACID | NOACID + LEFTDASH + LEFTSUPERDASH + WINGS");
-            ProvideLogicSubstitution(LocationNames.Love_Key, "SPICYSKIPS", "SPICYSKIPS | NOACID");
             ProvideLogicSubstitution(LocationNames.Mask_Shard_Grey_Mourner, "ACID", "ACID | NOACID");
-
 
             // Swim
             // No changes required
