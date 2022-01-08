@@ -13,102 +13,65 @@ namespace RandoPlus.RemoveUsefulItems
     {
         public static void Hook()
         {
-            RequestBuilder.OnUpdate.Subscribe(50f, RemoveLantern);
-            RequestBuilder.OnUpdate.Subscribe(50f, RemoveTear);
-            RequestBuilder.OnUpdate.Subscribe(50f, RemoveSwim);
+            RequestBuilder.OnUpdate.Subscribe(50f, CreateRemover(ItemNames.Lumafly_Lantern, Consts.NoLantern, 
+                "Dark room skips required for no Lantern", nameof(RandomizerMod.Settings.SkipSettings.DarkRooms), 
+                () => RandoPlus.GS.NoLantern));
+            RequestBuilder.OnUpdate.Subscribe(50f, CreateRemover(ItemNames.Ismas_Tear, Consts.NoTear,
+                "Acid skips required for no Tear", nameof(RandomizerMod.Settings.SkipSettings.AcidSkips),
+                () => RandoPlus.GS.NoTear));
+            RequestBuilder.OnUpdate.Subscribe(50f, CreateRemover(ItemNames.Swim, Consts.NoSwim,
+                "Acid skips required for no Swim", nameof(RandomizerMod.Settings.SkipSettings.AcidSkips),
+                () => RandoPlus.GS.NoSwim));
         }
 
-        private static void RemoveLantern(RequestBuilder rb)
+        private static RequestBuilder.RequestBuilderUpdateHandler CreateRemover(string oldItem, string newItem, string errorMessage,
+            string skipSetting, Func<bool> isRandomized)
         {
-            if (!RandoPlus.GS.NoLantern) return;
-            if (!rb.gs.SkipSettings.DarkRooms)
+            void RemoveItem(RequestBuilder rb)
             {
-                RandoPlus.instance.LogError("Dark room skips required for no Lantern");
-                return;
-            }
-            rb.ReplaceItem(ItemNames.Lumafly_Lantern, Consts.NoLantern);
-            rb.ReplaceItem(PlaceholderItem.Prefix + ItemNames.Lumafly_Lantern, PlaceholderItem.Prefix + Consts.NoLantern);
-            rb.StartItems.Replace(ItemNames.Lumafly_Lantern, Consts.NoLantern);
-
-            List<VanillaRequest> vanillaLantern = rb.Vanilla.EnumerateWithMultiplicity().Where(x => x.Item == ItemNames.Lumafly_Lantern).ToList();
-            foreach (VanillaRequest req in vanillaLantern)
-            {
-                rb.Vanilla.RemoveAll(req);
-                rb.Vanilla.Add(new(Consts.NoLantern, req.Location));
-            }
-
-            rb.EditItemRequest(Consts.NoLantern, info =>
-            {
-                info.getItemDef = () => new ItemDef()
+                if (!isRandomized()) return;
+                if (!rb.gs.SkipSettings.GetFieldByName(skipSetting))
                 {
-                    Name = Consts.NoLantern,
-                    Pool = Consts.RemoveUsefulItems,
-                    MajorItem = false,
-                    PriceCap = 500
-                };
-            });
-        }
+                    RandoPlus.instance.LogError(errorMessage);
+                    return;
+                }
+                rb.ReplaceItem(oldItem, newItem);
+                rb.ReplaceItem(PlaceholderItem.Prefix + oldItem, PlaceholderItem.Prefix + newItem);
+                rb.StartItems.Replace(oldItem, newItem);
 
-        private static void RemoveTear(RequestBuilder rb)
-        {
-            if (!RandoPlus.GS.NoTear) return;
-            if (!rb.gs.SkipSettings.AcidSkips)
-            {
-                RandoPlus.instance.LogError("Acid skips required for no Tear");
-                return;
-            }
-            rb.ReplaceItem(ItemNames.Ismas_Tear, Consts.NoTear);
-            rb.ReplaceItem(PlaceholderItem.Prefix + ItemNames.Ismas_Tear, PlaceholderItem.Prefix + Consts.NoTear);
-            rb.StartItems.Replace(ItemNames.Ismas_Tear, Consts.NoTear);
-
-            List<VanillaRequest> vanillaTear = rb.Vanilla.EnumerateWithMultiplicity().Where(x => x.Item == ItemNames.Ismas_Tear).ToList();
-            foreach (VanillaRequest req in vanillaTear)
-            {
-                rb.Vanilla.RemoveAll(req);
-                rb.Vanilla.Add(new(Consts.NoTear, req.Location));
-            }
-
-            rb.EditItemRequest(Consts.NoTear, info =>
-            {
-                info.getItemDef = () => new ItemDef()
+                List<VanillaRequest> vanilla = rb.Vanilla.EnumerateWithMultiplicity().Where(x => x.Item == oldItem).ToList();
+                foreach (VanillaRequest req in vanilla)
                 {
-                    Name = Consts.NoTear,
-                    Pool = Consts.RemoveUsefulItems,
-                    MajorItem = false,
-                    PriceCap = 500
-                };
-            });
-        }
+                    rb.Vanilla.RemoveAll(req);
+                    rb.Vanilla.Add(new(newItem, req.Location));
+                }
 
-        private static void RemoveSwim(RequestBuilder rb)
-        {
-            if (!RandoPlus.GS.NoSwim) return;
-            if (!rb.gs.SkipSettings.AcidSkips)
-            {
-                RandoPlus.instance.LogError("Acid skips required for no Swim");
-                return;
-            }
-            rb.ReplaceItem(ItemNames.Swim, Consts.NoSwim);
-            rb.ReplaceItem(PlaceholderItem.Prefix + ItemNames.Swim, PlaceholderItem.Prefix + Consts.NoSwim);
-            rb.StartItems.Replace(ItemNames.Swim, Consts.NoSwim);
-
-            List<VanillaRequest> vanillaSwim = rb.Vanilla.EnumerateWithMultiplicity().Where(x => x.Item == ItemNames.Swim).ToList();
-            foreach (VanillaRequest req in vanillaSwim)
-            {
-                rb.Vanilla.RemoveAll(req);
-                rb.Vanilla.Add(new(Consts.NoSwim, req.Location));
-            }
-
-            rb.EditItemRequest(Consts.NoSwim, info =>
-            {
-                info.getItemDef = () => new ItemDef()
+                rb.EditItemRequest(newItem, info =>
                 {
-                    Name = Consts.NoSwim,
-                    Pool = Consts.RemoveUsefulItems,
-                    MajorItem = false,
-                    PriceCap = 500
-                };
-            });
+                    info.getItemDef = () => new ItemDef()
+                    {
+                        Name = newItem,
+                        Pool = Consts.RemoveUsefulItems,
+                        MajorItem = false,
+                        PriceCap = 500
+                    };
+                });
+
+                rb.OnGetGroupFor.Subscribe(-999f, MatchGroup);
+
+                bool MatchGroup(RequestBuilder rb, string item, RequestBuilder.ElementType type, out GroupBuilder gb)
+                {
+                    if (item == newItem && (type == RequestBuilder.ElementType.Item || type == RequestBuilder.ElementType.Unknown))
+                    {
+                        gb = rb.GetGroupFor(item, type);
+                        return true;
+                    }
+                    gb = default;
+                    return false;
+                }
+            }
+
+            return RemoveItem;
         }
     }
 }
