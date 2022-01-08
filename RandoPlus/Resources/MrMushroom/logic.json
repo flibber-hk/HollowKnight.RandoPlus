@@ -1,0 +1,30 @@
+﻿[
+    {
+        "name": "Mr_Mushroom-Fungal_Wastes",
+        "logic": "Fungus2_18[top1] + Spore_Shroom + (MRMUSHROOMFOUND>0 | DREAMER3)"
+    },
+    {
+        "name": "Mr_Mushroom-Kingdom's_Edge",
+        "logic": "(Deepnest_East_01[bot1] + (RIGHTCLAW | WINGS) | Deepnest_East_01[top1] | Deepnest_East_01[right1]) + Spore_Shroom + (MRMUSHROOMFOUND>1 | MRMUSHROOMFOUND>0 + DREAMER3)"
+    },
+    {
+        "name": "Mr_Mushroom-Deepnest",
+        "logic": "Deepnest_40[right1] + Spore_Shroom + (MRMUSHROOMFOUND>2 | MRMUSHROOMFOUND>1 + DREAMER3)"
+    },
+    {
+        "name": "Mr_Mushroom-Howling_Cliffs",
+        "logic": "Room_nailmaster[left1] + Spore_Shroom + (MRMUSHROOMFOUND>3 | MRMUSHROOMFOUND>2 + DREAMER3)"
+    },
+    {
+        "name": "Mr_Mushroom-Ancient_Basin",
+        "logic": "Abyss_21[right1] + Spore_Shroom + (MRMUSHROOMFOUND>4 | MRMUSHROOMFOUND>3 + DREAMER3)"
+    },
+    {
+        "name": "Mr_Mushroom-Fog_Canyon",
+        "logic": "Fungus3_44[bot1] + Spore_Shroom + (MRMUSHROOMFOUND>5 | MRMUSHROOMFOUND>4 + DREAMER3)"
+    },
+    {
+        "name": "Mr_Mushroom-King's_Pass",
+        "logic": "Tutorial_01 + Spore_Shroom + (MRMUSHROOMFOUND>6 | MRMUSHROOMFOUND>5 + DREAMER3)"
+    }
+]

@@ -33,6 +33,7 @@ namespace RandoPlus
 
             if (rando) MenuHolder.Hook();
             RemoveUsefulItems.RemoveUsefulItems.Hook(rando, ic);
+            MrMushroom.MrMushroom.Hook(rando, ic);
 
             if (rando) ExternalLogicModification.Hook();
         }

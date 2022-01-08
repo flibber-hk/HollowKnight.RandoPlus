@@ -13,7 +13,7 @@ namespace RandoPlus.RemoveUsefulItems.Items
             {
                 name = Consts.NoLantern,
                 boolName = nameof(NoLanternModule.gotNoLantern),
-                moduleName = "RandoContentEnforcer.Items.NoLanternModule, RandoContentEnforcer",
+                moduleName = "RandoPlus.RemoveUsefulItems.Items.NoLanternModule, RandoPlus",
                 UIDef = lanternUIdef
             };
             Finder.DefineCustomItem(noLantern);
@@ -25,7 +25,7 @@ namespace RandoPlus.RemoveUsefulItems.Items
             {
                 name = Consts.NoTear,
                 boolName = nameof(NoTearModule.gotNoTear),
-                moduleName = "RandoContentEnforcer.Items.NoTearModule, RandoContentEnforcer",
+                moduleName = "RandoPlus.RemoveUsefulItems.Items.NoTearModule, RandoPlus",
                 UIDef = tearUIdef
             };
             Finder.DefineCustomItem(noTear);
@@ -38,7 +38,7 @@ namespace RandoPlus.RemoveUsefulItems.Items
             {
                 name = Consts.NoSwim,
                 boolName = nameof(NoSwimModule.gotNoSwim),
-                moduleName = "RandoContentEnforcer.Items.NoSwimModule, RandoContentEnforcer",
+                moduleName = "RandoPlus.RemoveUsefulItems.Items.NoSwimModule, RandoPlus",
                 UIDef = swimUIdef
             };
             Finder.DefineCustomItem(noSwim);
