@@ -7,9 +7,11 @@ using ItemChanger;
 using ItemChanger.Extensions;
 using ItemChanger.FsmStateActions;
 using ItemChanger.Locations;
+using ItemChanger.Placements;
 using ItemChanger.Tags;
 using ItemChanger.Util;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace RandoPlus.MrMushroom
 {
@@ -18,8 +20,10 @@ namespace RandoPlus.MrMushroom
         public int mushroomState;
         public string objectName;
 
-        public bool Appears() => PlayerData.instance.GetInt(nameof(PlayerData.mrMushroomState)) >= mushroomState
-            && !Placement.CheckVisitedAll(VisitState.Accepted)
+        public bool MushroomUnlocked() => PlayerData.instance.GetInt(nameof(PlayerData.mrMushroomState)) >= mushroomState;
+        public bool SuccessfullyInteracted() => Placement.CheckVisitedAll(VisitState.Accepted);
+        public bool Appears() => MushroomUnlocked()
+            && !SuccessfullyInteracted()
             && !Placement.AllObtained();
 
         protected override void OnLoad()
@@ -38,6 +42,9 @@ namespace RandoPlus.MrMushroom
             FsmState convo = fsm.GetState("Convo");
             convo.RemoveActionsOfType<IncrementPlayerDataInt>();
             convo.Actions[0] = new Lambda(() => fsm.FsmVariables.GetFsmInt("Mushroom State").Value = mushroomState);
+
+            fsm.GetState("Send Rocket").AddFirstAction(new Lambda(() => Placement.AddVisitFlag(VisitState.Accepted)));
+            fsm.GetState("Send Leave").AddFirstAction(new Lambda(() => Placement.AddVisitFlag(VisitState.Accepted)));
         }
 
         private void ModifyMrMushroom(PlayMakerFSM fsm)
@@ -46,7 +53,14 @@ namespace RandoPlus.MrMushroom
 
             fsm.GetState("Left").AddFirstAction(new Lambda(() => PlaceContainer(fsm.gameObject)));
             fsm.GetState("Box Down").AddFirstAction(new Lambda(() => PlaceContainer(fsm.gameObject)));
-
+            fsm.GetState("Destroy").AddFirstAction(new Lambda(() => 
+            { 
+                // This handles respawned items and geo rock shells, as well as dropped but unclaimed items
+                if (SuccessfullyInteracted())
+                {
+                    PlaceContainer(fsm.gameObject);
+                }
+            }));
         }
 
         private void PlaceContainer(GameObject mush)
