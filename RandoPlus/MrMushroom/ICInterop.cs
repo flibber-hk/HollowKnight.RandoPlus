@@ -11,16 +11,17 @@ namespace RandoPlus.MrMushroom
     {
         public static void DefineItemsAndLocations()
         {
-            Finder.DefineCustomItem(new IntItem()
+            Finder.DefineCustomItem(new MrMushroomItem()
             {
                 fieldName = nameof(PlayerData.mrMushroomState),
                 name = Consts.MrMushroomLevelUp,
                 amount = 1,
-                UIDef = new MsgUIDef()
+                UIDef = new SplitUIDef()
                 {
                     sprite = new EmbeddedSprite("MrMushroom.mushroom"),
                     shopDesc = new LanguageString("Minor NPC", "MR_MUSHROOM_SHROOMISH1"),
-                    name = new BoxedString("Mr Mushroom Level"),
+                    preview = new BoxedString("Mr Mushroom Level Up"),
+                    name = new MrMushroomString(),
                 }
             });
 
