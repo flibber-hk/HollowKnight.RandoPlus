@@ -11,6 +11,8 @@ namespace RandoPlus.RemoveUsefulItems
     {
         public static void Hook()
         {
+            RequestBuilder.OnUpdate.Subscribe(-499f, SetupRefs);
+
             RequestBuilder.OnUpdate.Subscribe(50f, CreateRemover(ItemNames.Lumafly_Lantern, Consts.NoLantern, 
                 "Dark room skips required for no Lantern", nameof(RandomizerMod.Settings.SkipSettings.DarkRooms), 
                 () => RandoPlus.GS.NoLantern));
@@ -22,28 +24,12 @@ namespace RandoPlus.RemoveUsefulItems
                 () => RandoPlus.GS.NoSwim));
         }
 
-        private static RequestBuilder.RequestBuilderUpdateHandler CreateRemover(string oldItem, string newItem, string errorMessage,
-            string skipSetting, Func<bool> isRandomized)
+        private static void SetupRefs(RequestBuilder rb)
         {
-            void RemoveItem(RequestBuilder rb)
+            if (!RandoPlus.GS.Any) return;
+
+            foreach (string newItem in new[] { Consts.NoTear, Consts.NoLantern, Consts.NoSwim })
             {
-                if (!isRandomized()) return;
-                if (!rb.gs.SkipSettings.GetFieldByName(skipSetting))
-                {
-                    RandoPlus.instance.LogError(errorMessage);
-                    return;
-                }
-                rb.ReplaceItem(oldItem, newItem);
-                rb.ReplaceItem(PlaceholderItem.Prefix + oldItem, PlaceholderItem.Prefix + newItem);
-                rb.StartItems.Replace(oldItem, newItem);
-
-                List<VanillaRequest> vanilla = rb.Vanilla.EnumerateWithMultiplicity().Where(x => x.Item == oldItem).ToList();
-                foreach (VanillaRequest req in vanilla)
-                {
-                    rb.Vanilla.RemoveAll(req);
-                    rb.Vanilla.Add(new(newItem, req.Location));
-                }
-
                 rb.EditItemRequest(newItem, info =>
                 {
                     info.getItemDef = () => new ItemDef()
@@ -66,6 +52,30 @@ namespace RandoPlus.RemoveUsefulItems
                     }
                     gb = default;
                     return false;
+                }
+            }
+        }
+
+        private static RequestBuilder.RequestBuilderUpdateHandler CreateRemover(string oldItem, string newItem, string errorMessage,
+            string skipSetting, Func<bool> isRandomized)
+        {
+            void RemoveItem(RequestBuilder rb)
+            {
+                if (!isRandomized()) return;
+                if (!rb.gs.SkipSettings.GetFieldByName(skipSetting))
+                {
+                    RandoPlus.instance.LogError(errorMessage);
+                    return;
+                }
+                rb.ReplaceItem(oldItem, newItem);
+                rb.ReplaceItem(PlaceholderItem.Prefix + oldItem, PlaceholderItem.Prefix + newItem);
+                rb.StartItems.Replace(oldItem, newItem);
+
+                List<VanillaRequest> vanilla = rb.Vanilla.EnumerateWithMultiplicity().Where(x => x.Item == oldItem).ToList();
+                foreach (VanillaRequest req in vanilla)
+                {
+                    rb.Vanilla.RemoveAll(req);
+                    rb.Vanilla.Add(new(newItem, req.Location));
                 }
             }
 
