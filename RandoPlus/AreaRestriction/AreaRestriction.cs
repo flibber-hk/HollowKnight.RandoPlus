@@ -39,12 +39,16 @@ namespace RandoPlus.AreaRestriction
                 }
             }
 
+            AbstractItem nothing = Finder.GetItem(ItemNames.Lumafly_Escape);
+            nothing.AddTag<ItemChanger.Tags.CompletionWeightTag>().Weight = 0;
+
             foreach (string loc in InvalidLocations)
             {
                 AbstractPlacement pmt = Finder.GetLocation(loc).Wrap();
-                pmt.Add(Finder.GetItem(ItemNames.Lumafly_Escape));
+                // Adding the tag to the item and the placement is redundant, but we can do it anyway
+                pmt.Add(nothing.Clone());
                 pmt.AddTag<ItemChanger.Tags.CompletionWeightTag>().Weight = 0;
-                ItemChangerMod.AddPlacements(pmt.Yield());
+                ItemChangerMod.AddPlacements(pmt.Yield(), PlacementConflictResolution.MergeKeepingOld);
             }
         }
     }
