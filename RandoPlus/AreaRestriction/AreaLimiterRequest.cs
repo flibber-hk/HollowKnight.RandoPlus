@@ -17,11 +17,13 @@ namespace RandoPlus.AreaRestriction
 
         private static void ApplyAreaLimit(RequestBuilder rb)
         {
+            if (!RandoPlus.GS.DeleteAreas) return;
+
             AreaRestriction.PlacedAreas.Clear();
             AreaRestriction.ExcludedAreas.Clear();
 
             // Select areas
-            List<string> AllAreas = (new HashSet<string>(Data.GetMapAreaTransitionNames().Select(x => Data.GetTransitionDef(x).MapArea))).ToList();
+            List<string> AllAreas = new HashSet<string>(Data.GetMapAreaTransitionNames().Select(x => Data.GetTransitionDef(x).MapArea)).ToList();
             
             if (rb.gs.LongLocationSettings.RandomizationInWhitePalace == RandomizerMod.Settings.LongLocationSettings.WPSetting.ExcludeWhitePalace)
             {

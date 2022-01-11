@@ -11,6 +11,10 @@
         public bool PreferMultiShiny;
 
         [Newtonsoft.Json.JsonIgnore]
-        public bool Any => MrMushroom || NoSwim || NoTear || NoLantern || DeleteAreas;
+        public bool Any => MrMushroom
+            || NoSwim
+            || NoTear
+            || NoLantern
+            || DeleteAreas;
     }
 }

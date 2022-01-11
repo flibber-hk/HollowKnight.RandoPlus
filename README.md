@@ -18,7 +18,7 @@ Replaces the skills with items that respectively
 * Enable dark room tolls and the No Eyes fight.
 
 ### Delete Areas
-Squishes all randomized locations into seven randomly selected map areas, which will always include Dirtmouth and the starting area, 
+Squishes all randomized locations into 7 randomly selected map areas, which will always include Dirtmouth and the starting area, 
 and will always exclude White Palace if Randomization in White Palace is disabled.
 - The selected areas will be displayed in the inventory focus tracker.
 - Randomized locations outside the selected areas will all receive Lumafly Escape items, which will not count for in-game completion percentage.
