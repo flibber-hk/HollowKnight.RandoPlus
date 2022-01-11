@@ -35,8 +35,6 @@ namespace RandoPlus
             RemoveUsefulItems.RemoveUsefulItems.Hook(rando, ic);
             MrMushroom.MrMushroom.Hook(rando, ic);
             AreaRestriction.AreaRestriction.Hook(rando, ic);
-
-            if (rando) ExternalLogicModification.Hook();
         }
     }
 }
