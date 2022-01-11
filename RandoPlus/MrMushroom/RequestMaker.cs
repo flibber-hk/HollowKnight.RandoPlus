@@ -24,9 +24,12 @@ namespace RandoPlus.MrMushroom
 
         public static void Hook()
         {
+            // Add Items and Locations to the pool
             RequestBuilder.OnUpdate.Subscribe(50, AddMrMushroom);
+            // Register the Deranged constraint
             RequestBuilder.OnUpdate.Subscribe(101, DerangeMrMushroom);
-            RequestBuilder.OnUpdate.Subscribe(-499, MatchMrMushroom);
+            // Set up OnGetGroupFor matcher and define infos for item and locations
+            RequestBuilder.OnUpdate.Subscribe(-499, SetupRefs);
         }
 
         private static void DerangeMrMushroom(RequestBuilder rb)
@@ -52,9 +55,33 @@ namespace RandoPlus.MrMushroom
             }
         }
 
-        private static void MatchMrMushroom(RequestBuilder rb)
+        private static void SetupRefs(RequestBuilder rb)
         {
             if (!RandoPlus.GS.MrMushroom) return;
+
+            rb.EditItemRequest(Consts.MrMushroomLevelUp, info =>
+            {
+                info.getItemDef = () => new()
+                {
+                    Name = Consts.MrMushroomLevelUp,
+                    Pool = Consts.MushPool,
+                    MajorItem = false,
+                    PriceCap = 500
+                };
+            });
+            foreach (string loc in mushrooms)
+            {
+                rb.EditLocationRequest(loc, info =>
+                {
+                    info.getLocationDef = () => new()
+                    {
+                        Name = loc,
+                        SceneName = Finder.GetLocation(loc).sceneName,
+                        FlexibleCount = false,
+                        AdditionalProgressionPenalty = false,
+                    };
+                });
+            }
 
             rb.OnGetGroupFor.Subscribe(-100f, MatchMushroomGroup);
 
@@ -80,30 +107,10 @@ namespace RandoPlus.MrMushroom
             if (!RandoPlus.GS.MrMushroom) return;
 
             rb.AddItemByName(Consts.MrMushroomLevelUp, 7);
-            rb.EditItemRequest(Consts.MrMushroomLevelUp, info =>
-            {
-                info.getItemDef = () => new()
-                {
-                    Name = Consts.MrMushroomLevelUp,
-                    Pool = Consts.MushPool,
-                    MajorItem = false,
-                    PriceCap = 500
-                };
-            });
 
             foreach (string loc in mushrooms)
             {
                 rb.AddLocationByName(loc);
-                rb.EditLocationRequest(loc, info =>
-                {
-                    info.getLocationDef = () => new()
-                    {
-                        Name = loc,
-                        SceneName = Finder.GetLocation(loc).sceneName,
-                        FlexibleCount = false,
-                        AdditionalProgressionPenalty = false,
-                    };
-                });
             }
         }
     }

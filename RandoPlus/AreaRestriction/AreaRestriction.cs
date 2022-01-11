@@ -44,11 +44,18 @@ namespace RandoPlus.AreaRestriction
 
             foreach (string loc in InvalidLocations)
             {
-                AbstractPlacement pmt = Finder.GetLocation(loc).Wrap();
-                // Adding the tag to the item and the placement is redundant, but we can do it anyway
-                pmt.Add(nothing.Clone());
-                pmt.AddTag<ItemChanger.Tags.CompletionWeightTag>().Weight = 0;
-                ItemChangerMod.AddPlacements(pmt.Yield(), PlacementConflictResolution.MergeKeepingOld);
+                try
+                {
+                    AbstractPlacement pmt = Finder.GetLocation(loc).Wrap();
+                    // Adding the tag to the item and the placement is redundant, but we can do it anyway
+                    pmt.Add(nothing.Clone());
+                    pmt.AddTag<ItemChanger.Tags.CompletionWeightTag>().Weight = 0;
+                    ItemChangerMod.AddPlacements(pmt.Yield(), PlacementConflictResolution.MergeKeepingOld);
+                }
+                catch
+                {
+                    RandoPlus.instance.LogWarn("Unable to find " + loc + " in Finder. Ignoring...");
+                }
             }
         }
     }

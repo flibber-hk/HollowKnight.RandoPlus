@@ -51,22 +51,27 @@ namespace RandoPlus.AreaRestriction
 
             AreaRestriction.ExcludedAreas.AddRange(AllAreas);
 
+
             // Squish locations
             AreaRestriction.InvalidLocations.Clear();
-            int invalidLocationCount = 0;
-            List<string> ValidLocations = new();
+            int invalidLocationCountFromGroup;
+            List<string> ValidLocationsInGroup = new();
             foreach (ItemGroupBuilder igb in rb.EnumerateItemGroups())
             {
+                invalidLocationCountFromGroup = 0;
+                ValidLocationsInGroup.Clear();
+
                 foreach (string loc in igb.Locations.EnumerateWithMultiplicity())
                 {
-                    if (AreaRestriction.PlacedAreas.Contains(Data.GetLocationDef(loc).MapArea))
+                    if (rb.TryGetLocationDef(loc, out LocationDef def) && AreaRestriction.PlacedAreas.Contains(def.MapArea))
                     {
-                        ValidLocations.Add(loc);
+                        ValidLocationsInGroup.Add(loc);
                     }
                     else
                     {
+                        // Location excluded if no location def defined
                         AreaRestriction.InvalidLocations.Add(loc);
-                        invalidLocationCount++;
+                        invalidLocationCountFromGroup++;
                     }
                 }
 
@@ -75,19 +80,19 @@ namespace RandoPlus.AreaRestriction
                     igb.Locations.RemoveAll(loc);
                 }
 
-                if (ValidLocations.Count == 0)
+                if (ValidLocationsInGroup.Count == 0)
                 {
-                    for (int i = 0; i < invalidLocationCount; i++)
+                    for (int i = 0; i < invalidLocationCountFromGroup; i++)
                     {
                         igb.Locations.Add(LocationNames.Sly);
                     }
                 }
                 else
                 {
-                    rb.rng.PermuteInPlace(ValidLocations);
-                    for (int i = 0; i < invalidLocationCount; i++)
+                    rb.rng.PermuteInPlace(ValidLocationsInGroup);
+                    for (int i = 0; i < invalidLocationCountFromGroup; i++)
                     {
-                        igb.Locations.Add(ValidLocations[i % ValidLocations.Count]);
+                        igb.Locations.Add(ValidLocationsInGroup[i % ValidLocationsInGroup.Count]);
                     }
                 }
             }
