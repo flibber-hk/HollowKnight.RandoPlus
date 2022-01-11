@@ -7,7 +7,7 @@ namespace RandoPlus.AreaRestriction
 {
     public static class AreaRestriction
     {
-        public const int AreaCount = 6;
+        public const int AreaCount = 7;
 
         // Data
         public static readonly List<string> PlacedAreas = new();

@@ -18,9 +18,17 @@ namespace RandoPlus.AreaRestriction
         private static void ApplyAreaLimit(RequestBuilder rb)
         {
             AreaRestriction.PlacedAreas.Clear();
+            AreaRestriction.ExcludedAreas.Clear();
+
             // Select areas
             List<string> AllAreas = (new HashSet<string>(Data.GetMapAreaTransitionNames().Select(x => Data.GetTransitionDef(x).MapArea))).ToList();
             
+            if (rb.gs.LongLocationSettings.RandomizationInWhitePalace == RandomizerMod.Settings.LongLocationSettings.WPSetting.ExcludeWhitePalace)
+            {
+                AllAreas.Remove("White Palace");
+                AreaRestriction.ExcludedAreas.Add("White Palace");
+            }
+
             void PlaceArea(string Area)
             {
                 if (AllAreas.Remove(Area))
@@ -39,7 +47,6 @@ namespace RandoPlus.AreaRestriction
                 PlaceArea(rb.rng.Next(AllAreas));
             }
 
-            AreaRestriction.ExcludedAreas.Clear();
             AreaRestriction.ExcludedAreas.AddRange(AllAreas);
 
             // Squish locations
@@ -66,10 +73,20 @@ namespace RandoPlus.AreaRestriction
                     igb.Locations.RemoveAll(loc);
                 }
 
-                rb.rng.PermuteInPlace(ValidLocations);
-                for (int i = 0; i < invalidLocationCount; i++)
+                if (ValidLocations.Count == 0)
                 {
-                    igb.Locations.Add(ValidLocations[i % ValidLocations.Count]);
+                    for (int i = 0; i < invalidLocationCount; i++)
+                    {
+                        igb.Locations.Add(LocationNames.Sly);
+                    }
+                }
+                else
+                {
+                    rb.rng.PermuteInPlace(ValidLocations);
+                    for (int i = 0; i < invalidLocationCount; i++)
+                    {
+                        igb.Locations.Add(ValidLocations[i % ValidLocations.Count]);
+                    }
                 }
             }
         }
