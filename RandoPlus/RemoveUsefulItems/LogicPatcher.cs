@@ -57,11 +57,14 @@ namespace RandoPlus.RemoveUsefulItems
             if (!RandoPlus.GS.Any) return;
 
             Term noLanternTerm = lmb.GetOrAddTerm("NOLANTERN");
-            lmb.AddItem(new CappedItem(Consts.NoLantern, new TermValue[] { new(noLanternTerm, 1) }, new(noLanternTerm, 1)));
+            Term darkrooms = lmb.GetOrAddTerm("DARKROOMS");
+            lmb.AddItem(new MultiSetItem(Consts.NoLantern, new Term[] { noLanternTerm, darkrooms }));
+            
             Term noTearTerm = lmb.GetOrAddTerm("NOACID");
-            lmb.AddItem(new CappedItem(Consts.NoTear, new TermValue[] { new(noTearTerm, 1) }, new(noTearTerm, 1)));
             Term noSwimTerm = lmb.GetOrAddTerm("NOSWIM");
-            lmb.AddItem(new CappedItem(Consts.NoSwim, new TermValue[] { new(noSwimTerm, 1) }, new(noSwimTerm, 1)));
+            Term acidskips = lmb.GetOrAddTerm("ACIDSKIPS");
+            lmb.AddItem(new MultiSetItem(Consts.NoTear, new Term[] { noTearTerm, acidskips }));
+            lmb.AddItem(new MultiSetItem(Consts.NoSwim, new Term[] { noSwimTerm, acidskips }));
         }
     }
 }

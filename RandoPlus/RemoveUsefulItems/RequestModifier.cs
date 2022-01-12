@@ -9,17 +9,11 @@ namespace RandoPlus.RemoveUsefulItems
 {
     public static class RequestModifier
     {
-        public static readonly (string oldItem, string newItem, string errorMessage, string skipType, Func<bool> isActive)[] settings = new (string oldItem, string newItem, string errorMessage, string skipType, Func<bool> isActive)[]
+        public static readonly (string oldItem, string newItem, Func<bool> isActive)[] settings = new (string oldItem, string newItem, Func<bool> isActive)[]
         {
-            (ItemNames.Lumafly_Lantern, Consts.NoLantern,
-                "Dark room skips required for no Lantern", nameof(RandomizerMod.Settings.SkipSettings.DarkRooms),
-                () => RandoPlus.GS.NoLantern),
-            (ItemNames.Ismas_Tear, Consts.NoTear,
-                "Acid skips required for no Tear", nameof(RandomizerMod.Settings.SkipSettings.AcidSkips),
-                () => RandoPlus.GS.NoTear),
-            (ItemNames.Swim, Consts.NoSwim,
-                "Acid skips required for no Swim", nameof(RandomizerMod.Settings.SkipSettings.AcidSkips),
-                () => RandoPlus.GS.NoSwim)
+            (ItemNames.Lumafly_Lantern, Consts.NoLantern,() => RandoPlus.GS.NoLantern),
+            (ItemNames.Ismas_Tear, Consts.NoTear, () => RandoPlus.GS.NoTear),
+            (ItemNames.Swim, Consts.NoSwim, () => RandoPlus.GS.NoSwim)
         };
 
         public static void Hook()
@@ -28,7 +22,7 @@ namespace RandoPlus.RemoveUsefulItems
 
             foreach (var tuple in settings)
             {
-                RequestBuilder.OnUpdate.Subscribe(50f, CreateRemover(tuple.oldItem, tuple.newItem, tuple.errorMessage, tuple.skipType, tuple.isActive));
+                RequestBuilder.OnUpdate.Subscribe(50f, CreateRemover(tuple.oldItem, tuple.newItem, tuple.isActive));
             }
         }
 
@@ -64,17 +58,12 @@ namespace RandoPlus.RemoveUsefulItems
             }
         }
 
-        private static RequestBuilder.RequestBuilderUpdateHandler CreateRemover(string oldItem, string newItem, string errorMessage,
-            string skipSetting, Func<bool> isRandomized)
+        private static RequestBuilder.RequestBuilderUpdateHandler CreateRemover(string oldItem, string newItem, Func<bool> isRandomized)
         {
             void RemoveItem(RequestBuilder rb)
             {
                 if (!isRandomized()) return;
-                if (!rb.gs.SkipSettings.GetFieldByName(skipSetting))
-                {
-                    RandoPlus.instance.LogError(errorMessage);
-                    return;
-                }
+
                 rb.ReplaceItem(oldItem, newItem);
                 rb.ReplaceItem(PlaceholderItem.Prefix + oldItem, PlaceholderItem.Prefix + newItem);
                 rb.StartItems.Replace(oldItem, newItem);

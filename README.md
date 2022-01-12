@@ -10,12 +10,15 @@ Achieving Mr Mushroom level 8 unlocks the ending cutscene.
 - For the purposes of split item groups, Mr Mushroom locations are considered to be in the same group as Lore Tablets (even if tablets are not randomized).
 
 ### No Tear, Swim, Lantern
-Options to remove the tear, swim and lantern skills from the game. (Require acidskips, acidskips and darkrooms enabled respectively.)
+Options to remove the tear, swim and lantern items from the game.
 
 Replaces the skills with items that respectively
 * Protect against acid damage (and remove the blocker opposite Leg Eater)
 * Protect against swim damage
 * Enable dark room tolls and the No Eyes fight.
+
+It is assumed that players using this setting know that acid skips and/or dark rooms will be required; consequently, it is possible to generate
+seeds with these skip settings *disabled*, and any skips will be put in logic when collecting the relevant items.
 
 ### Delete Areas
 Squishes all randomized locations into 7 randomly selected map areas, which will always include Dirtmouth and the starting area, 
