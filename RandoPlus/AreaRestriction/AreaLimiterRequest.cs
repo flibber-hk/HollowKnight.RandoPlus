@@ -15,6 +15,7 @@ namespace RandoPlus.AreaRestriction
             RequestBuilder.OnUpdate.Subscribe(150f, ApplyAreaLimit);
         }
 
+
         private static void ApplyAreaLimit(RequestBuilder rb)
         {
             if (!RandoPlus.GS.DeleteAreas) return;
@@ -52,26 +53,15 @@ namespace RandoPlus.AreaRestriction
             AreaRestriction.ExcludedAreas.AddRange(AllAreas);
 
 
-            // Squish locations
             AreaRestriction.InvalidLocations.Clear();
-            int invalidLocationCountFromGroup;
-            List<string> ValidLocationsInGroup = new();
             foreach (ItemGroupBuilder igb in rb.EnumerateItemGroups())
             {
-                invalidLocationCountFromGroup = 0;
-                ValidLocationsInGroup.Clear();
-
                 foreach (string loc in igb.Locations.EnumerateWithMultiplicity())
                 {
-                    if (rb.TryGetLocationDef(loc, out LocationDef def) && AreaRestriction.PlacedAreas.Contains(def.MapArea))
-                    {
-                        ValidLocationsInGroup.Add(loc);
-                    }
-                    else
+                    if (!rb.TryGetLocationDef(loc, out LocationDef def) || AreaRestriction.ExcludedAreas.Contains(def.MapArea))
                     {
                         // Location excluded if no location def defined
                         AreaRestriction.InvalidLocations.Add(loc);
-                        invalidLocationCountFromGroup++;
                     }
                 }
 
@@ -80,22 +70,34 @@ namespace RandoPlus.AreaRestriction
                     igb.Locations.RemoveAll(loc);
                 }
 
-                if (ValidLocationsInGroup.Count == 0)
+                igb.LocationPadder = GetPadder(rb.rng, igb);
+            }
+        }
+
+        public static ItemGroupBuilder.LocationPaddingHandler GetPadder(Random rng, ItemGroupBuilder gb)
+        {
+            IEnumerable<RandoModLocation> PadLocations(RandoFactory factory, int count)
+            {
+                List<string> locs = gb.Locations.EnumerateWithMultiplicity().ToList();
+
+                if (locs.Count == 0)
                 {
-                    for (int i = 0; i < invalidLocationCountFromGroup; i++)
+                    for (int i = 0; i < count;i++)
                     {
-                        igb.Locations.Add(LocationNames.Sly);
+                        yield return factory.MakeLocation(LocationNames.Sly);
                     }
+                    yield break;
                 }
-                else
+
+                rng.PermuteInPlace(locs);
+
+                for (int i = 0; i < count; i++)
                 {
-                    rb.rng.PermuteInPlace(ValidLocationsInGroup);
-                    for (int i = 0; i < invalidLocationCountFromGroup; i++)
-                    {
-                        igb.Locations.Add(ValidLocationsInGroup[i % ValidLocationsInGroup.Count]);
-                    }
+                    yield return factory.MakeLocation(locs[i % locs.Count]);
                 }
             }
+
+            return PadLocations;
         }
     }
 }
