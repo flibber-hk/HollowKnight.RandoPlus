@@ -19,6 +19,7 @@ Replaces the skills with items that respectively
 
 It is assumed that players using this setting know that acid skips and/or dark rooms will be required; consequently, it is possible to generate
 seeds with these skip settings *disabled*, and any skips will be put in logic when collecting the relevant items.
+This way, for example acid skips may be required, but only with the safety provided by the replacement Isma's Tear.
 
 ### Delete Areas
 Squishes all randomized locations into 7 randomly selected map areas, which will always include Dirtmouth and the starting area, 
