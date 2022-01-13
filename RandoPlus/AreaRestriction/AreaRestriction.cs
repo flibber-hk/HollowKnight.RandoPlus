@@ -29,6 +29,8 @@ namespace RandoPlus.AreaRestriction
             // Not rando file
             if (RandomizerMod.RandomizerMod.RS.GenerationSettings is null) return;
 
+            // TODO - add an in-game indicator for allowed areas?
+
             ItemChangerMod.Modules.GetOrAdd<AreaLimitModule>().PlacedAreas = new(PlacedAreas);
 
             if (RandoPlus.GS.PreferMultiShiny)
@@ -42,7 +44,7 @@ namespace RandoPlus.AreaRestriction
             AbstractItem nothing = Finder.GetItem(ItemNames.Lumafly_Escape);
             nothing.AddTag<ItemChanger.Tags.CompletionWeightTag>().Weight = 0;
 
-            // TODO - make placements using the ICFactory
+            // TODO - make placements using an ICFactory?
             foreach (string loc in InvalidLocations)
             {
                 try
