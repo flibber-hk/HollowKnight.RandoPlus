@@ -24,7 +24,7 @@ namespace RandoPlus.AreaRestriction
 
         private static void BeforeGameStart()
         {
-            if (!RandoPlus.GS.DeleteAreas) return;
+            if (!RandoPlus.GS.AreaBlitz) return;
 
             // Not rando file
             if (RandomizerMod.RandomizerMod.RS.GenerationSettings is null) return;
@@ -42,6 +42,7 @@ namespace RandoPlus.AreaRestriction
             AbstractItem nothing = Finder.GetItem(ItemNames.Lumafly_Escape);
             nothing.AddTag<ItemChanger.Tags.CompletionWeightTag>().Weight = 0;
 
+            // TODO - make placements using the ICFactory
             foreach (string loc in InvalidLocations)
             {
                 try
@@ -50,7 +51,7 @@ namespace RandoPlus.AreaRestriction
                     // Adding the tag to the item and the placement is redundant, but we can do it anyway
                     pmt.Add(nothing.Clone());
                     pmt.AddTag<ItemChanger.Tags.CompletionWeightTag>().Weight = 0;
-                    ItemChangerMod.AddPlacements(pmt.Yield(), PlacementConflictResolution.MergeKeepingOld);
+                    ItemChangerMod.AddPlacements(pmt.Yield(), PlacementConflictResolution.Ignore);
                 }
                 catch
                 {

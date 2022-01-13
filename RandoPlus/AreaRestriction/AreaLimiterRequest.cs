@@ -18,7 +18,7 @@ namespace RandoPlus.AreaRestriction
 
         private static void ApplyAreaLimit(RequestBuilder rb)
         {
-            if (!RandoPlus.GS.DeleteAreas) return;
+            if (!RandoPlus.GS.AreaBlitz) return;
 
             AreaRestriction.PlacedAreas.Clear();
             AreaRestriction.ExcludedAreas.Clear();

@@ -17,10 +17,6 @@ Replaces the skills with items that respectively
 * Protect against swim damage
 * Enable dark room tolls and the No Eyes fight.
 
-It is assumed that players using this setting know that acid skips and/or dark rooms will be required; consequently, it is possible to generate
-seeds with these skip settings *disabled*, and any skips will be put in logic when collecting the relevant items.
-This way, for example acid skips may be required, but only with the safety provided by the replacement Isma's Tear.
-
 ### Delete Areas
 Squishes all randomized locations into 7 randomly selected map areas, which will always include Dirtmouth and the starting area, 
 and will always exclude White Palace if Randomization in White Palace is disabled.
@@ -34,8 +30,14 @@ placed at Sly. (If a group has at least one included location, then none of its 
 It may still be necessary to pass through excluded areas; for instance, Mask_Shard-Bretta is considered part of Dirtmouth, so may be relevant
 even if Fungal Wastes (the map area containing Bretta) is excluded.
 
-### Custom Logic
+### Custom Pools and Logic
 Any external logic modifications can be made via the custom logic injector mod; logic modifications using terms defined by this mod
 must be made with a priority greater than 50.
 
 The keywords NOACID, NOSWIM and NOLANTERN can be used to represent having obtained the relevant items in No Tear, Swim and Lantern mode.
+
+The Define Refs option means that all refs will be defined; for example, this means that rando will think that Mr Mushroom level ups are placed
+vanilla at Mr Mushroom locations (rather than not knowing they exist), and any built-in logic changes will be made. This should have no effect on
+seed generation if none of the other options are selected, but the option to disable has been provided as a failsafe (and disabling
+this option will have no effect if any other option is selected). However, this option *must* be enabled in order to define any
+custom pools and logic using any items and locations defined in this mod.

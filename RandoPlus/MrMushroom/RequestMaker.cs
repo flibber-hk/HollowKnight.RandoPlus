@@ -35,7 +35,7 @@ namespace RandoPlus.MrMushroom
         private static void DerangeMrMushroom(RequestBuilder rb)
         {
             if (!rb.gs.CursedSettings.Deranged) return;
-            if (!RandoPlus.GS.MrMushroom) return;
+            if (!RandoPlus.GS.Any) return;
 
             static bool NotVanillaMushroom(IRandoItem item, IRandoLocation location)
             {
@@ -57,7 +57,7 @@ namespace RandoPlus.MrMushroom
 
         private static void SetupRefs(RequestBuilder rb)
         {
-            if (!RandoPlus.GS.MrMushroom) return;
+            if (!RandoPlus.GS.Any) return;
 
             rb.EditItemRequest(Consts.MrMushroomLevelUp, info =>
             {
@@ -104,13 +104,20 @@ namespace RandoPlus.MrMushroom
 
         private static void AddMrMushroom(RequestBuilder rb)
         {
-            if (!RandoPlus.GS.MrMushroom) return;
-
-            rb.AddItemByName(Consts.MrMushroomLevelUp, 7);
-
-            foreach (string loc in mushrooms)
+            if (RandoPlus.GS.MrMushroom)
             {
-                rb.AddLocationByName(loc);
+                rb.AddItemByName(Consts.MrMushroomLevelUp, 7);
+                foreach (string loc in mushrooms)
+                {
+                    rb.AddLocationByName(loc);
+                }
+            }
+            else if (RandoPlus.GS.DefineRefs)
+            {
+                foreach (string loc in mushrooms)
+                {
+                    rb.AddToVanilla(Consts.MrMushroomLevelUp, loc);
+                }
             }
         }
     }

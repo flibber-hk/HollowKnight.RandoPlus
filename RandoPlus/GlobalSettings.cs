@@ -2,19 +2,23 @@
 {
     public class GlobalSettings
     {
+        public bool DefineRefs;
+
         public bool MrMushroom;
+        
         public bool NoTear;
         public bool NoLantern;
         public bool NoSwim;
 
-        public bool DeleteAreas;
+        public bool AreaBlitz;
         public bool PreferMultiShiny;
 
         [Newtonsoft.Json.JsonIgnore]
-        public bool Any => MrMushroom
+        public bool Any => DefineRefs
+            || MrMushroom
             || NoSwim
             || NoTear
             || NoLantern
-            || DeleteAreas;
+            || AreaBlitz;
     }
 }
