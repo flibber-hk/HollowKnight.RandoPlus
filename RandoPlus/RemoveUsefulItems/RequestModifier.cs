@@ -20,9 +20,9 @@ namespace RandoPlus.RemoveUsefulItems
         {
             RequestBuilder.OnUpdate.Subscribe(-499f, SetupRefs);
 
-            foreach (var tuple in settings)
+            foreach ((string oldItem, string newItem, Func<bool> isActive) in settings)
             {
-                RequestBuilder.OnUpdate.Subscribe(50f, CreateRemover(tuple.oldItem, tuple.newItem, tuple.isActive));
+                RequestBuilder.OnUpdate.Subscribe(50f, CreateRemover(oldItem, newItem, isActive));
             }
         }
 
@@ -30,13 +30,13 @@ namespace RandoPlus.RemoveUsefulItems
         {
             if (!RandoPlus.GS.Any) return;
 
-            foreach (var tuple in settings)
+            foreach ((string oldItem, string newItem, Func<bool> isActive) in settings)
             {
-                rb.EditItemRequest(tuple.newItem, info =>
+                rb.EditItemRequest(newItem, info =>
                 {
                     info.getItemDef = () => new ItemDef()
                     {
-                        Name = tuple.newItem,
+                        Name = newItem,
                         Pool = Consts.RemoveUsefulItems,
                         MajorItem = false,
                         PriceCap = 500
@@ -47,9 +47,9 @@ namespace RandoPlus.RemoveUsefulItems
 
                 bool MatchGroup(RequestBuilder rb, string item, RequestBuilder.ElementType type, out GroupBuilder gb)
                 {
-                    if (item == tuple.newItem && (type == RequestBuilder.ElementType.Item || type == RequestBuilder.ElementType.Unknown))
+                    if (item == newItem && (type == RequestBuilder.ElementType.Item || type == RequestBuilder.ElementType.Unknown))
                     {
-                        gb = rb.GetGroupFor(tuple.oldItem, type);
+                        gb = rb.GetGroupFor(oldItem, type);
                         return true;
                     }
                     gb = default;

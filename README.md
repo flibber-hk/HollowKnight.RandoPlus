@@ -17,14 +17,14 @@ Replaces the skills with items that respectively
 * Protect against swim damage
 * Enable dark room tolls and the No Eyes fight.
 
-### Delete Areas
+### Area Blitz
 Squishes all randomized locations into 7 randomly selected map areas, which will always include Dirtmouth and the starting area, 
 and will always exclude White Palace if Randomization in White Palace is disabled.
 - The selected areas will be displayed in the inventory focus tracker.
 - Randomized locations outside the selected areas will all receive Lumafly Escape items, which will not count for in-game completion percentage.
 - Locations in the selected areas may receive more than one item. By default, a location with multiple items (unless given a special container 
 such as a grub) will become a chest containing several shinies; the PreferMultiShiny option instead places a shiny that gives several items.
-- This setting will respect split pools, with the exception that if a group has all of its locations excluded, then all of its items will be
+- This setting will respect split groups, with the exception that if a group has all of its locations excluded, then all of its items will be
 placed at Sly. (If a group has at least one included location, then none of its items will be placed at Sly unless Sly is part of the group.)
 
 It may still be necessary to pass through excluded areas; for instance, Mask_Shard-Bretta is considered part of Dirtmouth, so may be relevant
