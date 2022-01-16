@@ -9,39 +9,39 @@ namespace RandoPlus
 {
     public class MenuHolder
     {
-        internal MenuPage RandoContentEnforcerPage;
-        internal MenuElementFactory<GlobalSettings> rceMEF;
-        internal VerticalItemPanel rceVIP;
+        internal MenuPage RandoPlus;
+        internal MenuElementFactory<GlobalSettings> rpMEF;
+        internal VerticalItemPanel rpVIP;
 
-        internal SmallButton JumpToRCEButton;
+        internal SmallButton JumpToRPButton;
 
         private static MenuHolder _instance = null;
         internal static MenuHolder Instance => _instance ?? (_instance = new MenuHolder());
 
-        public static void OnExitMenu(Scene from, Scene to)
+        public static void OnExitMenu()
         {
-            if (from.name == "Menu_Title") _instance = null;
+            _instance = null;
         }
 
         public static void Hook()
         {
             RandomizerMenuAPI.AddMenuPage(Instance.ConstructMenu, Instance.HandleButton);
-            UnityEngine.SceneManagement.SceneManager.activeSceneChanged += OnExitMenu;
+            MenuChangerMod.OnExitMainMenu += OnExitMenu;
         }
 
         private bool HandleButton(MenuPage landingPage, out SmallButton button)
         {
-            JumpToRCEButton = new(landingPage, "RandoPlus");
-            JumpToRCEButton.AddHideAndShowEvent(landingPage, RandoContentEnforcerPage);
-            button = JumpToRCEButton;
+            JumpToRPButton = new(landingPage, "RandoPlus");
+            JumpToRPButton.AddHideAndShowEvent(landingPage, RandoPlus);
+            button = JumpToRPButton;
             return true;
         }
 
         private void ConstructMenu(MenuPage landingPage)
         {
-            RandoContentEnforcerPage = new MenuPage("RandoPlus", landingPage);
-            rceMEF = new(RandoContentEnforcerPage, RandoPlus.GS);
-            rceVIP = new(RandoContentEnforcerPage, new(0, 300), 50f, false, rceMEF.Elements);
+            RandoPlus = new MenuPage("RandoPlus", landingPage);
+            rpMEF = new(RandoPlus, global::RandoPlus.RandoPlus.GS);
+            rpVIP = new(RandoPlus, new(0, 300), 50f, false, rpMEF.Elements);
         }
     }
 }

@@ -83,18 +83,18 @@ namespace RandoPlus.MrMushroom
                 });
             }
 
-            rb.OnGetGroupFor.Subscribe(-100f, MatchMushroomGroup);
+            rb.OnGetGroupFor.Subscribe(0f, MatchMushroomGroup);
 
-            bool MatchMushroomGroup(RequestBuilder rb, string item, RequestBuilder.ElementType type, out GroupBuilder gb)
+            static bool MatchMushroomGroup(RequestBuilder rb, string item, RequestBuilder.ElementType type, out GroupBuilder gb)
             {
                 if (item == Consts.MrMushroomLevelUp && (type == RequestBuilder.ElementType.Unknown || type == RequestBuilder.ElementType.Item))
                 {
-                    gb = rb.GetGroupFor(ItemNames.Lore_Tablet_City_Entrance);
+                    gb = rb.GetGroupFor(ItemNames.Lore_Tablet_Kingdoms_Edge);
                     return true;
                 }
                 else if (mushrooms.Contains(item) && (type == RequestBuilder.ElementType.Unknown || type == RequestBuilder.ElementType.Location))
                 {
-                    gb = rb.GetGroupFor(ItemNames.Lore_Tablet_City_Entrance);
+                    gb = rb.GetGroupFor(ItemNames.Lore_Tablet_Kingdoms_Edge);
                     return true;
                 }
                 gb = default;

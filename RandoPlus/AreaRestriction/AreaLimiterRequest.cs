@@ -26,7 +26,7 @@ namespace RandoPlus.AreaRestriction
             // Select areas
             List<string> AllAreas = new HashSet<string>(Data.GetMapAreaTransitionNames().Select(x => Data.GetTransitionDef(x).MapArea)).ToList();
             
-            if (rb.gs.LongLocationSettings.RandomizationInWhitePalace == RandomizerMod.Settings.LongLocationSettings.WPSetting.ExcludeWhitePalace)
+            if (rb.gs.LongLocationSettings.WhitePalaceRando == RandomizerMod.Settings.LongLocationSettings.WPSetting.ExcludeWhitePalace)
             {
                 AllAreas.Remove("White Palace");
                 AreaRestriction.ExcludedAreas.Add("White Palace");

@@ -7,7 +7,8 @@ The following options are included; more may be added in later versions, and som
 - Add seven Mr Mushroom Level items to the randomization pool; each increases the Mr Mushroom level by 1. Collecting all three dreamers also increases the Mr Mushroom level by 1. 
 Achieving Mr Mushroom level 8 unlocks the ending cutscene.
 - Add the seven Mr Mushroom locations to the randomization pool; location n requires Mr Mushroom level at least n (as well as Spore Shroom equipped).
-- For the purposes of split item groups, Mr Mushroom locations are considered to be in the same group as Lore Tablets (even if tablets are not randomized).
+- For the purposes of split item groups, Mr Mushroom locations are considered by default to be in the same group as Lore Tablets - specifically the Kingdom's 
+Edge Lore Tablet - (even if tablets are not randomized).
 
 ### No Tear, Swim, Lantern
 Options to remove the tear, swim and lantern items from the game.
