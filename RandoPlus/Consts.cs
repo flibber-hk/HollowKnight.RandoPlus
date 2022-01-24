@@ -26,6 +26,8 @@ namespace RandoPlus
 
         public const string MushPool = "MrMushroom";
 
+        public const string Nail_Upgrade = "Nail_Upgrade";
+
         public const float LOGICPRIORITY = 50f;
     }
 }

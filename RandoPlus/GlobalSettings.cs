@@ -14,6 +14,8 @@
         public bool AreaBlitz;
         public bool PreferMultiShiny;
 
+        public bool NailUpgrades;
+
         [Newtonsoft.Json.JsonIgnore]
         public bool Any => DefineRefs
             || MrMushroom
