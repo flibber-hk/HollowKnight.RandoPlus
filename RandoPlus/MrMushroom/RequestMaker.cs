@@ -30,6 +30,18 @@ namespace RandoPlus.MrMushroom
             RequestBuilder.OnUpdate.Subscribe(101, DerangeMrMushroom);
             // Set up OnGetGroupFor matcher and define infos for item and locations
             RequestBuilder.OnUpdate.Subscribe(-499, SetupRefs);
+            // Option to dupe Spore Shroom
+            RequestBuilder.OnUpdate.Subscribe(20.1f, DupeSporeShroom);
+        }
+
+        private static void DupeSporeShroom(RequestBuilder rb)
+        {
+            if (!RandoPlus.GS.DupeSporeShroom) return;
+
+            if (!rb.IsAtStart(ItemNames.Spore_Shroom))
+            {
+                rb.AddItemByName($"{PlaceholderItem.Prefix}{ItemNames.Spore_Shroom}");
+            }
         }
 
         private static void DerangeMrMushroom(RequestBuilder rb)

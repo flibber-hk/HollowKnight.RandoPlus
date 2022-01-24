@@ -5,6 +5,7 @@
         public bool DefineRefs;
 
         public bool MrMushroom;
+        public bool DupeSporeShroom;
         
         public bool NoTear;
         public bool NoLantern;
