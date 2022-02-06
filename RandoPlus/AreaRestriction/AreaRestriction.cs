@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ItemChanger;
 using ItemChanger.Extensions;
+using RandomizerMod.RC;
 
 namespace RandoPlus.AreaRestriction
 {
@@ -20,14 +21,11 @@ namespace RandoPlus.AreaRestriction
             if (rando) HookStartNewGame();
         }
 
-        public static void HookStartNewGame() => ItemChanger.Events.BeforeStartNewGame += BeforeGameStart;
+        public static void HookStartNewGame() => RandoController.OnExportCompleted += BeforeGameStart;
 
-        private static void BeforeGameStart()
+        private static void BeforeGameStart(RandoController rc)
         {
             if (!RandoPlus.GS.AreaBlitz) return;
-
-            // Not rando file
-            if (RandomizerMod.RandomizerMod.RS.GenerationSettings is null) return;
 
             // TODO - add an in-game indicator for allowed areas?
 
@@ -44,7 +42,6 @@ namespace RandoPlus.AreaRestriction
             AbstractItem nothing = Finder.GetItem(ItemNames.Lumafly_Escape);
             nothing.AddTag<ItemChanger.Tags.CompletionWeightTag>().Weight = 0;
 
-            // TODO - make placements using an ICFactory?
             foreach (string loc in InvalidLocations)
             {
                 try
