@@ -59,7 +59,7 @@ namespace RandoPlus.RemoveUsefulItems.Items
 
         private void EditWaterSurface(PlayMakerFSM fsm)
         {
-            if (fsm.gameObject.LocateFSM("Acid Armour Check") != null) return; // acid
+            if (fsm.gameObject.LocateMyFSM("Acid Armour Check") != null) return; // acid
 
             FsmState splash = fsm.GetState("Big Splash?");
             FsmStateAction acidDeath = new Lambda(() =>
