@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using HutongGames.PlayMaker;
 using ItemChanger;
 using ItemChanger.Extensions;
 using ItemChanger.FsmStateActions;
 using ItemChanger.Modules;
-using HutongGames.PlayMaker;
 
 namespace RandoPlus.NailUpgrades
 {
@@ -35,11 +32,16 @@ namespace RandoPlus.NailUpgrades
             #region OfferPatch
             FsmState offer = fsm.GetState("Offer Type");
             offer.RemoveAction(0);
-            fsm.FsmVariables.GetFsmInt("Upgrades Completed").Value = RandoPlus.GS.UpgradesTaken;
+            offer.Actions = new FsmStateAction[]
+            {
+                new Lambda(()=> fsm.FsmVariables.GetFsmInt("Ore").Value=PlayerData.instance.ore),
+                new Lambda(()=> fsm.FsmVariables.GetFsmInt("Upgrades Completed").Value = RandoPlus.GS.UpgradesTaken),
+                new Lambda(()=> fsm.SendEvent("OFFER 1"))
+            };
             #endregion
 
             #region Patch Text
-            FsmState sendtext = fsm.GetState("Send Text");
+            //FsmState sendtext = fsm.GetState("Send Text");
 
             #endregion
 

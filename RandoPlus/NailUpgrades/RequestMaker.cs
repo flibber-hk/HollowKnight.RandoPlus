@@ -57,7 +57,6 @@ namespace RandoPlus.NailUpgrades
                 {
                     rb.AddLocationByName(Consts.NailPlace+counter.ToString());
                 }
-                //rb.AddLocationByName(Consts.NailUpgradeL+"2", 1);
 
             }
             else if (RandoPlus.GS.DefineRefs)

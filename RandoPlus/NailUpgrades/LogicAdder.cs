@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using ItemChanger;
+﻿using ItemChanger;
 using RandomizerCore;
 using RandomizerCore.Logic;
 using RandomizerCore.LogicItems;
-using RandomizerCore.StringLogic;
 using RandomizerMod.RC;
 using RandomizerMod.Settings;
-using RandoPlus;
 
 namespace RandoPlus.NailUpgrades
 {
@@ -24,11 +18,11 @@ namespace RandoPlus.NailUpgrades
         private static void ApplyLogic(GenerationSettings gs, LogicManagerBuilder lmb)
         {
             if (!RandoPlus.GS.NailUpgrades) return;
-            for (int counter = 1; counter < 5; counter++)
-            {
-                lmb.AddLogicDef(new RawLogicDef(Consts.NailPlace+counter.ToString(), "Town"));
-            }
-            //lmb.AddLogicDef(new RawLogicDef(Consts.NailUpgradeL2, $"Town + PALEORE > 2"));
+
+            lmb.AddLogicDef(new RawLogicDef(Consts.NailPlace + "1", SceneNames.Room_nailsmith + "[left1]"));
+            lmb.AddLogicDef(new RawLogicDef(Consts.NailPlace + "2", $"{SceneNames.Room_nailsmith}[left1] + PALEORE>0+ ARCANEEGGS>0"));
+            lmb.AddLogicDef(new RawLogicDef(Consts.NailPlace + "3", $"{SceneNames.Room_nailsmith}[left1] + PALEORE>2+ ARCANEEGGS>1"));
+            lmb.AddLogicDef(new RawLogicDef(Consts.NailPlace + "4", $"{SceneNames.Room_nailsmith}[left1] + PALEORE>5+ ARCANEEGGS>3"));
 
 
         }
@@ -36,9 +30,10 @@ namespace RandoPlus.NailUpgrades
         private static void DefineTermsAndItems(GenerationSettings gs, LogicManagerBuilder lmb)
         {
             if (!RandoPlus.GS.NailUpgrades) return;
-            Term t = lmb.GetTerm("DREAMNAIL");
-            lmb.AddItem(new SingleItem(Consts.Nail_Upgrade, new TermValue(t,1)));
-
+            Term nailupTerm = lmb.GetOrAddTerm("NAILUPGRADE");
+            lmb.AddItem(new SingleItem(Consts.Nail_Upgrade, new TermValue(nailupTerm, 1)));//, new TermValue(t,1)));
+                                                                                           //lmb.AddItem(new SingleItem(Consts.MrMushroomLevelUp, new TermValue(mushroomTerm, 1)));
+                                                                                           // lmb.AddItem(new EmptyItem(Consts.Nail_Upgrade));
         }
     }
 }
