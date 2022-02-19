@@ -3,7 +3,7 @@ using MenuChanger.MenuElements;
 using MenuChanger.MenuPanels;
 using MenuChanger.Extensions;
 using RandomizerMod.Menu;
-using UnityEngine.SceneManagement;
+using static RandomizerMod.Localization;
 
 namespace RandoPlus
 {
@@ -31,7 +31,7 @@ namespace RandoPlus
 
         private bool HandleButton(MenuPage landingPage, out SmallButton button)
         {
-            JumpToRPButton = new(landingPage, "RandoPlus");
+            JumpToRPButton = new(landingPage, Localize("RandoPlus"));
             JumpToRPButton.AddHideAndShowEvent(landingPage, RandoPlus);
             button = JumpToRPButton;
             return true;
@@ -39,9 +39,10 @@ namespace RandoPlus
 
         private void ConstructMenu(MenuPage landingPage)
         {
-            RandoPlus = new MenuPage("RandoPlus", landingPage);
+            RandoPlus = new MenuPage(Localize("RandoPlus"), landingPage);
             rpMEF = new(RandoPlus, global::RandoPlus.RandoPlus.GS);
             rpVIP = new(RandoPlus, new(0, 300), 50f, false, rpMEF.Elements);
+            Localize(rpMEF);
         }
     }
 }
