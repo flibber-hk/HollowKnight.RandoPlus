@@ -11,8 +11,7 @@ namespace RandoPlus.RemoveUsefulItems.Items
     {
         private static void AddSkillMetadata(AbstractItem item)
         {
-            SupplementalMetadataTag metadataTag = item.AddTag<SupplementalMetadataTag>();
-            metadataTag.PoolGroup = Consts.SkillsPoolGroup;
+            SupplementalMetadataTagFactory.AddTagToItem(item, Consts.SkillsPoolGroup);
         }
 
         public static void DefineItems()

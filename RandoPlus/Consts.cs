@@ -24,10 +24,8 @@ namespace RandoPlus
         public const string MrMushroomFogCanyon = "Mr_Mushroom-Fog_Canyon";
         public const string MrMushroomKingsPass = "Mr_Mushroom-King's_Pass";
 
-        public const string MushPool = "MrMushroom";
-
         public const string SkillsPoolGroup = "Skills";
-        public const string LoreTabletPoolGroup = "Lore Tablets";
+        public const string MrMushroomPoolGroup = "Mr Mushroom";
 
         public const float LOGICPRIORITY = 50f;
     }

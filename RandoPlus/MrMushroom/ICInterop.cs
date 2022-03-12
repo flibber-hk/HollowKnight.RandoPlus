@@ -24,8 +24,7 @@ namespace RandoPlus.MrMushroom
                     name = new MrMushroomString(),
                 }
             };
-            SupplementalMetadataTag itemMetadata = mushItem.AddTag<SupplementalMetadataTag>();
-            itemMetadata.PoolGroup = Consts.LoreTabletPoolGroup;
+            SupplementalMetadataTagFactory.AddTagToItem(mushItem, poolGroup: Consts.MrMushroomPoolGroup);
             Finder.DefineCustomItem(mushItem);
 
             void DefineLocation(string name, string scene, string objectName, int level)
@@ -38,8 +37,7 @@ namespace RandoPlus.MrMushroom
                     flingType = FlingType.Everywhere,
                     sceneName = scene,
                 };
-                SupplementalMetadataTag locationMetadata = mushLocation.AddTag<SupplementalMetadataTag>();
-                locationMetadata.PoolGroup = Consts.LoreTabletPoolGroup;
+                SupplementalMetadataTagFactory.AddTagToLocation(mushLocation, poolGroup: Consts.MrMushroomPoolGroup, vanillaItem: Consts.MrMushroomLevelUp);
                 Finder.DefineCustomLocation(mushLocation);
             }
 
