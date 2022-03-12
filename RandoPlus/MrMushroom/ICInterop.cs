@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using ItemChanger;
-using ItemChanger.Items;
+﻿using ItemChanger;
 using ItemChanger.UIDefs;
 
 namespace RandoPlus.MrMushroom
@@ -11,7 +7,7 @@ namespace RandoPlus.MrMushroom
     {
         public static void DefineItemsAndLocations()
         {
-            Finder.DefineCustomItem(new MrMushroomItem()
+            MrMushroomItem mushItem = new()
             {
                 fieldName = nameof(PlayerData.mrMushroomState),
                 name = Consts.MrMushroomLevelUp,
@@ -23,18 +19,24 @@ namespace RandoPlus.MrMushroom
                     preview = new BoxedString("Mr Mushroom Level Up"),
                     name = new MrMushroomString(),
                 }
-            });
+            };
+            SupplementalMetadataTag itemMetadata = mushItem.AddTag<SupplementalMetadataTag>();
+            itemMetadata.PoolGroup = Consts.LoreTabletPoolGroup;
+            Finder.DefineCustomItem(mushItem);
 
             void DefineLocation(string name, string scene, string objectName, int level)
             {
-                Finder.DefineCustomLocation(new MrMushroomLocation()
+                MrMushroomLocation mushLocation = new()
                 {
                     name = name,
                     objectName = objectName,
                     mushroomState = level,
                     flingType = FlingType.Everywhere,
                     sceneName = scene,
-                });
+                };
+                SupplementalMetadataTag locationMetadata = mushLocation.AddTag<SupplementalMetadataTag>();
+                locationMetadata.PoolGroup = Consts.LoreTabletPoolGroup;
+                Finder.DefineCustomLocation(mushLocation);
             }
 
             DefineLocation(Consts.MrMushroomFungalWastes, SceneNames.Fungus2_18, "Mr Mushroom NPC", 1);

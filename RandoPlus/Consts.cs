@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ItemChanger;
-
-namespace RandoPlus
+﻿namespace RandoPlus
 {
     public static class Consts
     {
@@ -25,6 +18,9 @@ namespace RandoPlus
         public const string MrMushroomKingsPass = "Mr_Mushroom-King's_Pass";
 
         public const string MushPool = "MrMushroom";
+
+        public const string SkillsPoolGroup = "Skills";
+        public const string LoreTabletPoolGroup = "Lore Tablets";
 
         public const float LOGICPRIORITY = 50f;
     }
