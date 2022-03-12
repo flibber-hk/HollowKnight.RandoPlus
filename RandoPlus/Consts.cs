@@ -26,6 +26,9 @@ namespace RandoPlus
 
         public const string MushPool = "MrMushroom";
 
+        public const string SkillsPoolGroup = "Skills";
+        public const string LoreTabletPoolGroup = "Lore Tablets";
+
         public const float LOGICPRIORITY = 50f;
     }
 }
