@@ -9,11 +9,6 @@ namespace RandoPlus.RemoveUsefulItems.Items
 {
     public static class ItemDefinition
     {
-        private static void AddSkillMetadata(AbstractItem item)
-        {
-            SupplementalMetadataTagFactory.AddTagToItem(item, Consts.SkillsPoolGroup);
-        }
-
         public static void DefineItems()
         {
             UIDef lanternUIdef = Finder.GetItem(ItemNames.Lumafly_Lantern).UIDef.Clone();
@@ -24,7 +19,7 @@ namespace RandoPlus.RemoveUsefulItems.Items
                 moduleName = "RandoPlus.RemoveUsefulItems.Items.NoLanternModule, RandoPlus",
                 UIDef = lanternUIdef
             };
-            AddSkillMetadata(noLantern);
+            SupplementalMetadataTagFactory.AddTagToItem(noLantern, Consts.KeysPoolGroup);
             Finder.DefineCustomItem(noLantern);
 
             BigUIDef tearUIdef = Finder.GetItem(ItemNames.Ismas_Tear).UIDef.Clone() as BigUIDef;
@@ -37,7 +32,7 @@ namespace RandoPlus.RemoveUsefulItems.Items
                 moduleName = "RandoPlus.RemoveUsefulItems.Items.NoTearModule, RandoPlus",
                 UIDef = tearUIdef
             };
-            AddSkillMetadata(noTear);
+            SupplementalMetadataTagFactory.AddTagToItem(noTear, Consts.SkillsPoolGroup);
             Finder.DefineCustomItem(noTear);
 
             BigUIDef swimUIdef = Finder.GetItem(ItemNames.Swim).UIDef.Clone() as BigUIDef;
@@ -51,7 +46,7 @@ namespace RandoPlus.RemoveUsefulItems.Items
                 moduleName = "RandoPlus.RemoveUsefulItems.Items.NoSwimModule, RandoPlus",
                 UIDef = swimUIdef
             };
-            AddSkillMetadata(noSwim);
+            SupplementalMetadataTagFactory.AddTagToItem(noSwim, Consts.SkillsPoolGroup);
             Finder.DefineCustomItem(noSwim);
         }
     }

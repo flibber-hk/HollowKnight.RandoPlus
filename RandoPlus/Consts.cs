@@ -25,6 +25,7 @@ namespace RandoPlus
         public const string MrMushroomKingsPass = "Mr_Mushroom-King's_Pass";
 
         public const string SkillsPoolGroup = "Skills";
+        public const string KeysPoolGroup = "Keys";
         public const string MrMushroomPoolGroup = "Mr Mushroom";
 
         public const float LOGICPRIORITY = 50f;
