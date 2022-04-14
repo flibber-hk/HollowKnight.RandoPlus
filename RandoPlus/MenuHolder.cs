@@ -41,7 +41,7 @@ namespace RandoPlus
         {
             RandoPlus = new MenuPage(Localize("RandoPlus"), landingPage);
             rpMEF = new(RandoPlus, global::RandoPlus.RandoPlus.GS);
-            rpVIP = new(RandoPlus, new(0, 300), 50f, false, rpMEF.Elements);
+            rpVIP = new(RandoPlus, new(0, 300), 50f, true, rpMEF.Elements);
             Localize(rpMEF);
         }
     }
