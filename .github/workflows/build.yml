@@ -70,6 +70,7 @@ jobs:
         id: details
         run: |
           echo "::set-output name=buildVersion::$(cat artifacts/metadata/version.txt)"
+          sed '1s/^\xEF\xBB\xBF//' < version.txt > version.txt
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
