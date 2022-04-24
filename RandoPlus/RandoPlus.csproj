@@ -136,7 +136,7 @@
       <Output TaskParameter="Items" ItemName="FilesWithHashes" />
     </GetFileHash>
     <Message Importance="High" Text="@(FilesWithHashes->'%(Identity): %(FileHash)')" />
-    <WriteLinesToFile File="$(ExportDir)/$(TargetName)/SHA.txt" Lines="@(FilesWithHashes->'%(FileHash)')" Overwrite="true" Encoding="UTF-8" />
+    <WriteLinesToFile File="$(ExportDir)/$(TargetName)/metadata/SHA.txt" Lines="@(FilesWithHashes->'%(FileHash)')" Overwrite="true" Encoding="UTF-8" />
 
     <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
       <Output TaskParameter="Assemblies" ItemName="Targets" />
@@ -144,6 +144,6 @@
     <ItemGroup>
       <VersionNumber Include="@(Targets->'%(Version)')" />
     </ItemGroup>
-    <WriteLinesToFile File="$(ExportDir)/$(TargetName)/version.txt" Lines="@(VersionNumber)" Overwrite="true" Encoding="UTF-8" />
+    <WriteLinesToFile File="$(ExportDir)/$(TargetName)/metadata/version.txt" Lines="@(VersionNumber)" Overwrite="false" Encoding="UTF-8" />
   </Target>  
 </Project>
