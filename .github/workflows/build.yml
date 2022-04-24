@@ -69,7 +69,7 @@ jobs:
       - name: Get build version
         id: details
         run: |
-          echo "::set-output name=buildVersion::$(cat artifacts/metadata/version.txt"
+          echo "::set-output name=buildVersion::$(cat artifacts/metadata/version.txt)"
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
