@@ -41,12 +41,12 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: RandoPlus
-          path: RandoPlus\bin\Publish\RandoPlus\zip
+          path: RandoPlus/bin/Publish/RandoPlus/zip
       - name: Upload metadata
         uses: actions/upload-artifact@v2
         with:
           name: metadata
-          path: RandoPlus\bin\Publish\RandoPlus\metadata
+          path: RandoPlus/bin/Publish/RandoPlus/metadata
 
   release:
     needs:
