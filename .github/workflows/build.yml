@@ -62,8 +62,8 @@ jobs:
       - name: Get build details
         id: details
         run: |
-          $sha = Get-Content artifacts/Publish/SHA.txt
-          $ver = Get-Content artifacts/Publish/version.txt
+          $sha = Get-Content artifacts/metadata/SHA.txt
+          $ver = Get-Content artifacts/metadata/version.txt
           echo "::set-output name=archiveHash::$sha"
           echo "::set-output name=buildVersion::$ver"
       - name: Release
