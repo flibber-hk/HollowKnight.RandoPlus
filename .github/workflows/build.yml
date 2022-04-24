@@ -40,7 +40,7 @@ jobs:
       - name: Prepare artifacts for release
         uses: actions/upload-artifact@v2
         with:
-          name: Publish
+          name: RandoPlus.zip
           path: RandoPlus/RandoPlus.zip
   release:
     needs:
