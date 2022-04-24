@@ -41,7 +41,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Publish
-          path: RandoPlus
+          path: RandoPlus/RandoPlus.zip
   release:
     needs:
       - build
