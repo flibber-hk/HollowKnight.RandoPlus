@@ -11,7 +11,7 @@
   </PropertyGroup>
   
   <PropertyGroup>
-    <HollowKnightRefs>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed</HollowKnightRefs>
+    <HollowKnightRefs>..\API</HollowKnightRefs>
   </PropertyGroup>
   
   <Import Project="LocalBuildProperties.props" Condition="Exists('LocalBuildProperties.props')" />
