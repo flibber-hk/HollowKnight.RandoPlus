@@ -69,8 +69,7 @@ jobs:
       - name: Get build version
         id: details
         run: |
-          $ver = Get-Content artifacts/metadata/version.txt
-          echo "::set-output name=buildVersion::$ver"
+          echo "::set-output name=buildVersion::$(cat artifacts/metadata/version.txt"
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
