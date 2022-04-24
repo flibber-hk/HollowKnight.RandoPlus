@@ -59,12 +59,17 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           path: artifacts
-      - name: Get build details
+      - name: Zip
+        run: |
+            zip -jr RandoPlus.zip ./artifacts/RandoPlus/*
+      - name: Generate release info
+        run: |
+            echo -n "Sha256: " > ChangeLog.txt ;
+            sha256sum -b RandoPlus.zip | cut -d -f 1 >> ChangeLog.txt ;
+      - name: Get build version
         id: details
         run: |
-          $sha = Get-Content artifacts/metadata/SHA.txt
           $ver = Get-Content artifacts/metadata/version.txt
-          echo "::set-output name=archiveHash::$sha"
           echo "::set-output name=buildVersion::$ver"
       - name: Release
         uses: softprops/action-gh-release@v1
@@ -73,7 +78,6 @@ jobs:
           generate_release_notes: true
           fail_on_unmatched_files: true
           tag_name: v${{ steps.details.outputs.buildVersion }}
-          body: |
-            SHA256: ${{ steps.details.outputs.archiveHash }}
+          body_path: ChangeLog.txt
           files: |
-            artifacts/RandoPlus.zip
+            RandoPlus.zip
