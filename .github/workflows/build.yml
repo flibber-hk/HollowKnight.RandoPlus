@@ -1,0 +1,77 @@
+name: Build
+
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+    inputs:
+      should_release:
+        description: "Create release?"
+        required: true
+        default: false
+        type: boolean
+
+jobs:
+  build:
+    runs-on: windows-2022
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup MAPI
+        uses: BadMagic100/setup-hk@v1
+        with:
+          apiPath: API
+          dependencyFilePath: ModDependencies.txt
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+      
+      - name: Install dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build -c Release
+
+      - name: Prepare artifacts for release
+        uses: actions/upload-artifact@v2
+        # only make a release if we manually request the build - other builds will be handled automatically with a push
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.should_release == 'true'
+        with:
+          name: Publish
+          path: RandoPlus/bin/Publish/RandoPlus
+  release:
+    needs:
+      - build
+    runs-on: windows-latest
+    # only make a release if we manually request the build - other builds will be handled automatically with a push
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.should_release == 'true'
+    steps:
+      - name: Download Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          path: artifacts
+      - name: Get build details
+        id: details
+        # this assumes that an MSBuild task that writes the SHA256 of the zip file to SHA.txt, and the mod version (for MagicUI,
+        # this is the same as the assembly version) to version.txt. The contents of these files are read to step outputs for use in release
+        run: |
+          $sha = Get-Content artifacts/Publish/SHA.txt
+          $ver = Get-Content artifacts/Publish/version.txt
+          echo "::set-output name=archiveHash::$sha"
+          echo "::set-output name=buildVersion::$ver"
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          draft: true
+          generate_release_notes: true
+          fail_on_unmatched_files: true
+          tag_name: v${{ steps.details.outputs.buildVersion }}
+          body: |
+            SHA256: ${{ steps.details.outputs.archiveHash }}
+          files: |
+            artifacts/Publish/RandoPlus.zip
