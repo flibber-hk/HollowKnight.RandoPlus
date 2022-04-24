@@ -65,7 +65,7 @@ jobs:
       - name: Generate release info
         run: |
             echo -n "Sha256: " > ChangeLog.txt ;
-            sha256sum -b RandoPlus.zip | cut -d -f 1 >> ChangeLog.txt ;
+            sha256sum -b RandoPlus.zip | cut -d " " -f 1 >> ChangeLog.txt ;
       - name: Get build version
         id: details
         run: |
