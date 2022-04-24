@@ -76,4 +76,4 @@ jobs:
           body: |
             SHA256: ${{ steps.details.outputs.archiveHash }}
           files: |
-            artifacts/Publish/RandoPlus.zip
+            artifacts/RandoPlus.zip
