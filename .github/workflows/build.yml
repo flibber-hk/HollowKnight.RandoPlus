@@ -16,7 +16,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-2022
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
@@ -73,8 +73,8 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          draft: true
-          generate_release_notes: true
+          draft: false
+          generate_release_notes: false
           fail_on_unmatched_files: true
           tag_name: v${{ steps.details.outputs.buildVersion }}
           body_path: ChangeLog.txt
