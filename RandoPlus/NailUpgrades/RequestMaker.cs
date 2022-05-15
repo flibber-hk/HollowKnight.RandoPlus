@@ -38,59 +38,57 @@ namespace RandoPlus.NailUpgrades
         private static void SetupRefs(RequestBuilder rb)
         {
             if (!RandoPlus.GS.Any) return;
+
+            rb.EditItemRequest(Consts.NailUpgrade, info =>
             {
-                rb.EditItemRequest(Consts.NailUpgrade, info =>
+                info.getItemDef = () => new ItemDef()
                 {
-                    info.getItemDef = () => new ItemDef()
+                    Name = Consts.NailUpgrade,
+                    Pool = Consts.NailUpgradePoolGroup,
+                    MajorItem = false,
+                    PriceCap = 500,
+                };
+            });
+
+            for (int i = 1; i < 5; i++)
+            {
+                // copy the iteration variable so the original isn't captured
+                int copyi = i;
+
+                rb.EditLocationRequest(Consts.NailsmithLocationPrefix + i, info =>
+                {
+                    info.getLocationDef = () => new()
                     {
-                        Name = Consts.NailUpgrade,
-                        Pool = Consts.NailUpgradePoolGroup,
-                        MajorItem = false,
-                        PriceCap = 500,
+                        Name = Consts.NailsmithLocationPrefix + copyi,
+                        SceneName = SceneNames.Room_nailsmith,
+                        FlexibleCount = false,
+                        AdditionalProgressionPenalty = false,
+                    };
+
+                    info.onRandoLocationCreation += (factory, rl) =>
+                    {
+                        rl.AddCost(new LogicGeoCost(factory.lm, 250 * copyi));
                     };
                 });
+            }
 
-                for (int i = 1; i < 5; i++)
+            rb.OnGetGroupFor.Subscribe(0f, MatchNailUpgradeGroup);
+
+            static bool MatchNailUpgradeGroup(RequestBuilder rb, string item, RequestBuilder.ElementType type, out GroupBuilder gb)
+            {
+                if (item == Consts.NailUpgrade && (type == RequestBuilder.ElementType.Unknown || type == RequestBuilder.ElementType.Item))
                 {
-                    // copy the iteration variable so the original isn't captured
-                    int copyi = i;
-
-                    rb.EditLocationRequest(Consts.NailsmithLocationPrefix + i, info =>
-                    {
-                        info.getLocationDef = () => new()
-                        {
-                            Name = Consts.NailsmithLocationPrefix + i,
-                            SceneName = SceneNames.Room_nailsmith,
-                            FlexibleCount = false,
-                            AdditionalProgressionPenalty = false,
-                        };
-
-                        info.onRandoLocationCreation += (factory, rl) =>
-                        {
-                            rl.AddCost(new LogicGeoCost(factory.lm, 250 * copyi));
-                        };
-                    });
+                    gb = rb.GetGroupFor(ItemNames.Vengeful_Spirit);
+                    return true;
+                }
+                else if (item.StartsWith(Consts.NailsmithLocationPrefix) && (type == RequestBuilder.ElementType.Unknown || type == RequestBuilder.ElementType.Location))
+                {
+                    gb = rb.GetGroupFor(ItemNames.Vengeful_Spirit);
+                    return true;
                 }
 
-                rb.OnGetGroupFor.Subscribe(0f, MatchNailUpgradeGroup);
-
-                static bool MatchNailUpgradeGroup(RequestBuilder rb, string item, RequestBuilder.ElementType type, out GroupBuilder gb)
-                {
-                    if (item == Consts.NailUpgrade && (type == RequestBuilder.ElementType.Unknown || type == RequestBuilder.ElementType.Item))
-                    {
-                        gb = rb.GetGroupFor(ItemNames.Vengeful_Spirit);
-                        return true;
-                    }
-                    else if (item.StartsWith(Consts.NailsmithLocationPrefix) && (type == RequestBuilder.ElementType.Unknown || type == RequestBuilder.ElementType.Location))
-                    {
-                        gb = rb.GetGroupFor(ItemNames.Vengeful_Spirit);
-                        return true;
-                    }
-
-                    gb = default;
-                    return false;
-                }
-
+                gb = default;
+                return false;
             }
         }
 
