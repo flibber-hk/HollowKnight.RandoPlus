@@ -58,6 +58,11 @@ namespace RandoPlus.NailUpgrades
         private void RemoveNailTextFromCompleteText(ref string value)
         {
             value = value.Split(new[] { "<page>" }, StringSplitOptions.None)[0];
+            value = value.Replace("reforging", "forging");
+            if (NailUpgradeSlot == 4)
+            {
+                value += "<page>To think this moment has come upon me so soon...<page>...I... I must step outside a moment...";
+            }
         }
 
         private void MakeShinyForRespawnedItems(Scene scene)

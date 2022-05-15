@@ -10,6 +10,7 @@ namespace RandoPlus.NailUpgrades
             if (ic) ItemDefinition.DefineItemsAndLocations();
             if (rando) RequestMaker.Hook();
             if (rando) LogicAdder.Hook();
+            if (rando) CondensedSpoilerLogger.AddCategory("Nail Upgrades", (args) => true, new() { Consts.NailUpgrade });
         }
     }
 }

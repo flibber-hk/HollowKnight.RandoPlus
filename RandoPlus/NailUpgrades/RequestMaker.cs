@@ -34,6 +34,9 @@ namespace RandoPlus.NailUpgrades
 
                 for (int i = 1; i < 5; i++)
                 {
+                    // copy the iteration variable so the original isn't captured
+                    int copyi = i;
+
                     rb.EditLocationRequest(Consts.NailsmithLocationPrefix + i, info =>
                     {
                         info.getLocationDef = () => new()
@@ -42,6 +45,11 @@ namespace RandoPlus.NailUpgrades
                             SceneName = SceneNames.Room_nailsmith,
                             FlexibleCount = false,
                             AdditionalProgressionPenalty = false,
+                        };
+
+                        info.onRandoLocationCreation += (factory, rl) =>
+                        {
+                            rl.AddCost(new LogicGeoCost(factory.lm, 250 * copyi));
                         };
                     });
                 }

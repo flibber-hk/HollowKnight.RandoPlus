@@ -48,6 +48,7 @@ namespace RandoPlus.NailUpgrades
             Events.AddFsmEdit(SceneNames.Room_nailsmith, new("Nailsmith", "Conversation Control"), PatchFsm);
             Events.AddLanguageEdit(new("Nailsmith", "NAILSMITH_OFFER"), ShowPickups);
             Events.AddLanguageEdit(new("Nailsmith", "NAILSMITH_OFFER_ORE"), ShowPickupsOre);
+            Imports.QoL.OverrideSettingToggle("NPCSellAll", "NailsmithBuyAll", false);
         }
 
         public override void Unload()
@@ -55,11 +56,12 @@ namespace RandoPlus.NailUpgrades
             Events.RemoveFsmEdit(SceneNames.Room_nailsmith, new("Nailsmith", "Conversation Control"), PatchFsm);
             Events.RemoveLanguageEdit(new("Nailsmith", "NAILSMITH_OFFER"), ShowPickups);
             Events.RemoveLanguageEdit(new("Nailsmith", "NAILSMITH_OFFER_ORE"), ShowPickupsOre);
+            Imports.QoL.RemoveSettingOverride("NPCSellAll", "NailsmithBuyAll");
         }
 
         private void ShowPickups(ref string value)
         {
-            if (!SubscribedLocations.TryGetValue(NextSlot, out NailsmithLocation loc) || loc.GetItemHintActive())
+            if (!SubscribedLocations.TryGetValue(NextSlot, out NailsmithLocation loc))
             {
                 return;
             }
@@ -68,7 +70,7 @@ namespace RandoPlus.NailUpgrades
         }
         private void ShowPickupsOre(ref string value)
         {
-            if (!SubscribedLocations.TryGetValue(NextSlot, out NailsmithLocation loc) || loc.GetItemHintActive())
+            if (!SubscribedLocations.TryGetValue(NextSlot, out NailsmithLocation loc))
             {
                 return;
             }
@@ -110,7 +112,7 @@ namespace RandoPlus.NailUpgrades
 
 
             FsmState upgrade = fsm.GetState("Upgrade");
-            upgrade.AddFirstAction(new DelegateBoolTest(() => ShouldGoModdedPath, null, "PAY MODDED"));
+            upgrade.AddFirstAction(new DelegateBoolTest(() => ShouldGoModdedPath, "PAY MODDED", null));
 
             FsmState payModded = new(fsm.Fsm)
             {
