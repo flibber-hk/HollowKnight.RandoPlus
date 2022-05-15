@@ -1,6 +1,5 @@
 ﻿using ItemChanger;
 using ItemChanger.UIDefs;
-using ItemChanger.Locations;
 
 namespace RandoPlus.NailUpgrades
 {
@@ -10,7 +9,7 @@ namespace RandoPlus.NailUpgrades
         {
             AbstractItem NailUpgrade = new DelayedNailUpgradeItem()
             {
-                name = Consts.Nail_Upgrade,
+                name = Consts.NailUpgrade,
                 UIDef = new MsgUIDef()
                 {
                     name = new BoxedString("Nail Upgrade"),
@@ -18,38 +17,22 @@ namespace RandoPlus.NailUpgrades
                     sprite = new ItemChangerSprite("ShopIcons.Downslash")
                 }
             };
-
-
+            SupplementalMetadataTagFactory.AddTagToItem(NailUpgrade, poolGroup: Consts.NailUpgradePoolGroup);
             Finder.DefineCustomItem(NailUpgrade);
    
-
-            void DefineLocations(string pos)
+            for (int i = 1; i < 5; i++)
             {
-                AutoLocation Nailsmith = new NailsmithLocation()
+                AbstractLocation Nailsmith = new NailsmithLocation()
                 {
-                    name = Consts.NailPlace+pos,
+                    HintActive = true,
+                    flingType = FlingType.Everywhere,
                     sceneName = SceneNames.Room_nailsmith,
-                    flingType = FlingType.DirectDeposit,
-                    
+                    NailUpgradeSlot = i,
+                    name = Consts.NailsmithLocationPrefix + i
                 };
-
+                SupplementalMetadataTagFactory.AddTagToLocation(Nailsmith, poolGroup: Consts.NailUpgradePoolGroup, vanillaItem: Consts.NailUpgrade);
                 Finder.DefineCustomLocation(Nailsmith);
             }
-
-
-            for(int counter=1;counter<5; counter++)
-            {
-                DefineLocations(counter.ToString());
-            }
-
-
-
         }
-
-       
-
-
-
-
     }
 }

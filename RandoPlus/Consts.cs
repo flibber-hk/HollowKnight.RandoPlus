@@ -28,9 +28,9 @@ namespace RandoPlus
         public const string KeysPoolGroup = "Keys";
         public const string MrMushroomPoolGroup = "Mr Mushroom";
 
-        public const string Nail_Upgrade = "Nail_Upgrade";
-        public const string NailPlace = "NailPlace";
-        public const string NailItem = "NailUpgrade";
+        public const string NailUpgrade = "Nail_Upgrade";
+        public const string NailsmithLocationPrefix = "Nailsmith_Upgrade_";
+        public const string NailUpgradePoolGroup = "Skills";
 
         public const float LOGICPRIORITY = 50f;
     }

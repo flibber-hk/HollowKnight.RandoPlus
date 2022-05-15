@@ -22,6 +22,7 @@
             || NoSwim
             || NoTear
             || NoLantern
-            || AreaBlitz;
+            || AreaBlitz
+            || NailUpgrades;
     }
 }

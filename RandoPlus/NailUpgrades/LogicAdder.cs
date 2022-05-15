@@ -19,21 +19,18 @@ namespace RandoPlus.NailUpgrades
         {
             if (!RandoPlus.GS.NailUpgrades) return;
 
-            lmb.AddLogicDef(new RawLogicDef(Consts.NailPlace + "1", SceneNames.Room_nailsmith + "[left1]"));
-            lmb.AddLogicDef(new RawLogicDef(Consts.NailPlace + "2", $"{SceneNames.Room_nailsmith}[left1] + PALEORE>0+ ARCANEEGGS>0"));
-            lmb.AddLogicDef(new RawLogicDef(Consts.NailPlace + "3", $"{SceneNames.Room_nailsmith}[left1] + PALEORE>2+ ARCANEEGGS>1"));
-            lmb.AddLogicDef(new RawLogicDef(Consts.NailPlace + "4", $"{SceneNames.Room_nailsmith}[left1] + PALEORE>5+ ARCANEEGGS>3"));
-
-
+            lmb.AddLogicDef(new RawLogicDef(Consts.NailsmithLocationPrefix + "1", $"{SceneNames.Room_nailsmith}[left1]"));
+            lmb.AddLogicDef(new RawLogicDef(Consts.NailsmithLocationPrefix + "2", $"{SceneNames.Room_nailsmith}[left1] + PALEORE>0"));
+            lmb.AddLogicDef(new RawLogicDef(Consts.NailsmithLocationPrefix + "3", $"{SceneNames.Room_nailsmith}[left1] + PALEORE>2"));
+            lmb.AddLogicDef(new RawLogicDef(Consts.NailsmithLocationPrefix + "4", $"{SceneNames.Room_nailsmith}[left1] + PALEORE>5"));
         }
 
         private static void DefineTermsAndItems(GenerationSettings gs, LogicManagerBuilder lmb)
         {
-            if (!RandoPlus.GS.NailUpgrades) return;
+            if (!RandoPlus.GS.Any) return;
+
             Term nailupTerm = lmb.GetOrAddTerm("NAILUPGRADE");
-            lmb.AddItem(new SingleItem(Consts.Nail_Upgrade, new TermValue(nailupTerm, 1)));//, new TermValue(t,1)));
-                                                                                           //lmb.AddItem(new SingleItem(Consts.MrMushroomLevelUp, new TermValue(mushroomTerm, 1)));
-                                                                                           // lmb.AddItem(new EmptyItem(Consts.Nail_Upgrade));
+            lmb.AddItem(new SingleItem(Consts.NailUpgrade, new TermValue(nailupTerm, 1)));
         }
     }
 }
