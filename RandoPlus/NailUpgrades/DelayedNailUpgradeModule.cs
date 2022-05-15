@@ -45,7 +45,7 @@ namespace RandoPlus.NailUpgrades
             {
                 if (InputHandler.Instance.inputActions.attack.WasPressed)
                 {
-                    ClaimNailUpgrade();
+                    if (!TryClaimNailUpgrade()) return;
 
                     int nailsmithUpgrades = 1 + PlayerData.instance.GetInt(nameof(PlayerData.nailSmithUpgrades));
                     PlayMakerFSM updateText = fsm.gameObject.LocateMyFSM("Update Text");
@@ -58,7 +58,7 @@ namespace RandoPlus.NailUpgrades
             }
         }
 
-        public bool ClaimNailUpgrade()
+        public bool TryClaimNailUpgrade()
         {
             if (UnclaimedUpgrades == 0) return false;
 
