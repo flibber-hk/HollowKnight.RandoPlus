@@ -13,8 +13,26 @@ namespace RandoPlus.NailUpgrades
         public static void Hook()
         {
             RequestBuilder.OnUpdate.Subscribe(50, AddNailUpgrades);
+            RequestBuilder.OnUpdate.Subscribe(30, ApplyNailUpgradePreviewSetting);
             RequestBuilder.OnUpdate.Subscribe(-499.2f, SetupRefs);
             RequestBuilder.OnUpdate.Subscribe(101, DerangeNailUpgrades);
+        }
+
+        private static void ApplyNailUpgradePreviewSetting(RequestBuilder rb)
+        {
+            if (!RandoPlus.GS.NailUpgrades) return;
+            if (rb.gs.LongLocationSettings.NailmasterPreview) return;
+
+            for (int i = 1; i < 5; i++)
+            {
+                rb.EditLocationRequest(Consts.NailsmithLocationPrefix + i, (info) =>
+                {
+                    info.onPlacementFetch += (factory, randoPlacement, realPlacement) =>
+                    {
+                        realPlacement.AddTag<ItemChanger.Tags.DisableItemPreviewTag>();
+                    };
+                });
+            }
         }
 
         private static void SetupRefs(RequestBuilder rb)

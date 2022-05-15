@@ -31,6 +31,16 @@ placed at Sly. (If a group has at least one included location, then none of its 
 It may still be necessary to pass through excluded areas; for instance, Mask_Shard-Bretta is considered part of Dirtmouth, so may be relevant
 even if Fungal Wastes (the map area containing Bretta) is excluded.
 
+### Nail Upgrades
+Adds the four nail upgrades to the randomization pool.
+- Nailsmith has four items as usual. By default each can be previewed if the previous location has been obtained. If the Nailmaster Previews setting
+is disabled in rando, then previews will not be shown for the Nailsmith's items.
+- Nail upgrades must be claimed from the inventory by pressing attack while the nail icon is selected. This is to avoid being
+locked out of skips, but the process of claiming a nail upgrade is not reversible. (Consult the Randomizer readme for information about
+how many nail upgrades should be claimed depending on skip settings).
+- The nailsmith questline (kill / Sheo) is tied to the location, not the items.
+- For the purposes of split item groups, Nail Upgrades are considered by default to be in the same group as Skills - specifically Vengeful Spirit.
+
 ### Custom Pools and Logic
 Any external logic modifications can be made via the custom logic injector mod; logic modifications using terms defined by this mod
 must be made with a priority greater than 50.
