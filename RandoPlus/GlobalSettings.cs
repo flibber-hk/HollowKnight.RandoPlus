@@ -15,7 +15,6 @@
         public bool PreferMultiShiny;
 
         public bool NailUpgrades;
-        public int UpgradesTaken;
 
         [Newtonsoft.Json.JsonIgnore]
         public bool Any => DefineRefs

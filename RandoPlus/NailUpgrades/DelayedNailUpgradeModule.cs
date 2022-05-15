@@ -1,4 +1,6 @@
-﻿using HutongGames.PlayMaker;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using ItemChanger;
 using ItemChanger.Extensions;
 using ItemChanger.FsmStateActions;
@@ -10,61 +12,18 @@ namespace RandoPlus.NailUpgrades
     {
         public int UnclaimedUpgrades = 0;
         public int DamagePerNailUpgrade = 4;
-        private int UpgradesTaken = RandoPlus.GS.UpgradesTaken;
         public void GiveNailUpgrade() => UnclaimedUpgrades++;
 
         public override void Initialize()
         {
             Events.AddFsmEdit(new("Inv", "UI Inventory"), AllowNailUpgradeClaim);
             for (int i = 1; i <= 5; i++) Events.AddLanguageEdit(new("UI", "INV_DESC_NAIL" + i), ShowNailUpgrades);
-            Events.AddFsmEdit(new("Nailsmith", "Conversation Control"), ConvoPatcher);
-            RandoPlus.GS.UpgradesTaken = 0;
         }
         public override void Unload()
         {
             Events.RemoveFsmEdit(new("Inv", "UI Inventory"), AllowNailUpgradeClaim);
             for (int i = 1; i <= 5; i++) Events.RemoveLanguageEdit(new("UI", "INV_DESC_NAIL" + i), ShowNailUpgrades);
-            Events.RemoveFsmEdit(new("Nailsmith", "Conversation Control"), ConvoPatcher);
         }
-
-        public void ConvoPatcher(PlayMakerFSM fsm)
-        {
-            #region OfferPatch
-            FsmState offer = fsm.GetState("Offer Type");
-            offer.RemoveAction(0);
-            offer.Actions = new FsmStateAction[]
-            {
-                new Lambda(()=> fsm.FsmVariables.GetFsmInt("Ore").Value=PlayerData.instance.ore),
-                new Lambda(()=> fsm.FsmVariables.GetFsmInt("Upgrades Completed").Value = RandoPlus.GS.UpgradesTaken),
-                new Lambda(()=> fsm.SendEvent("OFFER 1"))
-            };
-            #endregion
-
-            #region Patch Text
-            //FsmState sendtext = fsm.GetState("Send Text");
-
-            #endregion
-
-            #region Patch Upgrade
-            FsmState upgrade = fsm.GetState("Upgrade");
-            upgrade.ClearActions();
-            #endregion
-
-            #region Complet convo
-            FsmState convo = fsm.GetState("Complete Convo");
-            convo.Actions = new FsmStateAction[]
-            {
-
-                convo.Actions[0],
-                convo.Actions[1],
-                convo.Actions[3]
-            };
-
-            #endregion
-
-
-        }
-
 
         private void ShowNailUpgrades(ref string value)
         {
