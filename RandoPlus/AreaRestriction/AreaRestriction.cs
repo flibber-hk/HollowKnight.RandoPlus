@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using ItemChanger;
 using ItemChanger.Extensions;
+using RandomizerMod.IC;
+using RandomizerMod.RC;
 
 namespace RandoPlus.AreaRestriction
 {
@@ -20,14 +22,11 @@ namespace RandoPlus.AreaRestriction
             if (rando) HookStartNewGame();
         }
 
-        public static void HookStartNewGame() => ItemChanger.Events.BeforeStartNewGame += BeforeGameStart;
+        public static void HookStartNewGame() => RandoController.OnExportCompleted += BeforeGameStart;
 
-        private static void BeforeGameStart()
+        private static void BeforeGameStart(RandoController rc)
         {
             if (!RandoPlus.GS.AreaBlitz) return;
-
-            // Not rando file
-            if (RandomizerMod.RandomizerMod.RS.GenerationSettings is null) return;
 
             // TODO - add an in-game indicator for allowed areas?
 
@@ -35,29 +34,52 @@ namespace RandoPlus.AreaRestriction
 
             if (RandoPlus.GS.PreferMultiShiny)
             {
-                foreach (AbstractPlacement pmt in ItemChanger.Internal.Ref.Settings.GetPlacements())
-                {
-                    pmt.AddTag<ItemChanger.Tags.UnsupportedContainerTag>().containerType = Container.Chest;
-                }
+                PreventMultiChests();
             }
 
-            AbstractItem nothing = Finder.GetItem(ItemNames.Lumafly_Escape);
-            nothing.AddTag<ItemChanger.Tags.CompletionWeightTag>().Weight = 0;
+            Dictionary<string, AbstractPlacement> nothingPlacements = new();
+            RandoFactory randoFactory = new(rc.rb);
+            ICFactory icFactory = new(rc.rb, nothingPlacements);
 
-            // TODO - make placements using an ICFactory?
-            foreach (string loc in InvalidLocations)
+            foreach (string locName in InvalidLocations)
             {
-                try
+                RandoModItem nothing = randoFactory.MakeItemInternal(ItemNames.Lumafly_Escape);
+                RandoModLocation madeLocation = randoFactory.MakeLocation(locName);
+                madeLocation.info?.onRandomizerFinish?.Invoke(new(nothing, madeLocation));
+                icFactory.HandlePlacement(-1, nothing, madeLocation);
+            }
+
+            foreach (AbstractPlacement pmt in nothingPlacements.Values)
+            {
+                ModifyNothingPlacement(pmt);
+            }
+
+            ItemChangerMod.AddPlacements(nothingPlacements.Values);
+        }
+
+        private static void ModifyNothingPlacement(AbstractPlacement pmt)
+        {
+            pmt.RemoveTags<RandoPlacementTag>();
+            pmt.AddTag<ItemChanger.Tags.CompletionWeightTag>().Weight = 0;
+            if (pmt is ItemChanger.Placements.IMultiCostPlacement)
+            {
+                pmt.Items.Clear();
+                pmt.Add(Finder.GetItem(ItemNames.Lumafly_Escape));
+            }
+            foreach (AbstractItem item in pmt.Items)
+            {
+                item.RemoveTags<RandoItemTag>();
+                item.AddTag<ItemChanger.Tags.CompletionWeightTag>().Weight = 0;
+            }
+        }
+
+        private static void PreventMultiChests()
+        {
+            foreach (AbstractPlacement pmt in ItemChanger.Internal.Ref.Settings.GetPlacements())
+            {
+                if (pmt.HasTag<RandoPlacementTag>())
                 {
-                    AbstractPlacement pmt = Finder.GetLocation(loc).Wrap();
-                    // Adding the tag to the item and the placement is redundant, but we can do it anyway
-                    pmt.Add(nothing.Clone());
-                    pmt.AddTag<ItemChanger.Tags.CompletionWeightTag>().Weight = 0;
-                    ItemChangerMod.AddPlacements(pmt.Yield(), PlacementConflictResolution.Ignore);
-                }
-                catch
-                {
-                    RandoPlus.instance.LogWarn("Unable to find " + loc + " in Finder. Ignoring...");
+                    pmt.AddTag<ItemChanger.Tags.UnsupportedContainerTag>().containerType = Container.Chest;
                 }
             }
         }

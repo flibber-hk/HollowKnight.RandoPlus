@@ -4,25 +4,35 @@ using System.Linq;
 using ItemChanger;
 using RandomizerMod.RandomizerData;
 using RandomizerMod.RC;
+using RandomizerMod.Settings;
 
 namespace RandoPlus.RemoveUsefulItems
 {
     public static class RequestModifier
     {
-        public static readonly (string oldItem, string newItem, Func<bool> isActive)[] settings = new (string oldItem, string newItem, Func<bool> isActive)[]
+        public record struct RemoverInfo
+        (
+            string OldItem,
+            string VanillaLocation,
+            string SkipSetting,
+            string NewItem,
+            Func<bool> IsActive
+        );
+
+        public static readonly RemoverInfo[] settings = new RemoverInfo[]
         {
-            (ItemNames.Lumafly_Lantern, Consts.NoLantern,() => RandoPlus.GS.NoLantern),
-            (ItemNames.Ismas_Tear, Consts.NoTear, () => RandoPlus.GS.NoTear),
-            (ItemNames.Swim, Consts.NoSwim, () => RandoPlus.GS.NoSwim)
+            new(ItemNames.Lumafly_Lantern, LocationNames.Sly, nameof(SkipSettings.DarkRooms), Consts.NoLantern,() => RandoPlus.GS.NoLantern ),
+            new(ItemNames.Ismas_Tear, LocationNames.Ismas_Tear, nameof(SkipSettings.AcidSkips), Consts.NoTear, () => RandoPlus.GS.NoTear ),
+            new(ItemNames.Swim, null, nameof(SkipSettings.AcidSkips), Consts.NoSwim, () => RandoPlus.GS.NoSwim )
         };
 
         public static void Hook()
         {
             RequestBuilder.OnUpdate.Subscribe(-499f, SetupRefs);
 
-            foreach ((string oldItem, string newItem, Func<bool> isActive) in settings)
+            foreach (RemoverInfo info in settings)
             {
-                RequestBuilder.OnUpdate.Subscribe(50f, CreateRemover(oldItem, newItem, isActive));
+                RequestBuilder.OnUpdate.Subscribe(50f, CreateRemover(info));
             }
         }
 
@@ -30,13 +40,13 @@ namespace RandoPlus.RemoveUsefulItems
         {
             if (!RandoPlus.GS.Any) return;
 
-            foreach ((string oldItem, string newItem, Func<bool> isActive) in settings)
+            foreach (RemoverInfo ri in settings)
             {
-                rb.EditItemRequest(newItem, info =>
+                rb.EditItemRequest(ri.NewItem, info =>
                 {
                     info.getItemDef = () => new ItemDef()
                     {
-                        Name = newItem,
+                        Name = ri.NewItem,
                         Pool = Consts.RemoveUsefulItems,
                         MajorItem = false,
                         PriceCap = 500
@@ -47,9 +57,9 @@ namespace RandoPlus.RemoveUsefulItems
 
                 bool MatchGroup(RequestBuilder rb, string item, RequestBuilder.ElementType type, out GroupBuilder gb)
                 {
-                    if (item == newItem && (type == RequestBuilder.ElementType.Item || type == RequestBuilder.ElementType.Unknown))
+                    if (item == ri.NewItem && (type == RequestBuilder.ElementType.Item || type == RequestBuilder.ElementType.Unknown))
                     {
-                        gb = rb.GetGroupFor(oldItem, type);
+                        gb = rb.GetGroupFor(ri.OldItem, type);
                         return true;
                     }
                     gb = default;
@@ -58,21 +68,20 @@ namespace RandoPlus.RemoveUsefulItems
             }
         }
 
-        private static RequestBuilder.RequestBuilderUpdateHandler CreateRemover(string oldItem, string newItem, Func<bool> isRandomized)
+        private static RequestBuilder.RequestBuilderUpdateHandler CreateRemover(RemoverInfo info)
         {
             void RemoveItem(RequestBuilder rb)
             {
-                if (!isRandomized()) return;
+                if (!info.IsActive()) return;
+                if (!rb.gs.SkipSettings.GetFieldByName(info.SkipSetting)) return;
 
-                rb.ReplaceItem(oldItem, newItem);
-                rb.ReplaceItem(PlaceholderItem.Prefix + oldItem, PlaceholderItem.Prefix + newItem);
-                rb.StartItems.Replace(oldItem, newItem);
+                rb.ReplaceItem(info.OldItem, info.NewItem);
+                rb.ReplaceItem(PlaceholderItem.Prefix + info.OldItem, PlaceholderItem.Prefix + info.NewItem);
+                rb.StartItems.Replace(info.OldItem, info.NewItem);
 
-                List<VanillaRequest> vanilla = rb.Vanilla.EnumerateWithMultiplicity().Where(x => x.Item == oldItem).ToList();
-                foreach (VanillaRequest req in vanilla)
+                if (!string.IsNullOrEmpty(info.VanillaLocation))
                 {
-                    rb.Vanilla.RemoveAll(req);
-                    rb.Vanilla.Add(new(newItem, req.Location));
+                    rb.RemoveFromVanilla(info.VanillaLocation, info.OldItem);
                 }
             }
 

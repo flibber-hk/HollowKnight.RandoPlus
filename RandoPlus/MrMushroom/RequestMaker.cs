@@ -76,7 +76,7 @@ namespace RandoPlus.MrMushroom
                 info.getItemDef = () => new()
                 {
                     Name = Consts.MrMushroomLevelUp,
-                    Pool = Consts.MushPool,
+                    Pool = Consts.MrMushroomPoolGroup,
                     MajorItem = false,
                     PriceCap = 500
                 };

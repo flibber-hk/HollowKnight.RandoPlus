@@ -24,8 +24,17 @@ namespace RandoPlus.AreaRestriction
             AreaRestriction.ExcludedAreas.Clear();
 
             // Select areas
-            List<string> AllAreas = new HashSet<string>(Data.GetMapAreaTransitionNames().Select(x => Data.GetTransitionDef(x).MapArea)).ToList();
-            
+            HashSet<string> DistinctAreas = new();
+            foreach (string loc in rb.EnumerateItemGroups().SelectMany(x => x.Locations.EnumerateDistinct()))
+            {
+                if (rb.TryGetLocationDef(loc, out LocationDef def))
+                {
+                    DistinctAreas.Add(def.MapArea);
+                }
+            }
+
+            List<string> AllAreas = DistinctAreas.ToList();
+
             if (rb.gs.LongLocationSettings.WhitePalaceRando == RandomizerMod.Settings.LongLocationSettings.WPSetting.ExcludeWhitePalace)
             {
                 AllAreas.Remove("White Palace");
