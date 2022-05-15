@@ -17,7 +17,7 @@ namespace RandoPlus.NailUpgrades
 
         private static void ApplyLogic(GenerationSettings gs, LogicManagerBuilder lmb)
         {
-            if (!RandoPlus.GS.NailUpgrades) return;
+            if (!RandoPlus.GS.Any) return;
 
             lmb.AddLogicDef(new RawLogicDef(Consts.NailsmithLocationPrefix + "1", $"{SceneNames.Room_nailsmith}[left1]"));
             lmb.AddLogicDef(new RawLogicDef(Consts.NailsmithLocationPrefix + "2", $"{SceneNames.Room_nailsmith}[left1] + PALEORE>0"));

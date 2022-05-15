@@ -22,7 +22,7 @@ namespace RandoPlus.MrMushroom
 
         private static void ApplyLogic(GenerationSettings gs, LogicManagerBuilder lmb)
         {
-            if (!RandoPlus.GS.MrMushroom) return;
+            if (!RandoPlus.GS.Any) return;
 
             using Stream s = typeof(LogicAdder).Assembly.GetManifestResourceStream("RandoPlus.Resources.MrMushroom.logic.json");
             lmb.DeserializeJson(LogicManagerBuilder.JsonType.Locations, s);
