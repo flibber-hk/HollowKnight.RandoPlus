@@ -12,7 +12,18 @@ namespace RandoPlus.NailUpgrades
     {
         public int UnclaimedUpgrades = 0;
         public int DamagePerNailUpgrade = 4;
-        public void GiveNailUpgrade() => UnclaimedUpgrades++;
+
+        public bool GiveNailUpgradesImmediately { get; set; } = false;
+
+        public void GiveNailUpgrade() 
+        { 
+            UnclaimedUpgrades++;
+
+            if (GiveNailUpgradesImmediately)
+            {
+                TryClaimNailUpgrade();
+            }
+        }
 
         public override void Initialize()
         {
