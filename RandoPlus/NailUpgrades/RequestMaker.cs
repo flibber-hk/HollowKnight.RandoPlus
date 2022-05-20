@@ -106,9 +106,9 @@ namespace RandoPlus.NailUpgrades
 
             else if (RandoPlus.GS.DefineRefs)
             {
-                for (int i = 1; i < 5; i++)
+                foreach (VanillaDef vd in RandomizableNailUpgrades.GetVanillaNailUpgrades())
                 {
-                    rb.AddToVanilla(Consts.NailUpgrade, Consts.NailsmithLocationPrefix + i);
+                    rb.AddToVanilla(vd);
                 }
             }
         }
