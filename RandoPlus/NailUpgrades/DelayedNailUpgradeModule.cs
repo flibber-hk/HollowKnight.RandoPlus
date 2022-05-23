@@ -13,13 +13,13 @@ namespace RandoPlus.NailUpgrades
         public int UnclaimedUpgrades = 0;
         public int DamagePerNailUpgrade = 4;
 
-        public bool GiveNailUpgradesImmediately { get; set; } = false;
+        public bool GiveNailUpgradesOnPickup { get; set; } = false;
 
         public void GiveNailUpgrade() 
         { 
             UnclaimedUpgrades++;
 
-            if (GiveNailUpgradesImmediately)
+            if (GiveNailUpgradesOnPickup)
             {
                 TryClaimNailUpgrade();
             }
@@ -42,7 +42,7 @@ namespace RandoPlus.NailUpgrades
             {
                 value += $"<br><br>Press the attack button to claim a nail upgrade ({UnclaimedUpgrades} unclaimed).";
             }
-            else
+            else if (!GiveNailUpgradesOnPickup)
             {
                 value += $"<br><br>No unclaimed nail upgrades.";
             }
