@@ -21,7 +21,7 @@ namespace RandoPlus.NailUpgrades
 
         private static void ExportVanillaPool()
         {
-            RandoVanillaTracker.AddInterop("NailUpgrades", () => GetVanillaNailUpgrades().ToList());
+            RandoVanillaTracker.AddInterop("Nail Upgrades", () => GetVanillaNailUpgrades().ToList());
         }
 
         internal static IEnumerable<VanillaDef> GetVanillaNailUpgrades()

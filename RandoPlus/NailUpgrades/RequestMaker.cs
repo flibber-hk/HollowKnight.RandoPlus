@@ -62,12 +62,18 @@ namespace RandoPlus.NailUpgrades
                         FlexibleCount = false,
                         AdditionalProgressionPenalty = false,
                     };
-
-                    info.onRandoLocationCreation += (factory, rl) =>
-                    {
-                        rl.AddCost(new LogicGeoCost(factory.lm, 250 * copyi));
-                    };
                 });
+
+                if (RandoPlus.GS.NailUpgrades)
+                {
+                    rb.EditLocationRequest(Consts.NailsmithLocationPrefix + i, info =>
+                    {
+                        info.onRandoLocationCreation += (factory, rl) =>
+                        {
+                            rl.AddCost(new LogicGeoCost(factory.lm, 250 * copyi));
+                        };
+                    });
+                }
             }
 
             rb.OnGetGroupFor.Subscribe(0f, MatchNailUpgradeGroup);

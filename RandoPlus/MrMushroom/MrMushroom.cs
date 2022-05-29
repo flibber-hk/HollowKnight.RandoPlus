@@ -17,7 +17,7 @@ namespace RandoPlus.MrMushroom
 
         private static void ExportVanillaPool()
         {
-            RandoVanillaTracker.AddInterop("MrMushroom", () => new List<VanillaDef>()
+            RandoVanillaTracker.AddInterop("Mr Mushroom", () => new List<VanillaDef>()
             {
                 new(Consts.MrMushroomLevelUp, Consts.MrMushroomFungalWastes),
                 new(Consts.MrMushroomLevelUp, Consts.MrMushroomKingdomsEdge),
