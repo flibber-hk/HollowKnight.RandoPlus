@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using RandomizerMod.RandomizerData;
 using RandomizerMod.RC;
+using RandoPlus.Imports;
+using System.Linq;
 
 namespace RandoPlus.NailUpgrades
 {
@@ -14,6 +16,12 @@ namespace RandoPlus.NailUpgrades
             if (rando) LogicAdder.Hook();
             if (rando) CondensedSpoilerLogger.AddCategory("Nail Upgrades", (args) => true, new() { Consts.NailUpgrade });
             if (rando) HookRandoController();
+            if (rando) ExportVanillaPool();
+        }
+
+        private static void ExportVanillaPool()
+        {
+            RandoVanillaTracker.AddInterop("NailUpgrades", () => GetVanillaNailUpgrades().ToList());
         }
 
         internal static IEnumerable<VanillaDef> GetVanillaNailUpgrades()

@@ -1,8 +1,6 @@
-﻿using System;
+﻿using RandomizerMod.RandomizerData;
+using RandoPlus.Imports;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RandoPlus.MrMushroom
 {
@@ -13,6 +11,22 @@ namespace RandoPlus.MrMushroom
             if (ic) ICInterop.DefineItemsAndLocations();
             if (rando) RequestMaker.Hook();
             if (rando) LogicAdder.Hook();
+
+            if (rando) ExportVanillaPool();
+        }
+
+        private static void ExportVanillaPool()
+        {
+            RandoVanillaTracker.AddInterop("MrMushroom", () => new List<VanillaDef>()
+            {
+                new(Consts.MrMushroomLevelUp, Consts.MrMushroomFungalWastes),
+                new(Consts.MrMushroomLevelUp, Consts.MrMushroomKingdomsEdge),
+                new(Consts.MrMushroomLevelUp, Consts.MrMushroomDeepnest),
+                new(Consts.MrMushroomLevelUp, Consts.MrMushroomHowlingCliffs),
+                new(Consts.MrMushroomLevelUp, Consts.MrMushroomAncientBasin),
+                new(Consts.MrMushroomLevelUp, Consts.MrMushroomFogCanyon),
+                new(Consts.MrMushroomLevelUp, Consts.MrMushroomKingsPass),
+            });
         }
     }
 }
