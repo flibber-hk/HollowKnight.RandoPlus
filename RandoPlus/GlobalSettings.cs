@@ -16,6 +16,7 @@
 
         public bool NailUpgrades;
         public bool GiveNailUpgradesOnPickup;
+        public bool TwoDupePaleOre;
 
         [Newtonsoft.Json.JsonIgnore]
         public bool Any => DefineRefs

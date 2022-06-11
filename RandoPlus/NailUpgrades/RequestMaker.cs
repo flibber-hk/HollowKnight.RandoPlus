@@ -115,6 +115,11 @@ namespace RandoPlus.NailUpgrades
                     rb.AddToVanilla(vd);
                 }
             }
+
+            if (RandoPlus.GS.TwoDupePaleOre)
+            {
+                rb.AddItemByName(ItemNames.Pale_Ore, 2);
+            }
         }
 
         private static void DerangeNailUpgrades(RequestBuilder rb)
