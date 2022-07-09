@@ -71,7 +71,10 @@ namespace RandoPlus.NailUpgrades
             {
                 GameObject nailsmith = scene.FindGameObjectByName("Nailsmith");
                 Container c = Container.GetContainer(Container.Shiny);
-                GameObject shiny = c.GetNewContainer(Placement, Placement.Items, flingType, (Placement as ItemChanger.Placements.ISingleCostPlacement)?.Cost);
+
+                ContainerInfo info = new(c.Name, Placement, flingType, (Placement as ItemChanger.Placements.ISingleCostPlacement)?.Cost);
+                GameObject shiny = c.GetNewContainer(info);
+
                 c.ApplyTargetContext(shiny, nailsmith.transform.position.x, nailsmith.transform.position.y, 0f);
                 ShinyUtility.FlingShinyLeft(shiny.LocateMyFSM("Shiny Control"));
             }
