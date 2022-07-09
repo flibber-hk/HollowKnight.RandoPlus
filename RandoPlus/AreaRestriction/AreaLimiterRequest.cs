@@ -67,7 +67,7 @@ namespace RandoPlus.AreaRestriction
             {
                 foreach (string loc in igb.Locations.EnumerateWithMultiplicity())
                 {
-                    if (!rb.TryGetLocationDef(loc, out LocationDef def) || AreaRestriction.ExcludedAreas.Contains(def.MapArea))
+                    if (!rb.TryGetLocationDef(loc, out LocationDef def) || !AreaRestriction.PlacedAreas.Contains(def.MapArea ?? string.Empty))
                     {
                         // Location excluded if no location def defined
                         AreaRestriction.InvalidLocations.Add(loc);
