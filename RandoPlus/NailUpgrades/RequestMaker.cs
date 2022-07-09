@@ -127,7 +127,7 @@ namespace RandoPlus.NailUpgrades
             if (!rb.gs.CursedSettings.Deranged) return;
             if (!RandoPlus.GS.Any) return;
 
-            static bool NotVanillaMushroom(IRandoItem item, IRandoLocation location)
+            static bool NotVanillaNail(IRandoItem item, IRandoLocation location)
             {
                 if (item.Name == Consts.NailUpgrade && location.Name.StartsWith(Consts.NailsmithLocationPrefix))
                 {
@@ -140,7 +140,7 @@ namespace RandoPlus.NailUpgrades
             {
                 if (gb.strategy is DefaultGroupPlacementStrategy dgps)
                 {
-                    dgps.Constraints += NotVanillaMushroom;
+                    dgps.Constraints += NotVanillaNail;
                 }
             }
         }
