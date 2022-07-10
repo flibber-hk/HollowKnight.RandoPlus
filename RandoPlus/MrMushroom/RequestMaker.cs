@@ -24,6 +24,8 @@ namespace RandoPlus.MrMushroom
 
         public static void Hook()
         {
+            // Disable Mr Mushroom previews if they don't have 
+            RequestBuilder.OnUpdate.Subscribe(30, ApplyMrMushroomPreviewSetting);
             // Add Items and Locations to the pool
             RequestBuilder.OnUpdate.Subscribe(50, AddMrMushroom);
             // Register the Deranged constraint
@@ -33,6 +35,24 @@ namespace RandoPlus.MrMushroom
             // Option to dupe Spore Shroom
             RequestBuilder.OnUpdate.Subscribe(20.1f, DupeSporeShroom);
         }
+
+        private static void ApplyMrMushroomPreviewSetting(RequestBuilder rb)
+        {
+            if (!RandoPlus.GS.MrMushroom) return;
+            if (rb.gs.LongLocationSettings.LoreTabletPreview) return;
+
+            foreach (string mushroom in mushrooms)
+            {
+                rb.EditLocationRequest(mushroom, (info) =>
+                {
+                    info.onPlacementFetch += (factory, randoPlacement, realPlacement) =>
+                    {
+                        realPlacement.AddTag<ItemChanger.Tags.DisableItemPreviewTag>();
+                    };
+                });
+            }
+        }
+
 
         private static void DupeSporeShroom(RequestBuilder rb)
         {

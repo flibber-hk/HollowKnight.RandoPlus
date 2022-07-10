@@ -31,6 +31,7 @@ namespace RandoPlus.MrMushroom
             {
                 MrMushroomLocation mushLocation = new()
                 {
+                    HintActive = true,
                     name = name,
                     objectName = objectName,
                     mushroomState = level,

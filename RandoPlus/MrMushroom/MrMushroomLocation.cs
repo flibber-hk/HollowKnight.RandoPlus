@@ -15,10 +15,14 @@ using UnityEngine.SceneManagement;
 
 namespace RandoPlus.MrMushroom
 {
-    public class MrMushroomLocation : ContainerLocation
+    public class MrMushroomLocation : ContainerLocation, ILocalHintLocation
     {
         public int mushroomState;
         public string objectName;
+        public bool HintActive { get; set; }
+
+
+        public string GetLangKey(int i) => $"MR_MUSHROOM_SHROOMISH_{Placement.Name}_{i}";
 
         public bool MushroomUnlocked() => PlayerData.instance.GetInt(nameof(PlayerData.mrMushroomState)) >= mushroomState;
         public bool SuccessfullyInteracted() => Placement.CheckVisitedAll(VisitState.Accepted);
@@ -30,11 +34,46 @@ namespace RandoPlus.MrMushroom
         {
             Events.AddFsmEdit(sceneName, new(objectName, "Control"), ModifyMrMushroom);
             Events.AddFsmEdit(sceneName, new(objectName, "Conversation Control"), ModifyMushConvo);
+            Events.AddFsmEdit(sceneName, new(objectName, "Conversation Control"), AddHintText);
+
+            for (int i = 1; i <= 3; i++)
+            {
+                Events.AddLanguageEdit(new LanguageKey("Minor NPC", GetLangKey(i)), GetHintText);
+            }
         }
         protected override void OnUnload()
         {
             Events.RemoveFsmEdit(sceneName, new(objectName, "Control"), ModifyMrMushroom);
             Events.RemoveFsmEdit(sceneName, new(objectName, "Conversation Control"), ModifyMushConvo);
+            Events.RemoveFsmEdit(sceneName, new(objectName, "Conversation Control"), AddHintText);
+
+            for (int i = 1; i <= 3; i++)
+            {
+                Events.RemoveLanguageEdit(new LanguageKey("Minor NPC", GetLangKey(i)), GetHintText);
+            }
+        }
+
+        private void GetHintText(ref string value)
+        {
+            char i = value[value.Length - 4];
+            value = Language.Language.Get($"MR_MUSHROOM_SHROOMISH{i}", "Minor NPC");
+
+            if (!this.GetItemHintActive()) return;
+
+            string preview = Placement.GetUIName();
+            string[] valueSplit = value.Split(new[] { ',' }, 2);
+            value = $"{valueSplit[0]}, {preview},{valueSplit[1]}";
+            Placement.OnPreview(preview);
+        }
+
+        private void AddHintText(PlayMakerFSM fsm)
+        {
+            for (int i = 1; i <= 3; i++)
+            {
+                FsmState shrumish = fsm.GetState($"Shrumish {i}");
+                CallMethodProper cmp = shrumish.GetFirstActionOfType<CallMethodProper>();
+                cmp.parameters[0].stringValue = GetLangKey(i);
+            }
         }
 
         private void ModifyMushConvo(PlayMakerFSM fsm)
