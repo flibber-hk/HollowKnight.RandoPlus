@@ -50,7 +50,7 @@ namespace RandoPlus.NailUpgrades
             };
 
             string prefix = $"If you bring me {pieces} of Pale Ore, I can forge you";
-            string preview = Placement.GetUIName(60);
+            string preview = Placement.GetUIName();
             value = $"{prefix} {preview}.";
             Placement.OnPreview(preview);
         }
