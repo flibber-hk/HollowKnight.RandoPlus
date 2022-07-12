@@ -83,7 +83,8 @@ namespace RandoPlus.AreaRestriction
             }
         }
 
-        public static ItemGroupBuilder.LocationPaddingHandler GetPadder(Random rng, ItemGroupBuilder gb)
+        public static ItemGroupBuilder.LocationPaddingHandler GetPadder(Random rng,
+            ItemGroupBuilder gb, string defaultMultiLocation = LocationNames.Sly)
         {
             IEnumerable<RandoModLocation> PadLocations(RandoFactory factory, int count)
             {
@@ -93,7 +94,7 @@ namespace RandoPlus.AreaRestriction
                 {
                     for (int i = 0; i < count;i++)
                     {
-                        yield return factory.MakeLocation(LocationNames.Sly);
+                        yield return factory.MakeLocation(defaultMultiLocation);
                     }
                     yield break;
                 }
