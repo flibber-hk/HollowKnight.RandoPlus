@@ -73,7 +73,7 @@ namespace RandoPlus.AreaRestriction
             }
         }
 
-        private static void PreventMultiChests()
+        public static void PreventMultiChests()
         {
             foreach (AbstractPlacement pmt in ItemChanger.Internal.Ref.Settings.GetPlacements())
             {
