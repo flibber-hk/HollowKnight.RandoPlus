@@ -1,13 +1,17 @@
 ﻿using GlobalEnums;
 using HutongGames.PlayMaker;
+using HutongGames.PlayMaker.Actions;
 using ItemChanger;
 using ItemChanger.Extensions;
 using ItemChanger.FsmStateActions;
+using System.Linq;
+using UnityEngine;
 
 namespace RandoPlus.RemoveUsefulItems.Items
 {
     public class NoSwimModule : ItemChanger.Modules.Module
     {
+        // Have to do a positive amount of damage to trigger the respawn
         public const int NoSwimDamage = 36931;
 
         public bool gotNoSwim { get; set; }
@@ -59,18 +63,23 @@ namespace RandoPlus.RemoveUsefulItems.Items
 
         private void EditWaterSurface(PlayMakerFSM fsm)
         {
+            // Code for swimn't modified from the implementation of swimn't in ItemChanger
+
             if (fsm.gameObject.LocateMyFSM("Acid Armour Check") != null) return; // acid
 
-            FsmState splash = fsm.GetState("Big Splash?");
-            FsmStateAction acidDeath = new Lambda(() =>
-            {
-                // this is actually the spike death despite the enum, because the acid death splashes green stuff
-                HeroController.instance.TakeDamage(fsm.gameObject, CollisionSide.other, gotNoSwim ? NoSwimDamage : 1, (int)HazardType.ACID);
-                PlayMakerFSM.BroadcastEvent("SWIM DEATH");
-            });
+            GameObject splashSurface = fsm.transform.Find("Splash Surface").gameObject;
+            splashSurface.layer = 17; // orig is 8, which can enable seam jumping when it intersects with other terrain colliders
+            splashSurface.AddComponent<NonBouncer>();
 
-            splash.AddFirstAction(acidDeath);
-            splash.AddTransition("SWIM DEATH", "Idle");
+            FsmState idle = fsm.GetState("Idle");
+            FsmState damageHero = fsm.AddState("Damage Hero");
+
+            idle.Transitions[0].SetToState(damageHero);
+
+            damageHero.Actions = fsm.GetState("Splash In Norm").Actions.Where(a => a is not SetPosition).ToArray(); // play splash audio and fling splash particles
+            damageHero.AddLastAction(new Lambda(() => HeroController.instance.TakeDamage(
+                fsm.gameObject, CollisionSide.bottom, gotNoSwim ? NoSwimDamage : 1, 2)));
+            damageHero.AddTransition(FsmEvent.Finished, idle);
         }
     }
 }
