@@ -10,7 +10,7 @@ namespace RandoPlus.NailUpgrades
     {
         public static void Hook()
         {
-            RequestBuilder.OnUpdate.Subscribe(50, AddNailUpgrades);
+            RequestBuilder.OnUpdate.Subscribe(25, AddNailUpgrades);
             RequestBuilder.OnUpdate.Subscribe(30, ApplyNailUpgradePreviewSetting);
             RequestBuilder.OnUpdate.Subscribe(-499.2f, SetupRefs);
             RequestBuilder.OnUpdate.Subscribe(101, DerangeNailUpgrades);
@@ -114,6 +114,12 @@ namespace RandoPlus.NailUpgrades
                 {
                     rb.AddToVanilla(vd);
                 }
+            }
+
+            if (rb.gs.CursedSettings.ReplaceJunkWithOneGeo)
+            {
+                // Pale ore is no longer junk with this setting
+                rb.AddItemByName(ItemNames.Pale_Ore, 6);
             }
 
             if (RandoPlus.GS.TwoDupePaleOre)
