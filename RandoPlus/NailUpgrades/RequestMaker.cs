@@ -106,6 +106,12 @@ namespace RandoPlus.NailUpgrades
                 {
                     rb.AddLocationByName(Consts.NailsmithLocationPrefix + i);
                 }
+
+                if (rb.gs.CursedSettings.ReplaceJunkWithOneGeo)
+                {
+                    // Pale ore is no longer junk with this setting
+                    rb.AddItemByName(ItemNames.Pale_Ore, 6);
+                }
             }
 
             else if (RandoPlus.GS.DefineRefs)
@@ -114,12 +120,6 @@ namespace RandoPlus.NailUpgrades
                 {
                     rb.AddToVanilla(vd);
                 }
-            }
-
-            if (rb.gs.CursedSettings.ReplaceJunkWithOneGeo)
-            {
-                // Pale ore is no longer junk with this setting
-                rb.AddItemByName(ItemNames.Pale_Ore, 6);
             }
 
             if (RandoPlus.GS.TwoDupePaleOre)
