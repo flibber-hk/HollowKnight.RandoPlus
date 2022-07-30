@@ -27,7 +27,6 @@ namespace RandoPlus.RemoveUsefulItems
             TermToken acidSkips = lmb.LP.GetTermToken("ACIDSKIPS");
             TermToken swim = lmb.LP.GetTermToken("SWIM");
             TermToken acid = lmb.LP.GetTermToken("ACID");
-            TermToken darkrooms = lmb.LP.GetTermToken("DARKROOMS");
 
             CreateMacros("SKIPACID");
             CreateMacros("LEFTSKIPACID");
@@ -43,10 +42,6 @@ namespace RandoPlus.RemoveUsefulItems
                 LogicClauseBuilder acidLcb = new(lmb.LP.GetMacro(orig));
                 acidLcb.Subst(acidSkips, lmb.LP.ParseInfixToClause("ACIDSKIPS | NOACID"));
                 lmb.LP.SetMacro("ACID_" + orig, new LogicClause(acidLcb));
-
-                LogicClauseBuilder bothLcb = new(lmb.LP.GetMacro(orig));
-                bothLcb.Subst(acidSkips, lmb.LP.ParseInfixToClause("ACIDSKIPS | NOSWIM + NOACID"));
-                lmb.LP.SetMacro(orig, new LogicClause(bothLcb));
             }
 
             List<string> AllLogic = lmb.LogicLookup.Keys.ToList();
@@ -70,10 +65,7 @@ namespace RandoPlus.RemoveUsefulItems
                     lmb.DoSubst(new(key, "ACIDSKIPS", "ACIDSKIPS | NOACID"));
                 }
 
-                if (lmb.LogicLookup[key].Tokens.Contains(darkrooms))
-                {
-                    lmb.DoSubst(new(key, "DARKROOMS", "DARKROOMS | NOLANTERN"));
-                }
+                lmb.DoSubst(new(key, "DARKROOMS", "DARKROOMS | NOLANTERN"));
             }
         }
 
