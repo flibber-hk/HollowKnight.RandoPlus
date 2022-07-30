@@ -14,16 +14,15 @@ namespace RandoPlus.RemoveUsefulItems
         (
             string OldItem,
             string VanillaLocation,
-            string SkipSetting,
             string NewItem,
             Func<bool> IsActive
         );
 
         public static readonly RemoverInfo[] settings = new RemoverInfo[]
         {
-            new(ItemNames.Lumafly_Lantern, LocationNames.Sly, nameof(SkipSettings.DarkRooms), Consts.NoLantern,() => RandoPlus.GS.NoLantern ),
-            new(ItemNames.Ismas_Tear, LocationNames.Ismas_Tear, nameof(SkipSettings.AcidSkips), Consts.NoTear, () => RandoPlus.GS.NoTear ),
-            new(ItemNames.Swim, null, nameof(SkipSettings.AcidSkips), Consts.NoSwim, () => RandoPlus.GS.NoSwim )
+            new(ItemNames.Lumafly_Lantern, LocationNames.Sly, Consts.NoLantern, () => RandoPlus.GS.NoLantern),
+            new(ItemNames.Ismas_Tear, LocationNames.Ismas_Tear, Consts.NoTear, () => RandoPlus.GS.NoTear),
+            new(ItemNames.Swim, null, Consts.NoSwim, () => RandoPlus.GS.NoSwim)
         };
 
         public static void Hook()
@@ -73,7 +72,6 @@ namespace RandoPlus.RemoveUsefulItems
             void RemoveItem(RequestBuilder rb)
             {
                 if (!info.IsActive()) return;
-                if (!rb.gs.SkipSettings.GetFieldByName(info.SkipSetting)) return;
 
                 rb.ReplaceItem(info.OldItem, info.NewItem);
                 rb.ReplaceItem(PlaceholderItem.Prefix + info.OldItem, PlaceholderItem.Prefix + info.NewItem);

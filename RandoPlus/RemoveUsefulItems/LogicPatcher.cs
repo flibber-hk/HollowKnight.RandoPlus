@@ -18,6 +18,63 @@ namespace RandoPlus.RemoveUsefulItems
         {
             RCData.RuntimeLogicOverride.Subscribe(Consts.LOGICPRIORITY, DefineTermsAndItems);
             RCData.RuntimeLogicOverride.Subscribe(Consts.LOGICPRIORITY, InternalModifyLogic);
+            // High (late) priority
+            RCData.RuntimeLogicOverride.Subscribe(100_000, AllowSkips);
+        }
+
+        private static void AllowSkips(GenerationSettings gs, LogicManagerBuilder lmb)
+        {
+            TermToken acidSkips = lmb.LP.GetTermToken("ACIDSKIPS");
+            TermToken swim = lmb.LP.GetTermToken("SWIM");
+            TermToken acid = lmb.LP.GetTermToken("ACID");
+            TermToken darkrooms = lmb.LP.GetTermToken("DARKROOMS");
+
+            CreateMacros("SKIPACID");
+            CreateMacros("LEFTSKIPACID");
+            CreateMacros("RIGHTSKIPACID");
+            CreateMacros("FULLSKIPACID");
+
+            void CreateMacros(string orig)
+            {
+                LogicClauseBuilder waterLcb = new(lmb.LP.GetMacro(orig));
+                waterLcb.Subst(acidSkips, lmb.LP.ParseInfixToClause("ACIDSKIPS | NOSWIM"));
+                lmb.LP.SetMacro("WATER_" + orig, new LogicClause(waterLcb));
+
+                LogicClauseBuilder acidLcb = new(lmb.LP.GetMacro(orig));
+                acidLcb.Subst(acidSkips, lmb.LP.ParseInfixToClause("ACIDSKIPS | NOACID"));
+                lmb.LP.SetMacro("ACID_" + orig, new LogicClause(acidLcb));
+
+                LogicClauseBuilder bothLcb = new(lmb.LP.GetMacro(orig));
+                bothLcb.Subst(acidSkips, lmb.LP.ParseInfixToClause("ACIDSKIPS | NOSWIM + NOACID"));
+                lmb.LP.SetMacro(orig, new LogicClause(bothLcb));
+            }
+
+            List<string> AllLogic = lmb.LogicLookup.Keys.ToList();
+
+            foreach (string key in AllLogic)
+            {
+                if (lmb.LogicLookup[key].Tokens.Contains(swim))
+                {
+                    lmb.DoSubst(new(key, "SKIPACID", "WATER_SKIPACID"));
+                    lmb.DoSubst(new(key, "LEFTSKIPACID", "WATER_LEFTSKIPACID"));
+                    lmb.DoSubst(new(key, "RIGHTSKIPACID", "WATER_RIGHTSKIPACID"));
+                    lmb.DoSubst(new(key, "FULLSKIPACID", "WATER_FULLSKIPACID"));
+                    lmb.DoSubst(new(key, "ACIDSKIPS", "ACIDSKIPS | NOSWIM"));
+                }
+                else if (lmb.LogicLookup[key].Tokens.Contains(acid))
+                {
+                    lmb.DoSubst(new(key, "SKIPACID", "ACID_SKIPACID"));
+                    lmb.DoSubst(new(key, "LEFTSKIPACID", "ACID_LEFTSKIPACID"));
+                    lmb.DoSubst(new(key, "RIGHTSKIPACID", "ACID_RIGHTSKIPACID"));
+                    lmb.DoSubst(new(key, "FULLSKIPACID", "ACID_FULLSKIPACID"));
+                    lmb.DoSubst(new(key, "ACIDSKIPS", "ACIDSKIPS | NOACID"));
+                }
+
+                if (lmb.LogicLookup[key].Tokens.Contains(darkrooms))
+                {
+                    lmb.DoSubst(new(key, "DARKROOMS", "DARKROOMS | NOLANTERN"));
+                }
+            }
         }
 
         private static void InternalModifyLogic(GenerationSettings gs, LogicManagerBuilder lmb)

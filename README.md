@@ -20,6 +20,9 @@ Replaces the skills with items that respectively
 * Protect against swim damage
 * Enable dark room tolls and the No Eyes fight.
 
+Finding any of the relevant items will put all relevant skips into logic. For example, finding the No Acid item will put all acid skips into logic, even 
+if that skip setting was disabled.
+
 ### Area Blitz
 Squishes all randomized locations into 7 randomly selected map areas, which will always include Dirtmouth and the starting area, 
 and will always exclude White Palace if Randomization in White Palace is disabled.
