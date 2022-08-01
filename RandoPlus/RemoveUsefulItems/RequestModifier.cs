@@ -37,7 +37,7 @@ namespace RandoPlus.RemoveUsefulItems
 
         private static void SetupRefs(RequestBuilder rb)
         {
-            if (!RandoPlus.GS.Any) return;
+            if (!RandoPlus.GS.AnyUsefulItemsRemoved) return;
 
             foreach (RemoverInfo ri in settings)
             {

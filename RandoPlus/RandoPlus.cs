@@ -10,7 +10,7 @@ namespace RandoPlus
     {
         internal static RandoPlus instance;
 
-        public static GlobalSettings GS = new();
+        public static GlobalSettings GS { get; set; } = new();
         public void OnLoadGlobal(GlobalSettings gs) => GS = gs;
         public GlobalSettings OnSaveGlobal() => GS;
 

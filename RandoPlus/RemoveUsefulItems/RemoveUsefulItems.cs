@@ -10,7 +10,7 @@ namespace RandoPlus.RemoveUsefulItems
             if (randoInstalled) RequestModifier.Hook();
             if (itemchangerInstalled) Items.ItemDefinition.DefineItems();
 
-            CondensedSpoilerLogger.AddCategory("Removed Useful Items", _ => RandoPlus.GS.Any, new()
+            CondensedSpoilerLogger.AddCategory("Removed Useful Items", _ => RandoPlus.GS.AnyUsefulItemsRemoved, new()
             {
                 Consts.NoLantern,
                 Consts.NoTear,

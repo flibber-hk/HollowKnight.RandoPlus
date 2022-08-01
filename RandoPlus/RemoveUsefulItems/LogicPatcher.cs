@@ -24,6 +24,8 @@ namespace RandoPlus.RemoveUsefulItems
 
         private static void AllowSkips(GenerationSettings gs, LogicManagerBuilder lmb)
         {
+            if (!RandoPlus.GS.AnyUsefulItemsRemoved) return;
+
             TermToken acidSkips = lmb.LP.GetTermToken("ACIDSKIPS");
             TermToken swim = lmb.LP.GetTermToken("SWIM");
             TermToken acid = lmb.LP.GetTermToken("ACID");
@@ -71,7 +73,7 @@ namespace RandoPlus.RemoveUsefulItems
 
         private static void InternalModifyLogic(GenerationSettings gs, LogicManagerBuilder lmb)
         {
-            if (!RandoPlus.GS.Any) return;
+            if (!RandoPlus.GS.AnyUsefulItemsRemoved) return;
 
             // Lantern
             lmb.DoSubst(new("Mines_33[right1]", "LANTERN", "LANTERN | NOLANTERN + DARKROOMS"));
@@ -96,7 +98,7 @@ namespace RandoPlus.RemoveUsefulItems
 
         private static void DefineTermsAndItems(GenerationSettings gs, LogicManagerBuilder lmb)
         {
-            if (!RandoPlus.GS.Any) return;
+            if (!RandoPlus.GS.AnyUsefulItemsRemoved) return;
 
             Term noLanternTerm = lmb.GetOrAddTerm("NOLANTERN");
             lmb.AddItem(new CappedItem(Consts.NoLantern, new TermValue[] { new(noLanternTerm, 1) }, new(noLanternTerm, 1)));
