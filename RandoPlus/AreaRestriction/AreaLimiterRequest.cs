@@ -83,7 +83,7 @@ namespace RandoPlus.AreaRestriction
             }
         }
 
-        private static readonly MetadataProperty<AbstractLocation, IEnumerable<string>> MapAreas = new(nameof(MapAreas), _ => Enumerable.Empty<string>());
+        private static readonly MetadataProperty<AbstractLocation, IEnumerable<string>> MapAreasProperty = new("MapAreas", _ => Enumerable.Empty<string>());
 
         private static bool IsPlaceable(string loc, RequestBuilder rb)
         {
@@ -95,7 +95,7 @@ namespace RandoPlus.AreaRestriction
             AbstractLocation icLoc = Finder.GetLocation(loc);
             if (icLoc != null)
             {
-                IEnumerable<string> mapAreas = SupplementalMetadata.Of(icLoc).Get(MapAreas);
+                IEnumerable<string> mapAreas = SupplementalMetadata.Of(icLoc).Get(MapAreasProperty);
                 return mapAreas.Any(area => AreaRestriction.PlacedAreas.Contains(area));
             }
 
