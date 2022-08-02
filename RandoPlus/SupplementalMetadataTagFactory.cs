@@ -11,7 +11,7 @@ namespace RandoPlus
         private const string CmiPoolGroupProperty = "PoolGroup";
         private const string CmiModSourceProperty = "ModSource";
         private const string CmiVanillaItemProperty = "VanillaItem";
-        private const string TagMessage = "RandoSupplementalMetadata";
+        private const string TagMessage = ConnectionMetadataInjector.SupplementalMetadata.InteropTagMessage;
 
         public static InteropTag AddTagToObject(TaggableObject obj)
         {
