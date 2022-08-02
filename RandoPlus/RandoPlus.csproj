@@ -32,6 +32,9 @@
     <Reference Include="Assembly-CSharp">
       <HintPath>$(HollowKnightRefs)\Assembly-CSharp.dll</HintPath>
     </Reference>
+    <Reference Include="ConnectionMetadataInjector">
+      <HintPath>$(HollowKnightRefs)\Mods\ConnectionMetadataInjector\ConnectionMetadataInjector.dll</HintPath>
+    </Reference>
     <Reference Include="ItemChanger">
       <HintPath>$(HollowKnightRefs)\Mods\ItemChanger\ItemChanger.dll</HintPath>
     </Reference>

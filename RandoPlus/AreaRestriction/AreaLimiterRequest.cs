@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ConnectionMetadataInjector;
 using ItemChanger;
 using RandomizerCore.Extensions;
 using RandomizerMod.RandomizerData;
@@ -65,11 +66,10 @@ namespace RandoPlus.AreaRestriction
             AreaRestriction.InvalidLocations.Clear();
             foreach (ItemGroupBuilder igb in rb.EnumerateItemGroups())
             {
-                foreach (string loc in igb.Locations.EnumerateWithMultiplicity())
+                foreach (string loc in igb.Locations.EnumerateDistinct())
                 {
-                    if (!rb.TryGetLocationDef(loc, out LocationDef def) || !AreaRestriction.PlacedAreas.Contains(def.MapArea ?? string.Empty))
+                    if (!IsPlaceable(loc, rb))
                     {
-                        // Location excluded if no location def defined
                         AreaRestriction.InvalidLocations.Add(loc);
                     }
                 }
@@ -81,6 +81,25 @@ namespace RandoPlus.AreaRestriction
 
                 igb.LocationPadder = GetPadder(rb.rng, igb);
             }
+        }
+
+        private static readonly MetadataProperty<AbstractLocation, IEnumerable<string>> MapAreas = new(nameof(MapAreas), _ => Enumerable.Empty<string>());
+
+        private static bool IsPlaceable(string loc, RequestBuilder rb)
+        {
+            if (rb.TryGetLocationDef(loc, out LocationDef def) && !string.IsNullOrEmpty(def.MapArea))
+            {
+                return AreaRestriction.PlacedAreas.Contains(def.MapArea);
+            }
+
+            AbstractLocation icLoc = Finder.GetLocation(loc);
+            if (icLoc != null)
+            {
+                IEnumerable<string> mapAreas = SupplementalMetadata.Of(icLoc).Get(MapAreas);
+                return mapAreas.Any(area => AreaRestriction.PlacedAreas.Contains(area));
+            }
+
+            return false;
         }
 
         public static ItemGroupBuilder.LocationPaddingHandler GetPadder(Random rng,
