@@ -9,7 +9,6 @@ namespace RandoPlus.MrMushroom
         {
             base.OnLoad();
             ItemChangerMod.Modules.GetOrAdd<MushroomInventoryTrackerAddon>();
-            ItemChangerMod.Modules.GetOrAdd<VanillaDreamerMrMushroomLevel>();
         }
     }
 }

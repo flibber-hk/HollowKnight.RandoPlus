@@ -11,7 +11,7 @@
         public bool NoLantern;
         public bool NoSwim;
 
-        [Newtonsoft.Json.JsonIgnore] public bool AnyUsefulItemsRemoved => DefineRefs || NoTear || NoSwim || NoLantern;
+        public bool AnyUsefulItemsRemoved => DefineRefs || NoTear || NoSwim || NoLantern;
 
         public bool AreaBlitz;
         public bool PreferMultiShiny;
@@ -19,6 +19,8 @@
         public bool NailUpgrades;
         public bool GiveNailUpgradesOnPickup;
         public bool TwoDupePaleOre;
+
+        public bool Ghost;
 
         [Newtonsoft.Json.JsonIgnore]
         public bool Any => DefineRefs

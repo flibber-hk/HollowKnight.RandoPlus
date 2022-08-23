@@ -1,0 +1,9 @@
+D:\SubjectHYX\Edge\HollowKnight.RandoPlus-main\RandoPlus\bin\Debug\RandoPlus.dll
+D:\SubjectHYX\Edge\HollowKnight.RandoPlus-main\RandoPlus\bin\Debug\RandoPlus.pdb
+D:\SubjectHYX\Edge\HollowKnight.RandoPlus-main\RandoPlus\obj\Debug\RandoPlus.csproj.AssemblyReference.cache
+D:\SubjectHYX\Edge\HollowKnight.RandoPlus-main\RandoPlus\obj\Debug\RandoPlus.GeneratedMSBuildEditorConfig.editorconfig
+D:\SubjectHYX\Edge\HollowKnight.RandoPlus-main\RandoPlus\obj\Debug\RandoPlus.AssemblyInfoInputs.cache
+D:\SubjectHYX\Edge\HollowKnight.RandoPlus-main\RandoPlus\obj\Debug\RandoPlus.AssemblyInfo.cs
+D:\SubjectHYX\Edge\HollowKnight.RandoPlus-main\RandoPlus\obj\Debug\RandoPlus.csproj.CoreCompileInputs.cache
+D:\SubjectHYX\Edge\HollowKnight.RandoPlus-main\RandoPlus\obj\Debug\RandoPlus.dll
+D:\SubjectHYX\Edge\HollowKnight.RandoPlus-main\RandoPlus\obj\Debug\RandoPlus.pdb
