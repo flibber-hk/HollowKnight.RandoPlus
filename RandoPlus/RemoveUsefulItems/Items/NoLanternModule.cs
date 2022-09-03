@@ -1,45 +1,36 @@
-﻿using HutongGames.PlayMaker.Actions;
+﻿using HutongGames.PlayMaker;
+using HutongGames.PlayMaker.Actions;
 using ItemChanger;
 using ItemChanger.Extensions;
-using ItemChanger.FsmStateActions;
-using System;
 
 namespace RandoPlus.RemoveUsefulItems.Items
 {
     public class NoLanternModule : ItemChanger.Modules.Module
     {
-        public bool hasLanternAny => gotNoLantern || PlayerData.instance.GetBool(nameof(PlayerData.hasLantern));
         public bool gotNoLantern { get; set; }
 
         public override void Initialize()
         {
             Modding.ModHooks.GetPlayerBoolHook += OverrideBoolGet;
-            Events.AddFsmEdit(SceneNames.Mines_33, new("Toll Gate Machine", "Disable if No Lantern"), RemoveLanternCheck);
-            Events.AddFsmEdit(SceneNames.Mines_33, new("Toll Gate Machine (1)", "Disable if No Lantern"), RemoveLanternCheck);
-            Events.AddFsmEdit(SceneNames.Fungus1_35, new("Ghost Warrior NPC", "FSM"), RemoveLanternCheck);
-            Events.AddFsmEdit(SceneNames.Fungus1_35, new("Ghost Warrior NPC", "Conversation Control"), SetHazardRespawn);
+            Modding.ModHooks.SetPlayerBoolHook += OverrideSetBool;
             Events.AddLanguageEdit(new("UI", "INV_NAME_LANTERN"), EditLanternName);
             Events.AddLanguageEdit(new("UI", "INV_DESC_LANTERN"), EditLanternDesc);
-            Events.AddFsmEdit(new("Equipment", "Build Equipment List"), ShowNoLanternInInventory);
-            Modding.ModHooks.SetPlayerBoolHook += OverrideSetBool;
+            Events.AddFsmEdit(new("Vignette", "Darkness Control"), RemoveLanternFromVignette);
         }
 
         public override void Unload()
         {
             Modding.ModHooks.GetPlayerBoolHook -= OverrideBoolGet;
-            Events.RemoveFsmEdit(SceneNames.Mines_33, new("Toll Gate Machine", "Disable if No Lantern"), RemoveLanternCheck);
-            Events.RemoveFsmEdit(SceneNames.Mines_33, new("Toll Gate Machine (1)", "Disable if No Lantern"), RemoveLanternCheck);
-            Events.RemoveFsmEdit(SceneNames.Fungus1_35, new("Ghost Warrior NPC", "FSM"), RemoveLanternCheck);
-            Events.RemoveFsmEdit(SceneNames.Fungus1_35, new("Ghost Warrior NPC", "Conversation Control"), SetHazardRespawn);
+            Modding.ModHooks.SetPlayerBoolHook -= OverrideSetBool;
             Events.RemoveLanguageEdit(new("UI", "INV_NAME_LANTERN"), EditLanternName);
             Events.RemoveLanguageEdit(new("UI", "INV_DESC_LANTERN"), EditLanternDesc);
-            Events.RemoveFsmEdit(new("Equipment", "Build Equipment List"), ShowNoLanternInInventory);
-            Modding.ModHooks.SetPlayerBoolHook -= OverrideSetBool;
+            Events.RemoveFsmEdit(new("Vignette", "Darkness Control"), RemoveLanternFromVignette);
         }
 
-        private void ShowNoLanternInInventory(PlayMakerFSM fsm)
+        private void RemoveLanternFromVignette(PlayMakerFSM fsm)
         {
-            fsm.GetState("Lantern").GetFirstActionOfType<PlayerDataBoolTest>().boolName.Value = nameof(hasLanternAny);
+            fsm.GetState("Dark Lev Check").RemoveFirstActionOfType<PlayerDataBoolTest>();
+            fsm.GetState("Scene Reset").RemoveFirstActionOfType<PlayerDataBoolTest>();
         }
 
         private bool OverrideSetBool(string boolName, bool value)
@@ -48,6 +39,7 @@ namespace RandoPlus.RemoveUsefulItems.Items
             {
                 case nameof(gotNoLantern):
                     gotNoLantern = value;
+                    PlayerData.instance.SetBool(nameof(PlayerData.hasLantern), value);
                     break;
             }
             return value;
@@ -63,24 +55,10 @@ namespace RandoPlus.RemoveUsefulItems.Items
             value = "Not " + value;
         }
 
-        private void SetHazardRespawn(PlayMakerFSM fsm)
-        {
-            fsm.GetState("Start Fight").AddFirstAction(new Lambda(() => 
-            {
-                HeroController.instance.SetHazardRespawn(HeroController.instance.transform.position, true);
-            }));
-        }
-
-        private void RemoveLanternCheck(PlayMakerFSM fsm)
-        {
-            fsm.GetState("Check").GetFirstActionOfType<PlayerDataBoolTest>().boolName = nameof(hasLanternAny);
-        }
-
         private bool OverrideBoolGet(string name, bool orig)
         {
             return name switch
             {
-                nameof(hasLanternAny) => hasLanternAny,
                 nameof(gotNoLantern) => gotNoLantern,
                 _ => orig
             };
