@@ -54,6 +54,7 @@ namespace RandoPlus.RemoveUsefulItems.Items
             }));
         }
 
+        // TODO - this should be an IL hook
         private void RemoveHazardRespawnsWithNoLantern(On.DeactivateInDarknessWithoutLantern.orig_Start orig, DeactivateInDarknessWithoutLantern self)
         {
             orig(self);
@@ -62,7 +63,10 @@ namespace RandoPlus.RemoveUsefulItems.Items
 
             // If gotNoLantern is false, then assume also hasLantern is false and orig(self) would correctly deactivate the object
             // If gotNoLantern is true, then assume also hasLantern is true so orig(self) would incorrectly fail to deactivate the object.
-            if (self.GetComponent<HazardRespawnTrigger>() != null && gotNoLantern && self.gameObject.activeSelf)
+            if (self.GetComponent<HazardRespawnTrigger>() != null
+                && gotNoLantern
+                && self.gameObject.activeSelf
+                && GameManager.instance.sm.darknessLevel == 2)
             {
                 self.gameObject.SetActive(false);
                 return;
