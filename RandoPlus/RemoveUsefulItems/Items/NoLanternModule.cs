@@ -46,7 +46,11 @@ namespace RandoPlus.RemoveUsefulItems.Items
 
             fsm.GetState("Start Fight").AddFirstAction(new Lambda(() =>
             {
-                HeroController.instance.SetHazardRespawn(HeroController.instance.transform.position, true);
+                // Compatibility with mods that change the darkness level of F1_35
+                if (GameManager.instance.sm.darknessLevel == 2)
+                {
+                    HeroController.instance.SetHazardRespawn(HeroController.instance.transform.position, true);
+                }
             }));
         }
 
