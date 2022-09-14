@@ -20,6 +20,17 @@ namespace RandoPlus.RemoveUsefulItems
             RCData.RuntimeLogicOverride.Subscribe(Consts.LOGICPRIORITY, InternalModifyLogic);
             // High (late) priority
             RCData.RuntimeLogicOverride.Subscribe(100_000, AllowSkips);
+            RCData.RuntimeLogicOverride.Subscribe(100_000, FixJournalRandoLogic);
+        }
+
+        private static void FixJournalRandoLogic(GenerationSettings gs, LogicManagerBuilder lmb)
+        {
+            if (!RandoPlus.GS.AnyUsefulItemsRemoved) return;
+
+            if (lmb.LogicLookup.ContainsKey("Defeated_Any_Durandoo"))
+            {
+                lmb.DoSubst(new("Defeated_Any_Durandoo", "ACID", "ACID | NOACID"));
+            }
         }
 
         private static void AllowSkips(GenerationSettings gs, LogicManagerBuilder lmb)
