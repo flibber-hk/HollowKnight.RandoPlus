@@ -14,6 +14,7 @@
         [Newtonsoft.Json.JsonIgnore] public bool AnyUsefulItemsRemoved => DefineRefs || NoTear || NoSwim || NoLantern;
 
         public bool AreaBlitz;
+        public bool FullFlexibleCount;
         public bool PreferMultiShiny;
 
         public bool NailUpgrades;
@@ -27,6 +28,7 @@
             || NoTear
             || NoLantern
             || AreaBlitz
+            || FullFlexibleCount
             || NailUpgrades;
     }
 }

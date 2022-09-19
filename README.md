@@ -32,6 +32,8 @@ and will always exclude White Palace if Randomization in White Palace is disable
 such as a grub) will become a chest containing several shinies; the PreferMultiShiny option instead places a shiny that gives several items.
 - This setting will respect split groups, with the exception that if a group has all of its locations excluded, then all of its items will be
 placed at Sly. (If a group has at least one included location, then none of its items will be placed at Sly unless Sly is part of the group.)
+- With the Full Flexible Count setting, normal locations can accept more than one item but no locations will be removed. This is useful to avoid
+overinflating shops' importance, if other connections add a lot of items.
 
 It may still be necessary to pass through excluded areas; for instance, Mask_Shard-Bretta is considered part of Dirtmouth, so may be relevant
 even if Fungal Wastes (the map area containing Bretta) is excluded.

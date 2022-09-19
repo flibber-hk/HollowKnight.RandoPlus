@@ -13,9 +13,23 @@ namespace RandoPlus.AreaRestriction
     {
         public static void Hook()
         {
+            RequestBuilder.OnUpdate.Subscribe(99.9f, ApplyPadders);
             RequestBuilder.OnUpdate.Subscribe(150f, ApplyAreaLimit);
         }
 
+        private static void ApplyPadders(RequestBuilder rb)
+        {
+            if (!RandoPlus.GS.AreaBlitz && !RandoPlus.GS.FullFlexibleCount)
+            {
+                return;
+            }
+
+            // Apply padders just before rando applies them
+            foreach (ItemGroupBuilder igb in rb.EnumerateItemGroups())
+            {
+                igb.LocationPadder ??= GetPadder(rb.rng, igb);
+            }
+        }
 
         private static void ApplyAreaLimit(RequestBuilder rb)
         {
@@ -85,8 +99,6 @@ namespace RandoPlus.AreaRestriction
                 {
                     igb.Locations.RemoveAll(loc);
                 }
-
-                igb.LocationPadder = GetPadder(rb.rng, igb);
             }
         }
 
