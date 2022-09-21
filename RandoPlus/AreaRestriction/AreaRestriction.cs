@@ -26,16 +26,16 @@ namespace RandoPlus.AreaRestriction
 
         private static void BeforeGameStart(RandoController rc)
         {
+            if (RandoPlus.GS.Any && RandoPlus.GS.PreferMultiShiny)
+            {
+                PreventMultiChests();
+            }
+
             if (!RandoPlus.GS.AreaBlitz) return;
 
             // TODO - add an in-game indicator for allowed areas?
 
             ItemChangerMod.Modules.GetOrAdd<AreaLimitModule>().PlacedAreas = new(PlacedAreas);
-
-            if (RandoPlus.GS.PreferMultiShiny)
-            {
-                PreventMultiChests();
-            }
 
             Dictionary<string, AbstractPlacement> nothingPlacements = new();
             RandoFactory randoFactory = new(rc.rb);
