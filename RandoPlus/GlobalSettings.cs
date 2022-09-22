@@ -24,11 +24,13 @@
         [Newtonsoft.Json.JsonIgnore]
         public bool Any => DefineRefs
             || MrMushroom
+            || DupeSporeShroom
             || NoSwim
             || NoTear
             || NoLantern
             || AreaBlitz
             || FullFlexibleCount
-            || NailUpgrades;
+            || NailUpgrades
+            || TwoDupePaleOre;
     }
 }

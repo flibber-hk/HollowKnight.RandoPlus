@@ -9,7 +9,7 @@ namespace RandoPlus
 {
     public class MenuHolder
     {
-        internal MenuPage RandoPlus;
+        internal MenuPage RandoPlusMenuPage;
         internal MenuElementFactory<GlobalSettings> rpMEF;
         internal VerticalItemPanel rpVIP;
 
@@ -32,16 +32,31 @@ namespace RandoPlus
         private bool HandleButton(MenuPage landingPage, out SmallButton button)
         {
             JumpToRPButton = new(landingPage, Localize("RandoPlus"));
-            JumpToRPButton.AddHideAndShowEvent(landingPage, RandoPlus);
+            JumpToRPButton.AddHideAndShowEvent(landingPage, RandoPlusMenuPage);
+            SetTopLevelButtonColor();
+
             button = JumpToRPButton;
             return true;
         }
 
+        private void SetTopLevelButtonColor()
+        {
+            if (JumpToRPButton != null)
+            {
+                JumpToRPButton.Text.color = RandoPlus.GS.Any ? Colors.TRUE_COLOR : Colors.DEFAULT_COLOR;
+            }
+        }
+
         private void ConstructMenu(MenuPage landingPage)
         {
-            RandoPlus = new MenuPage(Localize("RandoPlus"), landingPage);
-            rpMEF = new(RandoPlus, global::RandoPlus.RandoPlus.GS);
-            rpVIP = new(RandoPlus, new(0, 300), 50f, true, rpMEF.Elements);
+            RandoPlusMenuPage = new MenuPage(Localize("RandoPlus"), landingPage);
+            rpMEF = new(RandoPlusMenuPage, RandoPlus.GS);
+            foreach (IValueElement e in rpMEF.Elements)
+            {
+                e.SelfChanged += obj => SetTopLevelButtonColor();
+            }
+
+            rpVIP = new(RandoPlusMenuPage, new(0, 300), 50f, true, rpMEF.Elements);
             Localize(rpMEF);
         }
     }
