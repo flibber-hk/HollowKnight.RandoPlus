@@ -59,5 +59,11 @@ namespace RandoPlus
             rpVIP = new(RandoPlusMenuPage, new(0, 300), 50f, true, rpMEF.Elements);
             Localize(rpMEF);
         }
+
+        internal void ResetMenu()
+        {
+            rpMEF.SetMenuValues(RandoPlus.GS);
+            SetTopLevelButtonColor();
+        }
     }
 }

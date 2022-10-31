@@ -1,4 +1,9 @@
-﻿namespace RandoPlus
+﻿using System;
+using System.Reflection;
+
+public class HashIgnoreAttribute : Attribute { }
+
+namespace RandoPlus
 {
     public class GlobalSettings
     {
@@ -15,10 +20,10 @@
 
         public bool AreaBlitz;
         public bool FullFlexibleCount;
-        public bool PreferMultiShiny;
+        [HashIgnore] public bool PreferMultiShiny;
 
         public bool NailUpgrades;
-        public bool GiveNailUpgradesOnPickup;
+        [HashIgnore] public bool GiveNailUpgradesOnPickup;
         public bool TwoDupePaleOre;
 
         [Newtonsoft.Json.JsonIgnore]
@@ -32,5 +37,21 @@
             || FullFlexibleCount
             || NailUpgrades
             || TwoDupePaleOre;
+
+        public void LoadFrom(GlobalSettings gs)
+        {
+            gs ??= new();
+
+            foreach (FieldInfo fi in GetType().GetFields(BindingFlags.Public | BindingFlags.Instance))
+            {
+                if (fi.GetCustomAttribute<HashIgnoreAttribute>() is not null)
+                {
+                    continue;
+                }
+
+                object val = fi.GetValue(gs);
+                fi.SetValue(this, val);
+            }
+        }
     }
 }
