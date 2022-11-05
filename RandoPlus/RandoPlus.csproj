@@ -76,7 +76,7 @@
       <HintPath>$(HollowKnightRefs)\Mods\Randomizer 4\RandomizerMod.dll</HintPath>
     </Reference>
     <Reference Include="RandoSettingsManager">
-      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\RandoSettingsManager\RandoSettingsManager.dll</HintPath>
+      <HintPath>$(HollowKnightRefs)\Mods\RandoSettingsManager\RandoSettingsManager.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
       <HintPath>$(HollowKnightRefs)\UnityEngine.dll</HintPath>
