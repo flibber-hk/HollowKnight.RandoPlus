@@ -17,7 +17,7 @@ namespace RandoPlus
         public override string ModKey => RandoPlus.instance.GetName();
 
         public override VersioningPolicy<string> VersioningPolicy { get; }
-            = new StrictModVersioningPolicy(RandoPlus.instance);
+            = new EqualityVersioningPolicy<string>(RandoPlus.instance.GetVersion());
 
         public override void ReceiveSettings(GlobalSettings settings)
         {
