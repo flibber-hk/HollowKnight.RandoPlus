@@ -38,6 +38,11 @@ namespace RandoPlus
             NailUpgrades.RandomizableNailUpgrades.Hook(rando, ic);
 
             Common.Hook(rando, ic);
+
+            if (ModHooks.GetMod("RandoSettingsManager") is Mod)
+            {
+                RandoSettingsManagerInterop.Hook();
+            }
         }
     }
 }
