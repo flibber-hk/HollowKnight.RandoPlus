@@ -15,27 +15,22 @@ namespace RandoPlus
 
         internal SmallButton JumpToRPButton;
 
-        private static MenuHolder _instance = null;
-        internal static MenuHolder Instance => _instance ?? (_instance = new MenuHolder());
+        internal static MenuHolder Instance { get; private set; }
 
         public static void OnExitMenu()
         {
-            _instance = null;
+            Instance = null;
         }
 
         public static void Hook()
         {
-            RandomizerMenuAPI.AddMenuPage(Instance.ConstructMenu, Instance.HandleButton);
+            RandomizerMenuAPI.AddMenuPage(ConstructMenu, HandleButton);
             MenuChangerMod.OnExitMainMenu += OnExitMenu;
         }
 
-        private bool HandleButton(MenuPage landingPage, out SmallButton button)
+        private static bool HandleButton(MenuPage landingPage, out SmallButton button)
         {
-            JumpToRPButton = new(landingPage, Localize("RandoPlus"));
-            JumpToRPButton.AddHideAndShowEvent(landingPage, RandoPlusMenuPage);
-            SetTopLevelButtonColor();
-
-            button = JumpToRPButton;
+            button = Instance.JumpToRPButton;
             return true;
         }
 
@@ -47,7 +42,9 @@ namespace RandoPlus
             }
         }
 
-        private void ConstructMenu(MenuPage landingPage)
+        private static void ConstructMenu(MenuPage landingPage) => Instance = new(landingPage);
+
+        private MenuHolder(MenuPage landingPage)
         {
             RandoPlusMenuPage = new MenuPage(Localize("RandoPlus"), landingPage);
             rpMEF = new(RandoPlusMenuPage, RandoPlus.GS);
@@ -58,6 +55,10 @@ namespace RandoPlus
 
             rpVIP = new(RandoPlusMenuPage, new(0, 300), 50f, true, rpMEF.Elements);
             Localize(rpMEF);
+
+            JumpToRPButton = new(landingPage, Localize("RandoPlus"));
+            JumpToRPButton.AddHideAndShowEvent(landingPage, RandoPlusMenuPage);
+            SetTopLevelButtonColor();
         }
 
         internal void ResetMenu()
