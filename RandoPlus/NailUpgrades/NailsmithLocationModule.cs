@@ -107,8 +107,11 @@ namespace RandoPlus.NailUpgrades
                 YNUtil.OpenYNDialogue(fsm.gameObject, currentLocation.Placement, currentLocation.Placement.Items, currentLocation.GetCost());
             }));
 
+            FsmState yesState = fsm.GetState("Yes");
             YNModded.AddTransition("NO", fsm.GetState("Decline Pause"));
-            YNModded.AddTransition("YES", fsm.GetState("Box Up 3"));
+            YNModded.AddTransition("YES", yesState);
+
+            yesState.GetFirstActionOfType<Wait>().time = 0.75f;
 
 
             FsmState upgrade = fsm.GetState("Upgrade");
