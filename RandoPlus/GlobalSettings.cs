@@ -27,6 +27,7 @@ namespace RandoPlus
         public bool TwoDupePaleOre;
 
         public bool DisperseGroups;
+        public bool EnforceAllConstraints;
 
         [Newtonsoft.Json.JsonIgnore]
         public bool Any => DefineRefs
@@ -39,7 +40,8 @@ namespace RandoPlus
             || FullFlexibleCount
             || NailUpgrades
             || TwoDupePaleOre
-            || DisperseGroups;
+            || DisperseGroups
+            || EnforceAllConstraints;
 
         public void LoadFrom(GlobalSettings gs)
         {

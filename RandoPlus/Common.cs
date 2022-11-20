@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
 using Modding;
 using Newtonsoft.Json;
+using RandomizerCore.Exceptions;
+using RandomizerCore.Randomization;
 using RandomizerMod.Logging;
 using RandomizerMod.RC;
 
@@ -21,6 +24,26 @@ namespace RandoPlus
         private static void HookMinorChanges()
         {
             RequestBuilder.OnUpdate.Subscribe(100_000f, DisperseGroups);
+            RequestBuilder.OnUpdate.Subscribe(500f, EnforceAllConstraints);
+        }
+
+        private static void EnforceAllConstraints(RequestBuilder rb)
+        {
+            if (!RandoPlus.GS.EnforceAllConstraints) return;
+
+            foreach (GroupBuilder gb in rb.Stages.SelectMany(stage => stage.Groups))
+            {
+                string groupLabel = gb.label;
+
+                if (gb.strategy is DefaultGroupPlacementStrategy dgps)
+                {
+                    dgps.OnConstraintViolated += (item, loc) =>
+                    {
+                        RandoPlus.instance.Log($"Constraint violated for group {groupLabel}: {item.Name} @ {loc.Name}");
+                        throw new OutOfLocationsException();
+                    };
+                }
+            }
         }
 
         private static void DisperseGroups(RequestBuilder rb)

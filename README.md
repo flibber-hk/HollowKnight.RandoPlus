@@ -49,10 +49,15 @@ randomization by selecting the Give Nail Upgrades On Pickup option.
 - The nailsmith questline (kill / Sheo) is tied to the location, not the items.
 - For the purposes of split item groups, Nail Upgrades are considered by default to be in the same group as Skills - specifically Vengeful Spirit.
 
-### Disperse Groups
-This setting makes a fairly technical change to the randomization algorithm - it moves groups that were otherwise randomized simultaneously to
-different stages. In concrete terms, it can reduce the number of attempts needed to generate placements in cases where it would otherwise
-take many attempts.
+### Advanced settings
+The following settings change the randomization in fairly technical ways, and are probably best ignored by most players.
+
+- Disperse Groups  moves groups that were otherwise randomized simultaneously to different stages. 
+In concrete terms, it can reduce the number of attempts needed to generate placements in cases where it would otherwise take many attempts.
+- Enforce All Constraints causes constraints added to groups to become mandatory. For example, the deranged constraint
+usually allows vanilla placements if the alternative is another randomization attempt. This setting will increase the
+number of attempts taken. With some combinations of settings this may make seed generation impossible (for example,
+if grubs and mimics are randomized together and deranged is enabled).
 
 ### Custom Pools and Logic
 Any external logic modifications can be made via the custom logic injector mod; logic modifications using terms defined by this mod
