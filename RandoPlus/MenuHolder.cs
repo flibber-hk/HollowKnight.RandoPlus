@@ -53,7 +53,15 @@ namespace RandoPlus
                 e.SelfChanged += obj => SetTopLevelButtonColor();
             }
 
-            rpGIP = new(RandoPlusMenuPage, new(0, 300), 2, 50, 500, true, rpMEF.Elements);
+            rpGIP = new(
+                RandoPlusMenuPage, 
+                SpaceParameters.TOP_CENTER_UNDER_TITLE, 
+                2, 
+                SpaceParameters.VSPACE_SMALL,
+                SpaceParameters.HSPACE_MEDIUM,
+                true,
+                rpMEF.Elements
+                );
             Localize(rpMEF);
 
             JumpToRPButton = new(landingPage, Localize("RandoPlus"));
