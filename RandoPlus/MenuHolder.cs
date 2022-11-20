@@ -11,7 +11,7 @@ namespace RandoPlus
     {
         internal MenuPage RandoPlusMenuPage;
         internal MenuElementFactory<GlobalSettings> rpMEF;
-        internal VerticalItemPanel rpVIP;
+        internal GridItemPanel rpGIP;
 
         internal SmallButton JumpToRPButton;
 
@@ -53,7 +53,7 @@ namespace RandoPlus
                 e.SelfChanged += obj => SetTopLevelButtonColor();
             }
 
-            rpVIP = new(RandoPlusMenuPage, new(0, 300), 50f, true, rpMEF.Elements);
+            rpGIP = new(RandoPlusMenuPage, new(0, 300), 2, 50, 500, true, rpMEF.Elements);
             Localize(rpMEF);
 
             JumpToRPButton = new(landingPage, Localize("RandoPlus"));
