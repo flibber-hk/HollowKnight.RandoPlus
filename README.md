@@ -44,9 +44,15 @@ Adds the four nail upgrades to the randomization pool.
 is disabled in rando, then previews will not be shown for the Nailsmith's items.
 - Nail upgrades must be claimed from the inventory by pressing attack while the nail icon is selected. This is to avoid being
 locked out of skips, but the process of claiming a nail upgrade is not reversible. (Consult the Randomizer readme for information about
-how many nail upgrades should be claimed depending on skip settings). This behaviour can be disabled (so nail upgrades are given immediately) before randomization by selecting the Give Nail Upgrades On Pickup option.
+how many nail upgrades should be claimed depending on skip settings). This behaviour can be disabled (so nail upgrades are given immediately) before
+randomization by selecting the Give Nail Upgrades On Pickup option.
 - The nailsmith questline (kill / Sheo) is tied to the location, not the items.
 - For the purposes of split item groups, Nail Upgrades are considered by default to be in the same group as Skills - specifically Vengeful Spirit.
+
+### Disperse Groups
+This setting makes a fairly technical change to the randomization algorithm - it moves groups that were otherwise randomized simultaneously to
+different stages. In concrete terms, it can reduce the number of attempts needed to generate placements in cases where it would otherwise
+take many attempts.
 
 ### Custom Pools and Logic
 Any external logic modifications can be made via the custom logic injector mod; logic modifications using terms defined by this mod

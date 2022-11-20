@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Reflection;
 
-public class HashIgnoreAttribute : Attribute { }
-
 namespace RandoPlus
 {
+    public class HashIgnoreAttribute : Attribute { }
+
     public class GlobalSettings
     {
         public bool DefineRefs;
@@ -26,6 +26,8 @@ namespace RandoPlus
         [HashIgnore] public bool GiveNailUpgradesOnPickup;
         public bool TwoDupePaleOre;
 
+        public bool DisperseGroups;
+
         [Newtonsoft.Json.JsonIgnore]
         public bool Any => DefineRefs
             || MrMushroom
@@ -36,7 +38,8 @@ namespace RandoPlus
             || AreaBlitz
             || FullFlexibleCount
             || NailUpgrades
-            || TwoDupePaleOre;
+            || TwoDupePaleOre
+            || DisperseGroups;
 
         public void LoadFrom(GlobalSettings gs)
         {
