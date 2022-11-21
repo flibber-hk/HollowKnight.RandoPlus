@@ -52,8 +52,8 @@ randomization by selecting the Give Nail Upgrades On Pickup option.
 ### Advanced settings
 The following settings change the randomization in fairly technical ways, and are probably best ignored by most players.
 
-- Disperse Groups  moves groups that were otherwise randomized simultaneously to different stages. 
-In concrete terms, it can reduce the number of attempts needed to generate placements in cases where it would otherwise take many attempts.
+- Disperse Groups moves groups that were otherwise randomized simultaneously to different stages. 
+In concrete terms, it can sometimes reduce the number of attempts needed to generate placements in cases where it would otherwise take many attempts.
 - Enforce All Constraints causes constraints added to groups to become mandatory. For example, the deranged constraint
 usually allows vanilla placements if the alternative is another randomization attempt. This setting will increase the
 number of attempts taken. With some combinations of settings this may make seed generation impossible (for example,
