@@ -67,6 +67,7 @@ namespace RandoPlus.Advanced
                     seenStageLabels[label] = 1;
                 }
 
+                RandoPlus.instance.LogDebug($"Dispersion: stage {label}");
                 StageBuilder sb = rb.AddStage(label);
                 sb.Add(group);
 
