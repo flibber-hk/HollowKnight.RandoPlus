@@ -36,6 +36,7 @@ namespace RandoPlus
             MrMushroom.MrMushroom.Hook(rando, ic);
             AreaRestriction.AreaRestriction.Hook(rando, ic);
             NailUpgrades.RandomizableNailUpgrades.Hook(rando, ic);
+            Advanced.AdvancedRequests.Hook(rando, ic);
 
             Common.Hook(rando, ic);
 
