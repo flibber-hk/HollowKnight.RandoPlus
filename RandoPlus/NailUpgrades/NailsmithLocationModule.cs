@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using HutongGames.PlayMaker;
 using HutongGames.PlayMaker.Actions;
 using ItemChanger;
 using ItemChanger.Extensions;
 using ItemChanger.FsmStateActions;
-using ItemChanger.Locations;
 using ItemChanger.Util;
 using Newtonsoft.Json;
-using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace RandoPlus.NailUpgrades
 {
@@ -19,10 +15,24 @@ namespace RandoPlus.NailUpgrades
     /// </summary>
     public class NailsmithLocationModule : ItemChanger.Modules.Module
     {
+        private const string ItemSyncLabel = "RandoPlus.NailsmithLocationModule.SlotsBought";
+
         [JsonIgnore]
         private Dictionary<int, NailsmithLocation> SubscribedLocations;
 
-        public int SlotsBought = 0;
+        private int _slotsBought = 0;
+        public int SlotsBought 
+        {
+            get
+            {
+                return _slotsBought;
+            }
+            set
+            {
+                _slotsBought = value;
+                Imports.ItemSyncUtil.Broadast(ItemSyncLabel, _slotsBought.ToString());
+            }
+        }
         public int NextSlot => SlotsBought + 1;
         public bool ShouldGoModdedPath => SubscribedLocations.ContainsKey(NextSlot);
 
@@ -49,6 +59,8 @@ namespace RandoPlus.NailUpgrades
             Events.AddLanguageEdit(new("Nailsmith", "NAILSMITH_OFFER"), ShowPickups);
             Events.AddLanguageEdit(new("Nailsmith", "NAILSMITH_OFFER_ORE"), ShowPickupsOre);
             Imports.QoL.OverrideSettingToggle("NPCSellAll", "NailsmithBuyAll", false);
+
+            Imports.ItemSyncUtil.AddHandler(ItemSyncLabel, HandleItemsyncMessage);
         }
 
         public override void Unload()
@@ -57,6 +69,18 @@ namespace RandoPlus.NailUpgrades
             Events.RemoveLanguageEdit(new("Nailsmith", "NAILSMITH_OFFER"), ShowPickups);
             Events.RemoveLanguageEdit(new("Nailsmith", "NAILSMITH_OFFER_ORE"), ShowPickupsOre);
             Imports.QoL.RemoveSettingOverride("NPCSellAll", "NailsmithBuyAll");
+
+            Imports.ItemSyncUtil.RemoveHandler(ItemSyncLabel, HandleItemsyncMessage);
+        }
+
+        private void HandleItemsyncMessage(string message)
+        {
+            if (!int.TryParse(message, out int result))
+            {
+                throw new ArgumentException($"Received ItemSync message for event {ItemSyncLabel} is not an integer");
+            }
+
+            _slotsBought = result;
         }
 
         private void ShowPickups(ref string value)
