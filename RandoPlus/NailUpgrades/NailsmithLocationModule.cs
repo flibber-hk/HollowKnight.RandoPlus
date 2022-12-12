@@ -20,20 +20,20 @@ namespace RandoPlus.NailUpgrades
         [JsonIgnore]
         private Dictionary<int, NailsmithLocation> SubscribedLocations;
 
-        private int _slotsBought = 0;
-        public int SlotsBought 
+        public HashSet<int> SlotsBought = new();
+
+        public int NextSlot
         {
             get
             {
-                return _slotsBought;
-            }
-            set
-            {
-                _slotsBought = value;
-                Imports.ItemSyncUtil.Broadast(ItemSyncLabel, _slotsBought.ToString());
+                int i = 1;
+                while (SlotsBought.Contains(i))
+                {
+                    i++;
+                }
+                return i;
             }
         }
-        public int NextSlot => SlotsBought + 1;
         public bool ShouldGoModdedPath => SubscribedLocations.ContainsKey(NextSlot);
 
         public void SubscribeLocation(NailsmithLocation loc)
@@ -80,7 +80,7 @@ namespace RandoPlus.NailUpgrades
                 throw new ArgumentException($"Received ItemSync message for event {ItemSyncLabel} is not an integer");
             }
 
-            _slotsBought = result;
+            SlotsBought.Add(result);
         }
 
         private void ShowPickups(ref string value)
@@ -108,7 +108,8 @@ namespace RandoPlus.NailUpgrades
             offerType.RemoveFirstActionOfType<GetPlayerDataInt>();
             offerType.AddFirstAction(new Lambda(() =>
             {
-                fsm.FsmVariables.GetFsmInt("Upgrades Completed").Value = SlotsBought;
+                // Used to determine the next slot
+                fsm.FsmVariables.GetFsmInt("Upgrades Completed").Value = NextSlot - 1;
             }));
 
             FsmState YNVanilla = fsm.GetState("Box Up YN");
@@ -159,12 +160,15 @@ namespace RandoPlus.NailUpgrades
 
             fsm.GetState("Box Up 4").AddFirstAction(new Lambda(() =>
             {
-                SlotsBought++;
+                int currentSlot = fsm.FsmVariables.GetFsmInt("Upgrades Completed").Value;
+                Imports.ItemSyncUtil.Broadast(ItemSyncLabel, currentSlot.ToString());
+                SlotsBought.Add(currentSlot);
             }));
 
             fsm.GetState("Complete Convo").Actions[2] = new Lambda(() =>
             {
-                fsm.FsmVariables.GetFsmInt("Upgrades Completed").Value = SlotsBought;
+                // Used to decide which convo to show
+                fsm.FsmVariables.GetFsmInt("Upgrades Completed").Value = SlotsBought.Count;
             });
 
         }
