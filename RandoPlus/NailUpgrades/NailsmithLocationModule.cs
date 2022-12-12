@@ -15,8 +15,6 @@ namespace RandoPlus.NailUpgrades
     /// </summary>
     public class NailsmithLocationModule : ItemChanger.Modules.Module
     {
-        private const string ItemSyncLabel = "RandoPlus.NailsmithLocationModule.SlotsBought";
-
         [JsonIgnore]
         private Dictionary<int, NailsmithLocation> SubscribedLocations;
 
@@ -27,7 +25,9 @@ namespace RandoPlus.NailUpgrades
             get
             {
                 int i = 1;
-                while (SlotsBought.Contains(i))
+                while (SlotsBought.Contains(i)
+                    || (SubscribedLocations.TryGetValue(i, out NailsmithLocation loc)
+                        && loc.Placement.CheckVisitedAll(VisitState.Accepted)))
                 {
                     i++;
                 }
@@ -59,8 +59,6 @@ namespace RandoPlus.NailUpgrades
             Events.AddLanguageEdit(new("Nailsmith", "NAILSMITH_OFFER"), ShowPickups);
             Events.AddLanguageEdit(new("Nailsmith", "NAILSMITH_OFFER_ORE"), ShowPickupsOre);
             Imports.QoL.OverrideSettingToggle("NPCSellAll", "NailsmithBuyAll", false);
-
-            Imports.ItemSyncUtil.AddHandler(ItemSyncLabel, HandleItemsyncMessage);
         }
 
         public override void Unload()
@@ -69,19 +67,8 @@ namespace RandoPlus.NailUpgrades
             Events.RemoveLanguageEdit(new("Nailsmith", "NAILSMITH_OFFER"), ShowPickups);
             Events.RemoveLanguageEdit(new("Nailsmith", "NAILSMITH_OFFER_ORE"), ShowPickupsOre);
             Imports.QoL.RemoveSettingOverride("NPCSellAll", "NailsmithBuyAll");
-
-            Imports.ItemSyncUtil.RemoveHandler(ItemSyncLabel, HandleItemsyncMessage);
         }
 
-        private void HandleItemsyncMessage(string message)
-        {
-            if (!int.TryParse(message, out int result))
-            {
-                throw new ArgumentException($"Received ItemSync message for event {ItemSyncLabel} is not an integer");
-            }
-
-            SlotsBought.Add(result);
-        }
 
         private void ShowPickups(ref string value)
         {
@@ -160,9 +147,7 @@ namespace RandoPlus.NailUpgrades
 
             fsm.GetState("Box Up 4").AddFirstAction(new Lambda(() =>
             {
-                int currentSlot = fsm.FsmVariables.GetFsmInt("Upgrades Completed").Value;
-                Imports.ItemSyncUtil.Broadast(ItemSyncLabel, currentSlot.ToString());
-                SlotsBought.Add(currentSlot);
+                SlotsBought.Add(NextSlot);                
             }));
 
             fsm.GetState("Complete Convo").Actions[2] = new Lambda(() =>
