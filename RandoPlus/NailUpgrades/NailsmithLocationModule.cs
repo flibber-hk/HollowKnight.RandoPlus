@@ -91,12 +91,18 @@ namespace RandoPlus.NailUpgrades
 
         public void PatchFsm(PlayMakerFSM fsm)
         {
+            // Add FSM int to track the slot we're currently buying
+            fsm.AddFsmInt("Current Slot RP", -1);
+
             FsmState offerType = fsm.GetState("Offer Type");
             offerType.RemoveFirstActionOfType<GetPlayerDataInt>();
             offerType.AddFirstAction(new Lambda(() =>
             {
                 // Used to determine the next slot
                 fsm.FsmVariables.GetFsmInt("Upgrades Completed").Value = NextSlot - 1;
+
+                // Assign the slot we're currently buying
+                fsm.FsmVariables.GetFsmInt("Current Slot RP").Value = NextSlot;
             }));
 
             FsmState YNVanilla = fsm.GetState("Box Up YN");
@@ -147,7 +153,8 @@ namespace RandoPlus.NailUpgrades
 
             fsm.GetState("Box Up 4").AddFirstAction(new Lambda(() =>
             {
-                SlotsBought.Add(NextSlot);                
+                int currentSlot = fsm.FsmVariables.GetFsmInt("Current Slot RP").Value;
+                SlotsBought.Add(currentSlot);
             }));
 
             fsm.GetState("Complete Convo").Actions[2] = new Lambda(() =>
