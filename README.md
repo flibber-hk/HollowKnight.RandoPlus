@@ -34,7 +34,7 @@ such as a grub) will become a chest containing several shinies; the PreferMultiS
 placed at Sly. (If a group has at least one included location, then none of its items will be placed at Sly unless Sly is part of the group.)
 - With the Full Flexible Count setting, normal locations can accept more than one item but no locations will be removed. This is useful to avoid
 overinflating shops' importance, if other connections add a lot of items.
-This setting is automatically enabled with area blitz (as there are many more items than locations). It can be enabled separately
+This setting is automatically enabled with Area Blitz (as there are many more items than locations). It can be enabled separately
 from Area Blitz, however.
 
 It may still be necessary to pass through excluded areas; for instance, Mask_Shard-Bretta is considered part of Dirtmouth, so may be relevant
