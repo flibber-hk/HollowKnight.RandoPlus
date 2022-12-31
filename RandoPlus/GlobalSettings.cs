@@ -20,7 +20,6 @@ namespace RandoPlus
 
         public bool AreaBlitz;
         public bool FullFlexibleCount;
-        [HashIgnore] public bool PreferMultiShiny;
 
         public bool NailUpgrades;
         [HashIgnore] public bool GiveNailUpgradesOnPickup;

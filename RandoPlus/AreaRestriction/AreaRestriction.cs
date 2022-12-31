@@ -18,7 +18,6 @@ namespace RandoPlus.AreaRestriction
         {
             if (rando) AreaLimiterRequest.Hook();
             if (rando) HookNothingPlacer();
-            if (ic) MultiLocationConfig.Hook();
         }
 
         public static void HookNothingPlacer() => RandoController.OnExportCompleted += PlaceNothingItems;
