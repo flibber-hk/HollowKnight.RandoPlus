@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using ItemChanger;
-using ItemChanger.Extensions;
 using RandomizerMod.IC;
 using RandomizerMod.RC;
 
@@ -19,18 +17,14 @@ namespace RandoPlus.AreaRestriction
         public static void Hook(bool rando, bool ic)
         {
             if (rando) AreaLimiterRequest.Hook();
-            if (rando) HookStartNewGame();
+            if (rando) HookNothingPlacer();
+            if (ic) MultiLocationConfig.Hook();
         }
 
-        public static void HookStartNewGame() => RandoController.OnExportCompleted += BeforeGameStart;
+        public static void HookNothingPlacer() => RandoController.OnExportCompleted += PlaceNothingItems;
 
-        private static void BeforeGameStart(RandoController rc)
+        private static void PlaceNothingItems(RandoController rc)
         {
-            if (RandoPlus.GS.Any && RandoPlus.GS.PreferMultiShiny)
-            {
-                PreventMultiChests();
-            }
-
             if (!RandoPlus.GS.AreaBlitz) return;
 
             // TODO - add an in-game indicator for allowed areas?
@@ -70,17 +64,6 @@ namespace RandoPlus.AreaRestriction
             {
                 item.RemoveTags<RandoItemTag>();
                 item.AddTag<ItemChanger.Tags.CompletionWeightTag>().Weight = 0;
-            }
-        }
-
-        public static void PreventMultiChests()
-        {
-            foreach (AbstractPlacement pmt in ItemChanger.Internal.Ref.Settings.GetPlacements())
-            {
-                if (pmt.HasTag<RandoPlacementTag>())
-                {
-                    pmt.AddTag<ItemChanger.Tags.UnsupportedContainerTag>().containerType = Container.Chest;
-                }
             }
         }
     }
