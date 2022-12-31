@@ -7,7 +7,7 @@ using RandomizerCore.Randomization;
 using RandomizerMod.RandomizerData;
 using RandomizerMod.RC;
 
-namespace RandoPlus.Ghost
+namespace RandoPlus.GhostEssence
 {
     public static class RequestMaker
     {
@@ -92,7 +92,7 @@ namespace RandoPlus.Ghost
 
         private static void AddGhost(RequestBuilder rb)
         {
-            if (RandoPlus.GS.Ghost)
+            if (RandoPlus.GS.GhostEssence)
             {
                 foreach (string ghost in GhostNames.Names)
                 {

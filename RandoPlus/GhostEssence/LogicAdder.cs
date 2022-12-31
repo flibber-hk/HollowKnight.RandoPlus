@@ -10,7 +10,7 @@ using RandomizerCore.StringLogic;
 using RandomizerMod.RC;
 using RandomizerMod.Settings;
 
-namespace RandoPlus.Ghost
+namespace RandoPlus.GhostEssence
 {
     public static class LogicAdder
     {

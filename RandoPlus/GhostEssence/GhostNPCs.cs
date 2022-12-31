@@ -2,7 +2,7 @@
 using RandoPlus.Imports;
 using System.Collections.Generic;
 
-namespace RandoPlus.Ghost
+namespace RandoPlus.GhostEssence
 {
     public static class GhostNPCs
     {

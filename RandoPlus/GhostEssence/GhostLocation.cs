@@ -14,7 +14,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Modding;
 
-namespace RandoPlus.Ghost
+namespace RandoPlus.GhostEssence
 {
     public class GhostLocation : AutoLocation
     {

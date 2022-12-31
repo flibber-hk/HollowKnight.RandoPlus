@@ -5,7 +5,7 @@ using ItemChanger;
 using ItemChanger.Items;
 using ItemChanger.UIDefs;
 
-namespace RandoPlus.Ghost
+namespace RandoPlus.GhostEssence
 {
     public static class ICInterop
     {
