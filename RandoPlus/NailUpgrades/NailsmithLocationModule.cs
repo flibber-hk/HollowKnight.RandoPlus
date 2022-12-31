@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using HutongGames.PlayMaker;
 using HutongGames.PlayMaker.Actions;
 using ItemChanger;
 using ItemChanger.Extensions;
 using ItemChanger.FsmStateActions;
-using ItemChanger.Locations;
 using ItemChanger.Util;
 using Newtonsoft.Json;
-using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace RandoPlus.NailUpgrades
 {
@@ -22,8 +18,22 @@ namespace RandoPlus.NailUpgrades
         [JsonIgnore]
         private Dictionary<int, NailsmithLocation> SubscribedLocations;
 
-        public int SlotsBought = 0;
-        public int NextSlot => SlotsBought + 1;
+        public HashSet<int> SlotsBought = new();
+
+        public int NextSlot
+        {
+            get
+            {
+                int i = 1;
+                while (SlotsBought.Contains(i)
+                    || (SubscribedLocations.TryGetValue(i, out NailsmithLocation loc)
+                        && loc.Placement.CheckVisitedAll(VisitState.Accepted)))
+                {
+                    i++;
+                }
+                return i;
+            }
+        }
         public bool ShouldGoModdedPath => SubscribedLocations.ContainsKey(NextSlot);
 
         public void SubscribeLocation(NailsmithLocation loc)
@@ -59,6 +69,7 @@ namespace RandoPlus.NailUpgrades
             Imports.QoL.RemoveSettingOverride("NPCSellAll", "NailsmithBuyAll");
         }
 
+
         private void ShowPickups(ref string value)
         {
             if (!SubscribedLocations.TryGetValue(NextSlot, out NailsmithLocation loc))
@@ -80,11 +91,18 @@ namespace RandoPlus.NailUpgrades
 
         public void PatchFsm(PlayMakerFSM fsm)
         {
+            // Add FSM int to track the slot we're currently buying
+            fsm.AddFsmInt("Current Slot RP", -1);
+
             FsmState offerType = fsm.GetState("Offer Type");
             offerType.RemoveFirstActionOfType<GetPlayerDataInt>();
             offerType.AddFirstAction(new Lambda(() =>
             {
-                fsm.FsmVariables.GetFsmInt("Upgrades Completed").Value = SlotsBought;
+                // Used to determine the next slot
+                fsm.FsmVariables.GetFsmInt("Upgrades Completed").Value = NextSlot - 1;
+
+                // Assign the slot we're currently buying
+                fsm.FsmVariables.GetFsmInt("Current Slot RP").Value = NextSlot;
             }));
 
             FsmState YNVanilla = fsm.GetState("Box Up YN");
@@ -107,8 +125,11 @@ namespace RandoPlus.NailUpgrades
                 YNUtil.OpenYNDialogue(fsm.gameObject, currentLocation.Placement, currentLocation.Placement.Items, currentLocation.GetCost());
             }));
 
+            FsmState yesState = fsm.GetState("Yes");
             YNModded.AddTransition("NO", fsm.GetState("Decline Pause"));
-            YNModded.AddTransition("YES", fsm.GetState("Box Up 3"));
+            YNModded.AddTransition("YES", yesState);
+
+            yesState.GetFirstActionOfType<Wait>().time = 0.75f;
 
 
             FsmState upgrade = fsm.GetState("Upgrade");
@@ -132,12 +153,14 @@ namespace RandoPlus.NailUpgrades
 
             fsm.GetState("Box Up 4").AddFirstAction(new Lambda(() =>
             {
-                SlotsBought++;
+                int currentSlot = fsm.FsmVariables.GetFsmInt("Current Slot RP").Value;
+                SlotsBought.Add(currentSlot);
             }));
 
             fsm.GetState("Complete Convo").Actions[2] = new Lambda(() =>
             {
-                fsm.FsmVariables.GetFsmInt("Upgrades Completed").Value = SlotsBought;
+                // Used to decide which convo to show
+                fsm.FsmVariables.GetFsmInt("Upgrades Completed").Value = SlotsBought.Count;
             });
 
         }

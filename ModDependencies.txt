@@ -3,3 +3,5 @@ RandomizerCore
 ItemChanger
 MenuChanger
 ConnectionMetadataInjector
+RandoSettingsManager
+ItemSync

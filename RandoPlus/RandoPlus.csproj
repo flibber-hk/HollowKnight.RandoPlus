@@ -4,19 +4,19 @@
     <TargetFramework>net472</TargetFramework>
     <RootNamespace>RandoPlus</RootNamespace>
     <AssemblyTitle>RandoPlus</AssemblyTitle>
-    <AssemblyVersion>1.4.2.0</AssemblyVersion>
+    <AssemblyVersion>1.5.1.0</AssemblyVersion>
     <Deterministic>true</Deterministic>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
-  
+
   <PropertyGroup>
     <HollowKnightRefs>..\API</HollowKnightRefs>
     <ExportDir>bin\Publish</ExportDir>
   </PropertyGroup>
-  
+
   <Import Project="LocalBuildProperties.props" Condition="Exists('LocalBuildProperties.props')" />
-  
+
   <ItemGroup>
     <None Remove="Resources\**\*.png" />
     <None Remove="Resources\**\*.json" />
@@ -27,7 +27,7 @@
     <EmbeddedResource Include="Resources\**\*.json" />
     <EmbeddedResource Include="Resources\**\*.xml" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
       <HintPath>$(HollowKnightRefs)\Assembly-CSharp.dll</HintPath>
@@ -37,6 +37,9 @@
     </Reference>
     <Reference Include="ItemChanger">
       <HintPath>$(HollowKnightRefs)\Mods\ItemChanger\ItemChanger.dll</HintPath>
+    </Reference>
+    <Reference Include="ItemSync">
+      <HintPath>$(HollowKnightRefs)\Mods\ItemSync\ItemSync.dll</HintPath>
     </Reference>
     <Reference Include="MenuChanger">
       <HintPath>$(HollowKnightRefs)\Mods\MenuChanger\MenuChanger.dll</HintPath>
@@ -59,6 +62,9 @@
     <Reference Include="MonoMod.Utils">
       <HintPath>$(HollowKnightRefs)\MonoMod.Utils.dll</HintPath>
     </Reference>
+    <Reference Include="MultiWorldLib">
+      <HintPath>$(HollowKnightRefs)\Mods\MultiWorldLib\MultiWorldLib.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(HollowKnightRefs)\Newtonsoft.Json.dll</HintPath>
@@ -74,6 +80,9 @@
     </Reference>
     <Reference Include="RandomizerMod" Condition="Exists('$(HollowKnightRefs)\Mods\Randomizer 4')">
       <HintPath>$(HollowKnightRefs)\Mods\Randomizer 4\RandomizerMod.dll</HintPath>
+    </Reference>
+    <Reference Include="RandoSettingsManager">
+      <HintPath>$(HollowKnightRefs)\Mods\RandoSettingsManager\RandoSettingsManager.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
       <HintPath>$(HollowKnightRefs)\UnityEngine.dll</HintPath>
@@ -116,7 +125,7 @@
       <HintPath>$(HollowKnightRefs)\UnityEngine.UIModule.dll</HintPath>
     </Reference>
   </ItemGroup>
-  
+
   <Target Name="ClearReferenceCopyLocalPaths" AfterTargets="ResolveAssemblyReferences">
     <ItemGroup>
       <ReferenceCopyLocalPaths Remove="@(ReferenceCopyLocalPaths)" />
@@ -148,5 +157,5 @@
       <VersionNumber Include="@(Targets->'%(Version)')" />
     </ItemGroup>
     <WriteLinesToFile File="$(ExportDir)/$(TargetName)/metadata/version.txt" Lines="@(VersionNumber)" Overwrite="true" Encoding="UTF-8" />
-  </Target>  
+  </Target>
 </Project>

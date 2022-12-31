@@ -1,4 +1,5 @@
-﻿using HutongGames.PlayMaker.Actions;
+﻿using HutongGames.PlayMaker;
+using HutongGames.PlayMaker.Actions;
 using ItemChanger;
 using ItemChanger.Extensions;
 using ItemChanger.FsmStateActions;
@@ -8,38 +9,74 @@ namespace RandoPlus.RemoveUsefulItems.Items
 {
     public class NoLanternModule : ItemChanger.Modules.Module
     {
-        public bool hasLanternAny => gotNoLantern || PlayerData.instance.GetBool(nameof(PlayerData.hasLantern));
+        // This should be synced with hasLantern unless lantern is given through a separate mechanism.
         public bool gotNoLantern { get; set; }
+
+        /// <summary>
+        /// If this is true, hazard respawns will stay when the player has not lantern. If not, then
+        /// the vanilla behaviour (respawn at start of room) will persist when obtaining not lantern.
+        /// </summary>
+        public bool KeepHazardRespawnsWithNoLantern { get; set; } = false;
 
         public override void Initialize()
         {
             Modding.ModHooks.GetPlayerBoolHook += OverrideBoolGet;
-            Events.AddFsmEdit(SceneNames.Mines_33, new("Toll Gate Machine", "Disable if No Lantern"), RemoveLanternCheck);
-            Events.AddFsmEdit(SceneNames.Mines_33, new("Toll Gate Machine (1)", "Disable if No Lantern"), RemoveLanternCheck);
-            Events.AddFsmEdit(SceneNames.Fungus1_35, new("Ghost Warrior NPC", "FSM"), RemoveLanternCheck);
-            Events.AddFsmEdit(SceneNames.Fungus1_35, new("Ghost Warrior NPC", "Conversation Control"), SetHazardRespawn);
+            Modding.ModHooks.SetPlayerBoolHook += OverrideSetBool;
             Events.AddLanguageEdit(new("UI", "INV_NAME_LANTERN"), EditLanternName);
             Events.AddLanguageEdit(new("UI", "INV_DESC_LANTERN"), EditLanternDesc);
-            Events.AddFsmEdit(new("Equipment", "Build Equipment List"), ShowNoLanternInInventory);
-            Modding.ModHooks.SetPlayerBoolHook += OverrideSetBool;
+            Events.AddFsmEdit(new("Vignette", "Darkness Control"), RemoveLanternFromVignette);
+            On.DeactivateInDarknessWithoutLantern.Start += RemoveHazardRespawnsWithNoLantern;
+            Events.AddFsmEdit(SceneNames.Fungus1_35, new("Ghost Warrior NPC", "Conversation Control"), SetNoEyesHazardRespawn);
         }
 
         public override void Unload()
         {
             Modding.ModHooks.GetPlayerBoolHook -= OverrideBoolGet;
-            Events.RemoveFsmEdit(SceneNames.Mines_33, new("Toll Gate Machine", "Disable if No Lantern"), RemoveLanternCheck);
-            Events.RemoveFsmEdit(SceneNames.Mines_33, new("Toll Gate Machine (1)", "Disable if No Lantern"), RemoveLanternCheck);
-            Events.RemoveFsmEdit(SceneNames.Fungus1_35, new("Ghost Warrior NPC", "FSM"), RemoveLanternCheck);
-            Events.RemoveFsmEdit(SceneNames.Fungus1_35, new("Ghost Warrior NPC", "Conversation Control"), SetHazardRespawn);
+            Modding.ModHooks.SetPlayerBoolHook -= OverrideSetBool;
             Events.RemoveLanguageEdit(new("UI", "INV_NAME_LANTERN"), EditLanternName);
             Events.RemoveLanguageEdit(new("UI", "INV_DESC_LANTERN"), EditLanternDesc);
-            Events.RemoveFsmEdit(new("Equipment", "Build Equipment List"), ShowNoLanternInInventory);
-            Modding.ModHooks.SetPlayerBoolHook -= OverrideSetBool;
+            Events.RemoveFsmEdit(new("Vignette", "Darkness Control"), RemoveLanternFromVignette);
+            On.DeactivateInDarknessWithoutLantern.Start -= RemoveHazardRespawnsWithNoLantern;
+            Events.RemoveFsmEdit(SceneNames.Fungus1_35, new("Ghost Warrior NPC", "Conversation Control"), SetNoEyesHazardRespawn);
         }
 
-        private void ShowNoLanternInInventory(PlayMakerFSM fsm)
+        private void SetNoEyesHazardRespawn(PlayMakerFSM fsm)
         {
-            fsm.GetState("Lantern").GetFirstActionOfType<PlayerDataBoolTest>().boolName.Value = nameof(hasLanternAny);
+            if (KeepHazardRespawnsWithNoLantern) return;
+
+            fsm.GetState("Start Fight").AddFirstAction(new Lambda(() =>
+            {
+                // Compatibility with mods that change the darkness level of F1_35
+                if (GameManager.instance.sm.darknessLevel == 2)
+                {
+                    HeroController.instance.SetHazardRespawn(HeroController.instance.transform.position, true);
+                }
+            }));
+        }
+
+        // TODO - this should be an IL hook
+        private void RemoveHazardRespawnsWithNoLantern(On.DeactivateInDarknessWithoutLantern.orig_Start orig, DeactivateInDarknessWithoutLantern self)
+        {
+            orig(self);
+
+            if (KeepHazardRespawnsWithNoLantern) return;
+
+            // If gotNoLantern is false, then assume also hasLantern is false and orig(self) would correctly deactivate the object
+            // If gotNoLantern is true, then assume also hasLantern is true so orig(self) would incorrectly fail to deactivate the object.
+            if (self.GetComponent<HazardRespawnTrigger>() != null
+                && gotNoLantern
+                && self.gameObject.activeSelf
+                && GameManager.instance.sm.darknessLevel == 2)
+            {
+                self.gameObject.SetActive(false);
+                return;
+            }
+        }
+
+        private void RemoveLanternFromVignette(PlayMakerFSM fsm)
+        {
+            fsm.GetState("Dark Lev Check").RemoveFirstActionOfType<PlayerDataBoolTest>();
+            fsm.GetState("Scene Reset").RemoveFirstActionOfType<PlayerDataBoolTest>();
         }
 
         private bool OverrideSetBool(string boolName, bool value)
@@ -48,6 +85,7 @@ namespace RandoPlus.RemoveUsefulItems.Items
             {
                 case nameof(gotNoLantern):
                     gotNoLantern = value;
+                    PlayerData.instance.SetBool(nameof(PlayerData.hasLantern), value);
                     break;
             }
             return value;
@@ -63,24 +101,10 @@ namespace RandoPlus.RemoveUsefulItems.Items
             value = "Not " + value;
         }
 
-        private void SetHazardRespawn(PlayMakerFSM fsm)
-        {
-            fsm.GetState("Start Fight").AddFirstAction(new Lambda(() => 
-            {
-                HeroController.instance.SetHazardRespawn(HeroController.instance.transform.position, true);
-            }));
-        }
-
-        private void RemoveLanternCheck(PlayMakerFSM fsm)
-        {
-            fsm.GetState("Check").GetFirstActionOfType<PlayerDataBoolTest>().boolName = nameof(hasLanternAny);
-        }
-
         private bool OverrideBoolGet(string name, bool orig)
         {
             return name switch
             {
-                nameof(hasLanternAny) => hasLanternAny,
                 nameof(gotNoLantern) => gotNoLantern,
                 _ => orig
             };

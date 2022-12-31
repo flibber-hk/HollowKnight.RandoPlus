@@ -13,9 +13,23 @@ namespace RandoPlus.AreaRestriction
     {
         public static void Hook()
         {
+            RequestBuilder.OnUpdate.Subscribe(99.9f, ApplyPadders);
             RequestBuilder.OnUpdate.Subscribe(150f, ApplyAreaLimit);
         }
 
+        private static void ApplyPadders(RequestBuilder rb)
+        {
+            if (!RandoPlus.GS.AreaBlitz && !RandoPlus.GS.FullFlexibleCount)
+            {
+                return;
+            }
+
+            // Apply padders just before rando applies them
+            foreach (ItemGroupBuilder igb in rb.EnumerateItemGroups())
+            {
+                igb.LocationPadder ??= GetPadder(rb.rng, igb);
+            }
+        }
 
         private static void ApplyAreaLimit(RequestBuilder rb)
         {
@@ -25,12 +39,19 @@ namespace RandoPlus.AreaRestriction
             AreaRestriction.ExcludedAreas.Clear();
 
             // Select areas
+            // Note - the candidate areas include any map area with at least one randomized location whose only
+            // map area is the given. It is intentional that map areas, all of whose locations are also found
+            // in another map area, are excluded.
             HashSet<string> DistinctAreas = new();
             foreach (string loc in rb.EnumerateItemGroups().SelectMany(x => x.Locations.EnumerateDistinct()))
             {
                 if (rb.TryGetLocationDef(loc, out LocationDef def))
                 {
-                    DistinctAreas.Add(def.MapArea);
+                    string mapArea = def.MapArea;
+                    if (!string.IsNullOrWhiteSpace(mapArea))
+                    {
+                        DistinctAreas.Add(mapArea);
+                    }
                 }
             }
 
@@ -78,8 +99,6 @@ namespace RandoPlus.AreaRestriction
                 {
                     igb.Locations.RemoveAll(loc);
                 }
-
-                igb.LocationPadder = GetPadder(rb.rng, igb);
             }
         }
 
@@ -87,7 +106,7 @@ namespace RandoPlus.AreaRestriction
 
         private static bool IsPlaceable(string loc, RequestBuilder rb)
         {
-            if (rb.TryGetLocationDef(loc, out LocationDef def) && !string.IsNullOrEmpty(def.MapArea))
+            if (rb.TryGetLocationDef(loc, out LocationDef def) && !string.IsNullOrWhiteSpace(def.MapArea))
             {
                 return AreaRestriction.PlacedAreas.Contains(def.MapArea);
             }

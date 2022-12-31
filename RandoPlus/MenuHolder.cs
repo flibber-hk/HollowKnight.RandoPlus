@@ -9,40 +9,70 @@ namespace RandoPlus
 {
     public class MenuHolder
     {
-        internal MenuPage RandoPlus;
+        internal MenuPage RandoPlusMenuPage;
         internal MenuElementFactory<GlobalSettings> rpMEF;
-        internal VerticalItemPanel rpVIP;
+        internal GridItemPanel rpGIP;
 
         internal SmallButton JumpToRPButton;
 
-        private static MenuHolder _instance = null;
-        internal static MenuHolder Instance => _instance ?? (_instance = new MenuHolder());
+        internal static MenuHolder Instance { get; private set; }
 
         public static void OnExitMenu()
         {
-            _instance = null;
+            Instance = null;
         }
 
         public static void Hook()
         {
-            RandomizerMenuAPI.AddMenuPage(Instance.ConstructMenu, Instance.HandleButton);
+            RandomizerMenuAPI.AddMenuPage(ConstructMenu, HandleButton);
             MenuChangerMod.OnExitMainMenu += OnExitMenu;
         }
 
-        private bool HandleButton(MenuPage landingPage, out SmallButton button)
+        private static bool HandleButton(MenuPage landingPage, out SmallButton button)
         {
-            JumpToRPButton = new(landingPage, Localize("RandoPlus"));
-            JumpToRPButton.AddHideAndShowEvent(landingPage, RandoPlus);
-            button = JumpToRPButton;
+            button = Instance.JumpToRPButton;
             return true;
         }
 
-        private void ConstructMenu(MenuPage landingPage)
+        private void SetTopLevelButtonColor()
         {
-            RandoPlus = new MenuPage(Localize("RandoPlus"), landingPage);
-            rpMEF = new(RandoPlus, global::RandoPlus.RandoPlus.GS);
-            rpVIP = new(RandoPlus, new(0, 300), 50f, true, rpMEF.Elements);
+            if (JumpToRPButton != null)
+            {
+                JumpToRPButton.Text.color = RandoPlus.GS.Any ? Colors.TRUE_COLOR : Colors.DEFAULT_COLOR;
+            }
+        }
+
+        private static void ConstructMenu(MenuPage landingPage) => Instance = new(landingPage);
+
+        private MenuHolder(MenuPage landingPage)
+        {
+            RandoPlusMenuPage = new MenuPage(Localize("RandoPlus"), landingPage);
+            rpMEF = new(RandoPlusMenuPage, RandoPlus.GS);
+            foreach (IValueElement e in rpMEF.Elements)
+            {
+                e.SelfChanged += obj => SetTopLevelButtonColor();
+            }
+
+            rpGIP = new(
+                RandoPlusMenuPage, 
+                SpaceParameters.TOP_CENTER_UNDER_TITLE, 
+                2, 
+                SpaceParameters.VSPACE_SMALL,
+                SpaceParameters.HSPACE_MEDIUM,
+                true,
+                rpMEF.Elements
+                );
             Localize(rpMEF);
+
+            JumpToRPButton = new(landingPage, Localize("RandoPlus"));
+            JumpToRPButton.AddHideAndShowEvent(landingPage, RandoPlusMenuPage);
+            SetTopLevelButtonColor();
+        }
+
+        internal void ResetMenu()
+        {
+            rpMEF.SetMenuValues(RandoPlus.GS);
+            SetTopLevelButtonColor();
         }
     }
 }

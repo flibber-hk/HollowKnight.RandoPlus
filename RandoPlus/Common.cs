@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Modding;
 using Newtonsoft.Json;
+using RandomizerCore.Exceptions;
+using RandomizerCore.Randomization;
 using RandomizerMod.Logging;
+using RandomizerMod.RC;
 
 namespace RandoPlus
 {

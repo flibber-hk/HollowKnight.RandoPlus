@@ -37,8 +37,14 @@ namespace RandoPlus
             AreaRestriction.AreaRestriction.Hook(rando, ic);
             NailUpgrades.RandomizableNailUpgrades.Hook(rando, ic);
             Ghost.GhostNPCs.Hook(rando, ic);
+            Advanced.AdvancedRequests.Hook(rando, ic);
 
             Common.Hook(rando, ic);
+
+            if (ModHooks.GetMod("RandoSettingsManager") is Mod)
+            {
+                RandoSettingsManagerInterop.Hook();
+            }
         }
     }
 }
