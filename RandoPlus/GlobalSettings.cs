@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 
 namespace RandoPlus
@@ -7,6 +8,16 @@ namespace RandoPlus
 
     public class GlobalSettings
     {
+        private static readonly FieldInfo[] _fieldInfos;
+
+        static GlobalSettings()
+        {
+            _fieldInfos = typeof(GlobalSettings)
+                .GetFields(BindingFlags.Instance | BindingFlags.Public)
+                .Where(fi => fi.GetCustomAttribute<HashIgnoreAttribute>() is null)
+                .ToArray();
+        }
+
         public bool DefineRefs;
 
         public bool MrMushroom;
@@ -46,13 +57,8 @@ namespace RandoPlus
         {
             gs ??= new();
 
-            foreach (FieldInfo fi in GetType().GetFields(BindingFlags.Public | BindingFlags.Instance))
+            foreach (FieldInfo fi in _fieldInfos)
             {
-                if (fi.GetCustomAttribute<HashIgnoreAttribute>() is not null)
-                {
-                    continue;
-                }
-
                 object val = fi.GetValue(gs);
                 fi.SetValue(this, val);
             }
