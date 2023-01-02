@@ -12,6 +12,7 @@ namespace RandoPlus.GhostEssence.Locations
     public class GhostLocation : AutoLocation
     {
         public string objectName;
+        public bool Revek { get; set; }
 
         protected override void OnLoad()
         {
@@ -22,6 +23,7 @@ namespace RandoPlus.GhostEssence.Locations
         {
             Events.RemoveFsmEdit(sceneName, new(objectName, "ghost_npc_death"), ModifyGhostDeath);
         }
+
         private void ModifyGhostDeath(PlayMakerFSM fsm)
         {
             FsmState impact = fsm.GetState("Impact");
@@ -45,6 +47,12 @@ namespace RandoPlus.GhostEssence.Locations
             // We do not want to increment the count for alive ghosts that have previously been checked.
             FsmState glade = fsm.GetState("Spirit Glade");
             glade.AddFirstAction(new DelegateBoolTest(() => Placement.CheckVisitedAny(VisitState.Accepted | VisitState.ObtainedAnyItem), "FINISHED", null));
+
+            // If the ghost is not Revek, do not allow it to switch to Revek's sprite
+            if (!Revek && fsm.Fsm.GlobalTransitions is not null)
+            {
+                fsm.Fsm.GlobalTransitions = fsm.Fsm.GlobalTransitions.Where(x => x.EventName != "REVEK DEJECTED").ToArray();
+            }
         }
     }
 }
