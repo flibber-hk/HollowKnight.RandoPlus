@@ -34,8 +34,6 @@ namespace RandoPlus.GhostEssence
             ghostLocation.Revek = info.Name == GhostNames.Ghost_Essence_Revek;
             SupplementalMetadataTagFactory.AddTagToLocation(ghostLocation, poolGroup: Consts.GhostPoolGroup, vanillaItem: ghostLocation.name);
 
-            // TODO - Special case for Revek?
-
             return ghostLocation;
         }
 

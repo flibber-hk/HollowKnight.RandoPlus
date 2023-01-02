@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using HutongGames.PlayMaker;
 using HutongGames.PlayMaker.Actions;
@@ -17,11 +18,22 @@ namespace RandoPlus.GhostEssence.Locations
         protected override void OnLoad()
         {
             Events.AddFsmEdit(sceneName, new(objectName, "ghost_npc_death"), ModifyGhostDeath);
+            if (!Revek) Events.AddFsmEdit(sceneName, new(objectName, "Conversation Control"), FixRevekSprite);
         }
 
         protected override void OnUnload()
         {
             Events.RemoveFsmEdit(sceneName, new(objectName, "ghost_npc_death"), ModifyGhostDeath);
+            if (!Revek) Events.RemoveFsmEdit(sceneName, new(objectName, "Conversation Control"), FixRevekSprite);
+        }
+
+        private void FixRevekSprite(PlayMakerFSM fsm)
+        {
+            // If the ghost is not Revek, do not allow it to switch to Revek's sprite
+            if (!Revek && fsm.Fsm.GlobalTransitions is not null)
+            {
+                fsm.Fsm.GlobalTransitions = fsm.Fsm.GlobalTransitions.Where(x => x.EventName != "REVEK DEJECTED").ToArray();
+            }
         }
 
         private void ModifyGhostDeath(PlayMakerFSM fsm)
@@ -30,6 +42,7 @@ namespace RandoPlus.GhostEssence.Locations
             List<FsmStateAction> fsmStateActions = impact.Actions.ToList();
             fsmStateActions.RemoveAt(fsmStateActions.Count - 1);
             fsmStateActions.RemoveAt(fsmStateActions.Count - 1);
+            fsmStateActions.RemoveAt(6);  // Spawns the essence get effect
             fsmStateActions.Add(new Lambda(() => Placement.AddVisitFlag(VisitState.Accepted)));
             fsmStateActions.Add(new AsyncLambda(GiveAllAsync(fsm.transform)));
             impact.Actions = fsmStateActions.ToArray();
@@ -47,12 +60,6 @@ namespace RandoPlus.GhostEssence.Locations
             // We do not want to increment the count for alive ghosts that have previously been checked.
             FsmState glade = fsm.GetState("Spirit Glade");
             glade.AddFirstAction(new DelegateBoolTest(() => Placement.CheckVisitedAny(VisitState.Accepted | VisitState.ObtainedAnyItem), "FINISHED", null));
-
-            // If the ghost is not Revek, do not allow it to switch to Revek's sprite
-            if (!Revek && fsm.Fsm.GlobalTransitions is not null)
-            {
-                fsm.Fsm.GlobalTransitions = fsm.Fsm.GlobalTransitions.Where(x => x.EventName != "REVEK DEJECTED").ToArray();
-            }
         }
     }
 }
