@@ -11,12 +11,12 @@
   },
   {
     "name": "Middle_Glade",
-    "logic": "Lower_Glade + (WINGS | SWIM + LEFTCLAW | RIGHTCLAW + LEFTDASH)",
+    "logic": "Lower_Glade + (WINGS | SWIM + LEFTCLAW | RIGHTCLAW + LEFTDASH | FULLCLAW)",
     "Stateless": true
   },
   {
     "name": "Upper_Glade",
-    "logic": "Middle_Glade + (LEFTCLAW | RIGHTCLAW + WINGS)",
+    "logic": "Middle_Glade + (LEFTCLAW | RIGHTCLAW + WINGS | FULLDASH + WINGS | RIGHTCLAW + RIGHTDASH + DIFFICULTSKIPS)",
     "Stateless": true
   }
 ]
