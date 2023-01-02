@@ -35,6 +35,12 @@ namespace RandoPlus.GhostEssence
             return ghostLocation;
         }
 
+        public static void DefineItemsAndLocations()
+        {
+            DefineItems();
+            DefineLocations();
+        }
+
         public static void DefineItems()
         {
             // TODO - use static method on EssenceItem to define this (when available)
@@ -74,7 +80,7 @@ namespace RandoPlus.GhostEssence
 
             foreach (GhostInfo info in GhostInfos)
             {
-                DefineGhostLocation(info);
+                Finder.DefineCustomLocation(DefineGhostLocation(info));
             }
         }
     }
