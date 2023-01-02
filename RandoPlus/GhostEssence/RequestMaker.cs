@@ -31,7 +31,7 @@ namespace RandoPlus.GhostEssence
 
             static bool NotVanillaGhost(IRandoItem item, IRandoLocation location)
             {
-                if (GhostNames.Names.Contains(location.Name) && item.Name == location.Name)
+                if (GhostNames.ToArray().Contains(location.Name) && item.Name == location.Name)
                 {
                     return false;
                 }
@@ -51,7 +51,7 @@ namespace RandoPlus.GhostEssence
         {
             if (!RandoPlus.GS.Any) return;
 
-            foreach (string ghost in GhostNames.Names)
+            foreach (string ghost in GhostNames.ToArray())
             {
                 rb.EditItemRequest(ghost, info =>
                 {
@@ -94,7 +94,7 @@ namespace RandoPlus.GhostEssence
         {
             if (RandoPlus.GS.GhostEssence)
             {
-                foreach (string ghost in GhostNames.Names)
+                foreach (string ghost in GhostNames.ToArray())
                 {
                     rb.AddItemByName(ghost);
                     rb.AddLocationByName(ghost);
@@ -102,7 +102,7 @@ namespace RandoPlus.GhostEssence
             }
             else if (RandoPlus.GS.DefineRefs)
             {
-                foreach (string ghost in GhostNames.Names)
+                foreach (string ghost in GhostNames.ToArray())
                 {
                     rb.AddToVanilla(ghost, ghost);
                 }

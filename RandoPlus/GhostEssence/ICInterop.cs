@@ -28,7 +28,7 @@ namespace RandoPlus.GhostEssence
                 Finder.DefineCustomItem(oneEssence);
             }
 
-            foreach(string ghostName in GhostNames.Names)
+            foreach (string ghostName in GhostNames.ToArray())
             {
                 DefineItem(ghostName);
             }

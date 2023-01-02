@@ -33,7 +33,7 @@ namespace RandoPlus.GhostEssence
             if (!RandoPlus.GS.Any) return;
 
             Term essence = lmb.GetTerm("ESSENCE");
-            foreach(string ghost in GhostNames.Names)
+            foreach (string ghost in GhostNames.ToArray())
             {
                 lmb.AddItem(new SingleItem(ghost, new TermValue(essence, 1)));
             }
