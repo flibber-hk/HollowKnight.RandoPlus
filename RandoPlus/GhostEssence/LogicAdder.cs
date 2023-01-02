@@ -24,8 +24,11 @@ namespace RandoPlus.GhostEssence
         {
             if (!RandoPlus.GS.Any) return;
 
-            using Stream s = typeof(LogicAdder).Assembly.GetManifestResourceStream("RandoPlus.Resources.GhostEssence.logic.json");
-            lmb.DeserializeJson(LogicManagerBuilder.JsonType.Locations, s);
+            using Stream wpStream = typeof(LogicAdder).Assembly.GetManifestResourceStream("RandoPlus.Resources.GhostEssence.waypoints.json");
+            lmb.DeserializeJson(LogicManagerBuilder.JsonType.Waypoints, wpStream);
+
+            using Stream locStream = typeof(LogicAdder).Assembly.GetManifestResourceStream("RandoPlus.Resources.GhostEssence.locations.json");
+            lmb.DeserializeJson(LogicManagerBuilder.JsonType.Locations, locStream);
         }
 
         private static void DefineTermsAndItems(GenerationSettings gs, LogicManagerBuilder lmb)

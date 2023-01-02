@@ -1,0 +1,106 @@
+﻿[
+  {
+    "name": "Ghost_Essence-Gravedigger",
+    "logic": "Town + DREAMNAIL"
+  },
+  {
+    "name": "Ghost_Essence-Vespa",
+    "logic": "Hive_05[left1] + Defeated_Hive_Knight + DREAMNAIL"
+  },
+  {
+    "name": "Ghost_Essence-Joni",
+    "logic": "Cliffs_05[left1] + DREAMNAIL"
+  },
+  {
+    "name": "Ghost_Essence-Marissa",
+    "logic": "(Ruins_Bathhouse[door1] | Ruins_Bathhouse[right1]) + DREAMNAIL"
+  },
+  {
+    "name": "Ghost_Essence-Poggy_Thorax",
+    "logic": "*Rancid_Egg-City_of_Tears_Pleasure_House + DREAMNAIL"
+  },
+  {
+    "name": "Ghost_Essence-Caelif_Fera_Orthop",
+    "logic": "*Queen's_Gardens_Map + DREAMNAIL"
+  },
+  {
+    "name": "Ghost_Essence-Cloth",
+    "logic": "Fungus3_23[left1] + Defeated_Traitor_Lord + Rescued_Cloth + DREAMNAIL"
+  },
+  {
+    "name": "Ghost_Essence-Revek",
+    "logic": "Upper_Glade + DREAMNAIL"
+  },
+  {
+    "name": "Ghost_Essence-Millybug",
+    "logic": "Lower_Glade + DREAMNAIL"
+  },
+  {
+    "name": "Ghost_Essence-Caspian",
+    "logic": "Lower_Glade + DREAMNAIL"
+  },
+  {
+    "name": "Ghost_Essence-Atra",
+    "logic": "Middle_Glade + DREAMNAIL"
+  },
+  {
+    "name": "Ghost_Essence-Dr_Chagax",
+    "logic": "Middle_Glade + DREAMNAIL"
+  },
+  {
+    "name": "Ghost_Essence-Garro",
+    "logic": "Upper_Glade + DREAMNAIL"
+  },
+  {
+    "name": "Ghost_Essence-Kcin",
+    "logic": "Upper_Glade + DREAMNAIL"
+  },
+  {
+    "name": "Ghost_Essence-Karina",
+    "logic": "Upper_Glade + DREAMNAIL"
+  },
+  {
+    "name": "Ghost_Essence-Hundred_Nail_Warrior",
+    "logic": "Upper_Glade + DREAMNAIL"
+  },
+  {
+    "name": "Ghost_Essence-Grohac",
+    "logic": "Upper_Glade + DREAMNAIL"
+  },
+  {
+    "name": "Ghost_Essence-Perpetos_Noo",
+    "logic": "Upper_Glade + DREAMNAIL"
+  },
+  {
+    "name": "Ghost_Essence-Molten",
+    "logic": "Upper_Glade + DREAMNAIL"
+  },
+  {
+    "name": "Ghost_Essence-Magnus_Strong",
+    "logic": "Upper_Glade + DREAMNAIL"
+  },
+  {
+    "name": "Ghost_Essence-Waldie",
+    "logic": "Upper_Glade + DREAMNAIL"
+  },
+  {
+    "name": "Ghost_Essence-Wayner",
+    "logic": "Upper_Glade + DREAMNAIL"
+  },
+  {
+    "name": "Ghost_Essence-Wyatt",
+    "logic": "Upper_Glade + DREAMNAIL"
+  },
+  {
+    "name": "Ghost_Essence-Hex",
+    "logic": "Upper_Glade + DREAMNAIL"
+  },
+  {
+    "name": "Ghost_Essence-Thistlewind",
+    "logic": "Upper_Glade + DREAMNAIL"
+  },
+  {
+    "name": "Ghost_Essence-Boss",
+    "logic": "Upper_Glade + DREAMNAIL"
+  }
+]
