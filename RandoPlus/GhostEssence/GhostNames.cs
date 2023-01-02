@@ -3,8 +3,7 @@ using System.Reflection;
 
 namespace RandoPlus.GhostEssence
 {
-    // TODO - rename ghostlogic.json back to logic.json when RCG is fixed
-    [RandoConstantGenerators.GenerateJsonConsts("$[*].name", "ghostlogic.json")]
+    [RandoConstantGenerators.GenerateJsonConsts("$[*].Name", "ghostdata.json")]
     public static partial class GhostNames
     {
         public static string[] ToArray()

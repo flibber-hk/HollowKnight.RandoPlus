@@ -14,7 +14,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Modding;
 
-namespace RandoPlus.GhostEssence
+namespace RandoPlus.GhostEssence.Locations
 {
     public class GhostLocation : AutoLocation
     {
@@ -22,7 +22,7 @@ namespace RandoPlus.GhostEssence
 
         protected override void OnLoad()
         {
-            Events.AddFsmEdit(sceneName, new(objectName, "ghost_npc_death"), ModifyGhostDeath);            
+            Events.AddFsmEdit(sceneName, new(objectName, "ghost_npc_death"), ModifyGhostDeath);
         }
 
         protected override void OnUnload()

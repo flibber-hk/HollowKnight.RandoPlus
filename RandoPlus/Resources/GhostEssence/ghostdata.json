@@ -1,0 +1,127 @@
+﻿[
+  {
+    "Name": "Ghost_Essence-Gravedigger",
+    "SceneName": "Town",
+    "ObjectName": "Gravedigger NPC"
+  },
+  {
+    "Name": "Ghost_Essence-Vespa",
+    "SceneName": "Hive_05",
+    "ObjectName": "Vespa NPC"
+  },
+  {
+    "Name": "Ghost_Essence-Joni",
+    "SceneName": "Cliffs_05",
+    "ObjectName": "Ghost NPC Joni"
+  },
+  {
+    "Name": "Ghost_Essence-Marissa",
+    "SceneName": "Ruins_Bathhouse",
+    "ObjectName": "Ghost NPC"
+  },
+  {
+    "Name": "Ghost_Essence-Poggy_Thorax",
+    "SceneName": "Ruins_Elevator",
+    "ObjectName": "Ghost NPC"
+  },
+  {
+    "Name": "Ghost_Essence-Caelif_&_Fera_Orthop",
+    "SceneName": "Fungus1_24",
+    "ObjectName": "Ghost NPC"
+  },
+  {
+    "Name": "Ghost_Essence-Revek",
+    "SceneName": "RestingGrounds_08",
+    "ObjectName": "Ghost revek"
+  },
+  {
+    "Name": "Ghost_Essence-Millybug",
+    "SceneName": "RestingGrounds_08",
+    "ObjectName": "Ghost milly"
+  },
+  {
+    "Name": "Ghost_Essence-Caspian",
+    "SceneName": "RestingGrounds_08",
+    "ObjectName": "Ghost caspian"
+  },
+  {
+    "Name": "Ghost_Essence-Atra",
+    "SceneName": "RestingGrounds_08",
+    "ObjectName": "Ghost atra"
+  },
+  {
+    "Name": "Ghost_Essence-Dr_Chagax",
+    "SceneName": "RestingGrounds_08",
+    "ObjectName": "Ghost chagax"
+  },
+  {
+    "Name": "Ghost_Essence-Garro",
+    "SceneName": "RestingGrounds_08",
+    "ObjectName": "Ghost garro"
+  },
+  {
+    "Name": "Ghost_Essence-Kcin",
+    "SceneName": "RestingGrounds_08",
+    "ObjectName": "Ghost kcin"
+  },
+  {
+    "Name": "Ghost_Essence-Karina",
+    "SceneName": "RestingGrounds_08",
+    "ObjectName": "karina"
+  },
+  {
+    "Name": "Ghost_Essence-Hundred_Nail_Warrior",
+    "SceneName": "RestingGrounds_08",
+    "ObjectName": "Ghost NPC 100 nail"
+  },
+  {
+    "Name": "Ghost_Essence-Grohac",
+    "SceneName": "RestingGrounds_08",
+    "ObjectName": "Ghost grohac"
+  },
+  {
+    "Name": "Ghost_Essence-Perpetos_Noo",
+    "SceneName": "RestingGrounds_08",
+    "ObjectName": "Ghost perpetos"
+  },
+  {
+    "Name": "Ghost_Essence-Molten",
+    "SceneName": "RestingGrounds_08",
+    "ObjectName": "Ghost molten"
+  },
+  {
+    "Name": "Ghost_Essence-Magnus_Strong",
+    "SceneName": "RestingGrounds_08",
+    "ObjectName": "Ghost magnus"
+  },
+  {
+    "Name": "Ghost_Essence-Waldie",
+    "SceneName": "RestingGrounds_08",
+    "ObjectName": "Ghost waldie"
+  },
+  {
+    "Name": "Ghost_Essence-Wayner",
+    "SceneName": "RestingGrounds_08",
+    "ObjectName": "Ghost wayner"
+  },
+  {
+    "Name": "Ghost_Essence-Wyatt",
+    "SceneName": "RestingGrounds_08",
+    "ObjectName": "Ghost wyatt"
+  },
+  {
+    "Name": "Ghost_Essence-Hex",
+    "SceneName": "RestingGrounds_08",
+    "ObjectName": "Ghost hex"
+  },
+  {
+    "Name": "Ghost_Essence-Thistlewind",
+    "SceneName": "RestingGrounds_08",
+    "ObjectName": "Ghost thistlewind"
+  },
+  {
+    "Name": "Ghost_Essence-Boss",
+    "SceneName": "RestingGrounds_08",
+    "ObjectName": "Ghost boss"
+  }
+]
