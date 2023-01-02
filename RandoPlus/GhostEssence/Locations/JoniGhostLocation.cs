@@ -36,10 +36,22 @@ namespace RandoPlus.GhostEssence.Locations
 
             // If they checked Joni
             idle.AddLastAction(new DelegateBoolTest(
-                () => new PlacementAllObtainedBool(LocationNames.Jonis_Blessing, new BoxedBool(PlayerData.instance.GetBool(nameof(PlayerData.gotCharm_27)))).Value,
+                JonisBlessingCollected,
                 "SHINY PICKED UP",
                 null));
             
+        }
+
+        private static bool JonisBlessingCollected()
+        {
+            if (ItemChanger.Internal.Ref.Settings.Placements.TryGetValue(LocationNames.Jonis_Blessing, out AbstractPlacement pmt))
+            {
+                return pmt.CheckVisitedAny(VisitState.ObtainedAnyItem);
+            }
+            else
+            {
+                return PlayerData.instance.GetBool(nameof(PlayerData.gotCharm_27));
+            }
         }
     }
 }

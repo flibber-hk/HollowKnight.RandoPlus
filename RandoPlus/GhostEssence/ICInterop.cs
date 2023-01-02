@@ -25,7 +25,7 @@ namespace RandoPlus.GhostEssence
             {
                 GhostNames.Ghost_Essence_Cloth => new ClothGhostLocation(),
                 GhostNames.Ghost_Essence_Joni => new JoniGhostLocation(),
-                _ => new()
+                _ => new GhostLocation()
             };
             ghostLocation.name = info.Name;
             ghostLocation.objectName = info.ObjectName;
