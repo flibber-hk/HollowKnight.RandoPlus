@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using HutongGames.PlayMaker;
 using HutongGames.PlayMaker.Actions;
@@ -7,12 +6,6 @@ using ItemChanger;
 using ItemChanger.Extensions;
 using ItemChanger.FsmStateActions;
 using ItemChanger.Locations;
-using ItemChanger.Placements;
-using ItemChanger.Tags;
-using ItemChanger.Util;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-using Modding;
 
 namespace RandoPlus.GhostEssence.Locations
 {

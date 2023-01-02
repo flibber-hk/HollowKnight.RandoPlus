@@ -25,9 +25,14 @@
     "ObjectName": "Ghost NPC"
   },
   {
-    "Name": "Ghost_Essence-Caelif_&_Fera_Orthop",
+    "Name": "Ghost_Essence-Caelif_Fera_Orthop",
     "SceneName": "Fungus1_24",
     "ObjectName": "Ghost NPC"
+  },
+  {
+    "Name": "Ghost_Essence-Cloth",
+    "SceneName": "Fungus3_23",
+    "ObjectName": "Cloth Ghost NPC"
   },
   {
     "Name": "Ghost_Essence-Revek",

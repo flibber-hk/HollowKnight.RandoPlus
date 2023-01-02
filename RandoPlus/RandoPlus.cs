@@ -28,6 +28,9 @@ namespace RandoPlus
         {
             Log("Initializing Mod...");
 
+            On.DeactivateIfPlayerdataFalse.OnEnable += (o, s) => Log($"FALSE {s.gameObject.name} - {s.boolName}");
+            On.DeactivateIfPlayerdataTrue.OnEnable += (o, s) => Log($"TRUE {s.gameObject.name} - {s.boolName}");
+
             bool rando = ModHooks.GetMod("Randomizer 4") is Mod;
             bool ic = ModHooks.GetMod("ItemChangerMod") is Mod;
 

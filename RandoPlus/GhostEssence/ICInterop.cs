@@ -21,16 +21,19 @@ namespace RandoPlus.GhostEssence
 
         private static AbstractLocation DefineGhostLocation(GhostInfo info)
         {
-            GhostLocation ghostLocation = new()
+            GhostLocation ghostLocation = info.Name switch
             {
-                name = info.Name,
-                objectName = info.ObjectName,
-                flingType = FlingType.DirectDeposit,
-                sceneName = info.SceneName,
+                GhostNames.Ghost_Essence_Cloth => new ClothGhostLocation(),
+                GhostNames.Ghost_Essence_Joni => new JoniGhostLocation(),
+                _ => new()
             };
+            ghostLocation.name = info.Name;
+            ghostLocation.objectName = info.ObjectName;
+            ghostLocation.flingType = FlingType.DirectDeposit;
+            ghostLocation.sceneName = info.SceneName;
             SupplementalMetadataTagFactory.AddTagToLocation(ghostLocation, poolGroup: Consts.GhostPoolGroup, vanillaItem: ghostLocation.name);
 
-            // TODO - Special cases for Joni, Vespa and Cloth
+            // TODO - Special case for Revek?
 
             return ghostLocation;
         }

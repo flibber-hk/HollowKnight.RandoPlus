@@ -20,7 +20,7 @@
     "logic": "(Ruins_Elevator[left1] | Ruins_Elevator[left2]) + DREAMNAIL"
   },
   {
-    "name": "Ghost_Essence-Caelif_&_Fera_Orthop",
+    "name": "Ghost_Essence-Caelif_Fera_Orthop",
     "logic": "Fungus1_24[left1] + (ANYCLAW | WINGS) + DREAMNAIL"
   },
   {
