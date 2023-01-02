@@ -15,14 +15,12 @@ namespace RandoPlus.GhostEssence
         public static void Hook()
         {
             // Add Items and Locations to the pool
-            RequestBuilder.OnUpdate.Subscribe(25, AddGhost);
+            RequestBuilder.OnUpdate.Subscribe(25, AddGhosts);
             // Register the Deranged constraint
             RequestBuilder.OnUpdate.Subscribe(101, DerangeGhostEssence);
             // Set up OnGetGroupFor matcher and define infos for item and locations
             RequestBuilder.OnUpdate.Subscribe(-499, SetupRefs);
-            // Option to dupe Spore Shroom
         }
-
 
         private static void DerangeGhostEssence(RequestBuilder rb)
         {
@@ -31,7 +29,7 @@ namespace RandoPlus.GhostEssence
 
             static bool NotVanillaGhost(IRandoItem item, IRandoLocation location)
             {
-                if (GhostNames.ToArray().Contains(location.Name) && item.Name == location.Name)
+                if (GhostNames.ToArray().Contains(location.Name) && item.Name == Consts.GhostEssenceItemName)
                 {
                     return false;
                 }
@@ -51,19 +49,19 @@ namespace RandoPlus.GhostEssence
         {
             if (!RandoPlus.GS.Any) return;
 
+            rb.EditItemRequest(Consts.GhostEssenceItemName, info =>
+            {
+                info.getItemDef = () => new()
+                {
+                    Name = Consts.GhostEssenceItemName,
+                    Pool = Consts.GhostPoolGroup,
+                    MajorItem = false,
+                    PriceCap = 10,
+                };
+            });
+
             foreach (string ghost in GhostNames.ToArray())
             {
-                rb.EditItemRequest(ghost, info =>
-                {
-                    info.getItemDef = () => new()
-                    {
-                        Name = ghost,
-                        Pool = Consts.GhostPoolGroup,
-                        MajorItem = false,
-                        PriceCap = 10
-                    };
-                });
-
                 rb.EditLocationRequest(ghost, info =>
                 {
                     info.getLocationDef = () => new()
@@ -90,13 +88,13 @@ namespace RandoPlus.GhostEssence
             }
         }
 
-        private static void AddGhost(RequestBuilder rb)
+        private static void AddGhosts(RequestBuilder rb)
         {
             if (RandoPlus.GS.GhostEssence)
             {
+                rb.AddItemByName(Consts.GhostEssenceItemName, GhostNames.ToArray().Length);
                 foreach (string ghost in GhostNames.ToArray())
                 {
-                    rb.AddItemByName(ghost);
                     rb.AddLocationByName(ghost);
                 }
             }

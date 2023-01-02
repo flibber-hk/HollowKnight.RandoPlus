@@ -1,6 +1,7 @@
 ﻿using RandomizerMod.RandomizerData;
 using RandoPlus.Imports;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RandoPlus.GhostEssence
 {
@@ -17,10 +18,7 @@ namespace RandoPlus.GhostEssence
 
         private static void ExportVanillaPool()
         {
-            RandoVanillaTracker.AddInterop(Consts.GhostPoolGroup, () => new List<VanillaDef>()
-            {
-                new("Ghost_Essence-Gravedigger","Ghost_Essence-Gravedigger")
-            });
+            RandoVanillaTracker.AddInterop("Ghost Essence", () => GhostNames.ToArray().Select(name => new VanillaDef(Consts.GhostEssenceItemName, name)).ToList());
         }
     }
 }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using ItemChanger;
+﻿using ItemChanger;
 using ItemChanger.Items;
 using ItemChanger.UIDefs;
 
@@ -11,27 +8,23 @@ namespace RandoPlus.GhostEssence
     {
         public static void DefineItemsAndLocations()
         {
-            void DefineItem(string ghostName)
-            {
-                EssenceItem oneEssence = new()
-                {
-                    name = ghostName,
-                    amount = 1,
-                    UIDef = new MsgUIDef()
-                    {
-                        sprite = new ItemChangerSprite("ShopIcons.Essence"),
-                        shopDesc = new BoxedString("Wield your dream nail and blast the ghost haha"),
-                        name = new LanguageString("UI", "ITEMCHANGER_NAME_ESSENCE_1"),
-                    }
-                };
-                SupplementalMetadataTagFactory.AddTagToItem(oneEssence, poolGroup: Consts.GhostPoolGroup);
-                Finder.DefineCustomItem(oneEssence);
-            }
+            // TODO - use static method on EssenceItem to define this (when available)
 
-            foreach (string ghostName in GhostNames.ToArray())
+            AbstractItem prefab = Finder.GetItem(ItemNames.Boss_Essence_Xero);
+            MsgUIDef prefabDef = (MsgUIDef)prefab.UIDef;
+            EssenceItem oneEssence = new()
             {
-                DefineItem(ghostName);
-            }
+                amount = 1,
+                name = Consts.GhostEssenceItemName,
+                UIDef = new MsgUIDef()
+                {
+                    name = new LanguageString("UI", "ITEMCHANGER_NAME_ESSENCE_1"),
+                    shopDesc = prefabDef.shopDesc,
+                    sprite = prefabDef.sprite
+                }
+            };
+            SupplementalMetadataTagFactory.AddTagToItem(oneEssence, poolGroup: Consts.GhostPoolGroup);
+            Finder.DefineCustomItem(oneEssence);
 
             void DefineLocation(string ghostName, string scene, string objectName)
             {
