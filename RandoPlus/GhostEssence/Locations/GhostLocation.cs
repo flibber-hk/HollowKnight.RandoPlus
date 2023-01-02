@@ -28,6 +28,7 @@ namespace RandoPlus.GhostEssence.Locations
             List<FsmStateAction> fsmStateActions = impact.Actions.ToList();
             fsmStateActions.RemoveAt(fsmStateActions.Count - 1);
             fsmStateActions.RemoveAt(fsmStateActions.Count - 1);
+            fsmStateActions.Add(new Lambda(() => Placement.AddVisitFlag(VisitState.Accepted)));
             fsmStateActions.Add(new AsyncLambda(GiveAllAsync(fsm.transform)));
             impact.Actions = fsmStateActions.ToArray();
 
@@ -36,6 +37,14 @@ namespace RandoPlus.GhostEssence.Locations
             FsmStateAction newtest = new DelegateBoolTest(() => Placement.AllObtained(), oldtest);
             init.RemoveAction(2);
             init.AddLastAction(newtest);
+
+            // The Revek check works as follows:
+            // - Each non-revek ghost increments the alive ghosts counter in "Spirit Glade" state
+            // - The GhostBattleRevek-Control fsm receives the increments, and broadcasts the REVEK DEJECTED event
+            //   to inform other fsms that Revek should be sad
+            // We do not want to increment the count for alive ghosts that have previously been checked.
+            FsmState glade = fsm.GetState("Spirit Glade");
+            glade.AddFirstAction(new DelegateBoolTest(() => Placement.CheckVisitedAny(VisitState.Accepted | VisitState.ObtainedAnyItem), "FINISHED", null));
         }
     }
 }
