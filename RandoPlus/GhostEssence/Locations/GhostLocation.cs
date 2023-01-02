@@ -45,32 +45,4 @@ namespace RandoPlus.GhostEssence.Locations
             init.AddLastAction(newtest);
         }
     }
-
-    public class GhostClothLocation : GhostLocation
-    {
-        protected override void OnLoad()
-        {
-            base.OnLoad();
-            ModHooks.GetPlayerBoolHook += ClothBoolHook;
-        }
-
-        protected override void OnUnload()
-        {
-            base.OnUnload();
-            ModHooks.GetPlayerBoolHook -= ClothBoolHook;
-        }
-
-        private bool ClothBoolHook(string name, bool orig)
-        {
-            if (name == "clothKilled")
-            {
-                return PlayerData.instance.GetBool("savedCloth") && PlayerData.instance.GetBool("killedTraitorLord");
-            }
-            if (name == "clothGhostSpoken")
-            {
-                return false;
-            }
-            return orig;
-        }
-    }
 }
