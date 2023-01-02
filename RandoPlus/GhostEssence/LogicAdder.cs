@@ -24,7 +24,7 @@ namespace RandoPlus.GhostEssence
         {
             if (!RandoPlus.GS.Any) return;
 
-            using Stream s = typeof(LogicAdder).Assembly.GetManifestResourceStream("RandoPlus.Resources.GhostNPCs.logic.json");
+            using Stream s = typeof(LogicAdder).Assembly.GetManifestResourceStream("RandoPlus.Resources.GhostEssence.logic.json");
             lmb.DeserializeJson(LogicManagerBuilder.JsonType.Locations, s);
         }
 
@@ -35,7 +35,7 @@ namespace RandoPlus.GhostEssence
             Term essence = lmb.GetTerm("ESSENCE");
             foreach(string ghost in GhostNames.Names)
             {
-            lmb.AddItem(new SingleItem(ghost, new TermValue(essence, 1)));
+                lmb.AddItem(new SingleItem(ghost, new TermValue(essence, 1)));
             }
         }
     }
