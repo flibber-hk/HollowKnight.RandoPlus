@@ -36,6 +36,8 @@ namespace RandoPlus
         [HashIgnore] public bool GiveNailUpgradesOnPickup;
         public bool TwoDupePaleOre;
 
+        public bool GhostEssence;
+
         public bool DisperseGroups;
         public bool EnforceAllConstraints;
 

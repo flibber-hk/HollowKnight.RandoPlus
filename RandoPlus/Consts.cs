@@ -32,6 +32,9 @@ namespace RandoPlus
         public const string NailsmithLocationPrefix = "Nailsmith_Upgrade_";
         public const string NailUpgradePoolGroup = "Skills";
 
+        public const string GhostPoolGroup = "Ghost Essence";
+        public const string GhostEssenceItemName = "Ghost_Essence";
+
         public static readonly int[] VanillaNailUpgradeCosts = new[] { 0, 250, 800, 2000, 4000 };
 
         public const float LOGICPRIORITY = 50f;
