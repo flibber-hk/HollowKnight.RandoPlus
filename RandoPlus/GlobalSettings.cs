@@ -27,7 +27,7 @@ namespace RandoPlus
         public bool NoLantern;
         public bool NoSwim;
 
-        public bool AnyUsefulItemsRemoved => DefineRefs || NoTear || NoSwim || NoLantern;
+        [Newtonsoft.Json.JsonIgnore] public bool AnyUsefulItemsRemoved => DefineRefs || NoTear || NoSwim || NoLantern;
 
         public bool AreaBlitz;
         public bool FullFlexibleCount;
