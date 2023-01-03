@@ -32,7 +32,7 @@
     <EmbeddedResource Include="Resources\**\*.xml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="RandoConstantGenerators" Version="1.1.0" />
+    <PackageReference Include="RandoConstantGenerators" Version="1.2.0" />
   </ItemGroup>
 
   <ItemGroup>
