@@ -6,17 +6,14 @@
   },
   {
     "name": "Lower_Glade",
-    "logic": "RestingGrounds_08[left1] + (RIGHTSUPERDASH | RIGHTDASH + WINGS | SWIM)",
-    "Stateless": true
+    "logic": "RestingGrounds_08[left1] + (RIGHTSUPERDASH | RIGHTDASH + WINGS | SWIM)"
   },
   {
     "name": "Middle_Glade",
-    "logic": "Lower_Glade + (WINGS | SWIM + LEFTCLAW | RIGHTCLAW + LEFTDASH | FULLCLAW)",
-    "Stateless": true
+    "logic": "Lower_Glade + (WINGS | SWIM + LEFTCLAW | RIGHTCLAW + LEFTDASH | FULLCLAW)"
   },
   {
     "name": "Upper_Glade",
-    "logic": "Middle_Glade + (LEFTCLAW | RIGHTCLAW + WINGS | FULLDASH + WINGS | RIGHTCLAW + RIGHTDASH + DIFFICULTSKIPS)",
-    "Stateless": true
+    "logic": "Middle_Glade + (LEFTCLAW | RIGHTCLAW + WINGS | FULLDASH + WINGS | RIGHTCLAW + RIGHTDASH + DIFFICULTSKIPS)"
   }
 ]
