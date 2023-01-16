@@ -9,10 +9,27 @@ namespace RandoPlus.NailUpgrades
 {
     class LogicAdder
     {
+        private const string PALEORE = "PALEORE";
+
         public static void Hook()
         {
+            ProgressionInitializer.OnCreateProgressionInitializer += AddOreTolerance;
             RCData.RuntimeLogicOverride.Subscribe(Consts.LOGICPRIORITY, DefineTermsAndItems);
             RCData.RuntimeLogicOverride.Subscribe(Consts.LOGICPRIORITY, ApplyLogic);
+        }
+
+        private static void AddOreTolerance(LogicManager lm, GenerationSettings gs, ProgressionInitializer pi)
+        {
+
+            if (!RandoPlus.GS.NailUpgrades && !RandoPlus.GS.TwoDupePaleOre) return;
+
+            if (lm.GetTermStrict(PALEORE) is not Term oreTerm)
+            {
+                RandoPlus.instance.LogWarn($"Cannot add ore tolerance because term {PALEORE} not found");
+                return;
+            }
+
+            pi.Setters.Add(new(oreTerm, -1));
         }
 
         private static void ApplyLogic(GenerationSettings gs, LogicManagerBuilder lmb)
@@ -20,9 +37,9 @@ namespace RandoPlus.NailUpgrades
             if (!RandoPlus.GS.Any) return;
 
             lmb.AddLogicDef(new RawLogicDef(Consts.NailsmithLocationPrefix + "1", $"{SceneNames.Room_nailsmith}[left1]"));
-            lmb.AddLogicDef(new RawLogicDef(Consts.NailsmithLocationPrefix + "2", $"{SceneNames.Room_nailsmith}[left1] + PALEORE>0"));
-            lmb.AddLogicDef(new RawLogicDef(Consts.NailsmithLocationPrefix + "3", $"{SceneNames.Room_nailsmith}[left1] + PALEORE>2"));
-            lmb.AddLogicDef(new RawLogicDef(Consts.NailsmithLocationPrefix + "4", $"{SceneNames.Room_nailsmith}[left1] + PALEORE>5"));
+            lmb.AddLogicDef(new RawLogicDef(Consts.NailsmithLocationPrefix + "2", $"{SceneNames.Room_nailsmith}[left1] + {PALEORE} > 0"));
+            lmb.AddLogicDef(new RawLogicDef(Consts.NailsmithLocationPrefix + "3", $"{SceneNames.Room_nailsmith}[left1] + {PALEORE} > 2"));
+            lmb.AddLogicDef(new RawLogicDef(Consts.NailsmithLocationPrefix + "4", $"{SceneNames.Room_nailsmith}[left1] + {PALEORE} > 5"));
         }
 
         private static void DefineTermsAndItems(GenerationSettings gs, LogicManagerBuilder lmb)

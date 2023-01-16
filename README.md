@@ -50,6 +50,8 @@ how many nail upgrades should be claimed depending on skip settings). This behav
 randomization by selecting the Give Nail Upgrades On Pickup option.
 - The nailsmith questline (kill / Sheo) is tied to the location, not the items.
 - For the purposes of split item groups, Nail Upgrades are considered by default to be in the same group as Skills - specifically Vengeful Spirit.
+- Enabling the Two Dupe Pale Ore setting adds two pale ore in logic. Any of the 8 pale ore in the pool can be required progression, but pale
+ore costs have a tolerance of 1 (so, for example, the second nail upgrade location requires 2 ore in logic before being treated as reachable).
 
 ### Advanced settings
 The following settings change the randomization in fairly technical ways, and are probably best ignored by most players.
