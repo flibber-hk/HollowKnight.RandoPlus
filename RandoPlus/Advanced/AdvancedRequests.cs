@@ -1,17 +1,19 @@
 ﻿using Modding;
+using RandomizerCore;
 using RandomizerCore.Exceptions;
 using RandomizerCore.Randomization;
 using RandomizerMod.RC;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
 
 namespace RandoPlus.Advanced
 {
     public static class AdvancedRequests
     {
+        private static readonly ILogger _logger = new SimpleLogger("RandoPlus.AdvancedRequests");
+
         public static void Hook(bool rando, bool ic)
         {
             if (rando) HookRequestBuilder();
@@ -35,12 +37,53 @@ namespace RandoPlus.Advanced
                 {
                     dgps.OnConstraintViolated += (item, loc) =>
                     {
-                        RandoPlus.instance.Log($"Constraint violated for group {groupLabel}: {item.Name} @ {loc.Name}");
+                        _logger.Log($"Constraint violated for group {groupLabel}: {item.Name} @ {loc.Name}");
+                        LogConstraintViolationInfo(dgps, item, loc);
                         throw new OutOfLocationsException();
                     };
                 }
             }
         }
+
+        private static void LogConstraintViolationInfo(DefaultGroupPlacementStrategy dgps, IRandoItem item, IRandoLocation loc)
+        {
+            List<Func<IRandoItem, IRandoLocation, bool>> constraintList;
+            try
+            {
+                constraintList = ReflectionHelper.GetField<DefaultGroupPlacementStrategy, List<Func<IRandoItem, IRandoLocation, bool>>>(dgps, "_constraints");
+            }
+            catch (MemberAccessException)
+            {
+                constraintList = null;
+            }
+
+            if (constraintList is null)
+            {
+                _logger.LogDebug("Cannot find constraint list.");
+                return;
+            }
+
+            bool foundError = false;
+            foreach (Func<IRandoItem, IRandoLocation, bool> constraint in constraintList)
+            {
+                if (!constraint(item, loc))
+                {
+                    MethodInfo method = constraint.Method;
+                    _logger.LogDebug($"Constraint {method.Name} on {method.DeclaringType.Name} in {method.DeclaringType.Assembly.FullName} violated");
+                    foundError = true;
+                }
+            }
+            if (!foundError)
+            {
+                _logger.LogDebug("No constraint consistently violated");
+                foreach (Func<IRandoItem, IRandoLocation, bool> constraint in constraintList)
+                {
+                    MethodInfo method = constraint.Method;
+                    _logger.LogDebug($" - constraint {method.Name} on {method.DeclaringType.Name} in {method.DeclaringType.Assembly.FullName}");
+                }
+            }
+        }
+
 
         private static void DisperseGroups(RequestBuilder rb)
         {
@@ -67,7 +110,7 @@ namespace RandoPlus.Advanced
                     seenStageLabels[label] = 1;
                 }
 
-                RandoPlus.instance.LogDebug($"Dispersion: stage {label}");
+                _logger.LogDebug($"Dispersion: stage {label}");
                 StageBuilder sb = rb.AddStage(label);
                 sb.Add(group);
 
@@ -79,7 +122,7 @@ namespace RandoPlus.Advanced
                     }
                     catch (Exception)
                     {
-                        RandoPlus.instance.LogError("Failed to reassign MainItemStage");
+                        _logger.LogError("Failed to reassign MainItemStage");
                     }
                 }
             }
