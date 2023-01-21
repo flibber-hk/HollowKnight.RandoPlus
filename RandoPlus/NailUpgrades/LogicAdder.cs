@@ -23,7 +23,7 @@ namespace RandoPlus.NailUpgrades
 
             if (!RandoPlus.GS.NailUpgrades && !RandoPlus.GS.TwoDupePaleOre) return;
 
-            if (lm.GetTermStrict(PALEORE) is not Term oreTerm)
+            if (lm.GetTerm(PALEORE) is not Term oreTerm)
             {
                 RandoPlus.instance.LogWarn($"Cannot add ore tolerance because term {PALEORE} not found");
                 return;
