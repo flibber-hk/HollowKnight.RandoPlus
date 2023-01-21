@@ -45,21 +45,8 @@ namespace RandoPlus.GhostEssence
 
         public static void DefineItems()
         {
-            // TODO - use static method on EssenceItem to define this (when available)
-
-            AbstractItem prefab = Finder.GetItem(ItemNames.Boss_Essence_Xero);
-            MsgUIDef prefabDef = (MsgUIDef)prefab.UIDef;
-            EssenceItem oneEssence = new()
-            {
-                amount = 1,
-                name = Consts.GhostEssenceItemName,
-                UIDef = new MsgUIDef()
-                {
-                    name = new LanguageString("UI", "ITEMCHANGER_NAME_ESSENCE_1"),
-                    shopDesc = prefabDef.shopDesc,
-                    sprite = prefabDef.sprite
-                }
-            };
+            EssenceItem oneEssence = EssenceItem.MakeEssenceItem(1);
+            oneEssence.name = Consts.GhostEssenceItemName;
             SupplementalMetadataTagFactory.AddTagToItem(oneEssence, poolGroup: Consts.GhostPoolGroup);
             Finder.DefineCustomItem(oneEssence);
         }
@@ -68,16 +55,7 @@ namespace RandoPlus.GhostEssence
         {
             if (GhostInfos is null)
             {
-                JsonSerializer js = new()
-                {
-                    Formatting = Formatting.Indented,
-                    TypeNameHandling = TypeNameHandling.Auto,
-                };
-
-                using Stream s = typeof(ICInterop).Assembly.GetManifestResourceStream("RandoPlus.Resources.GhostEssence.ghostdata.json");
-                using StreamReader sr = new(s);
-                using JsonTextReader jtr = new(sr);
-                GhostInfos = js.Deserialize<List<GhostInfo>>(jtr);
+                GhostInfos = Finder.DeserializeResource<List<GhostInfo>>(typeof(ICInterop).Assembly, "RandoPlus.Resources.GhostEssence.ghostdata.json");
             }
 
             foreach (GhostInfo info in GhostInfos)
