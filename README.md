@@ -17,7 +17,7 @@ Edge Lore Tablet - (even if tablets are not randomized).
 - For the purposes of split item groups, Ghost Essence items and locations are considered by default to be in the same group as Boss Essence - specifically Xero 
 (even if Boss Essence, or dream warriors, are not randomized).
 - A template file for use with the CustomPoolInjector mod (to customize the set of ghosts randomized) is provided
-[here](https://github.com/flibber-hk/HollowKnight.RandoPlus/Resources/all_ghosts.json). To randomize a subset of the ghosts, make sure that DefineRefs is enabled
+[here](https://github.com/flibber-hk/HollowKnight.RandoPlus/blob/main/Resources/all_ghosts.json). To randomize a subset of the ghosts, make sure that DefineRefs is enabled
 in the RandoPlus settings (and *not* Ghost Essence) and delete an entry from the IncludeItems, IncludeLocations and ExcludeVanilla for each ghost
 that should not be randomized.
 
