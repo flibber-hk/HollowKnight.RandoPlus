@@ -22,7 +22,9 @@ namespace RandoPlus
 
         public bool MrMushroom;
         public bool DupeSporeShroom;
-        
+
+        public bool GhostEssence;
+
         public bool NoTear;
         public bool NoLantern;
         public bool NoSwim;
@@ -35,8 +37,6 @@ namespace RandoPlus
         public bool NailUpgrades;
         [HashIgnore] public bool GiveNailUpgradesOnPickup;
         public bool TwoDupePaleOre;
-
-        public bool GhostEssence;
 
         public bool DisperseGroups;
         public bool EnforceAllConstraints;
