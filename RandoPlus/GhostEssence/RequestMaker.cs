@@ -78,7 +78,12 @@ namespace RandoPlus.GhostEssence
 
             static bool MatchGhostGroup(RequestBuilder rb, string item, RequestBuilder.ElementType type, out GroupBuilder gb)
             {
-                if (item.StartsWith("Ghost_Essence") && (type == RequestBuilder.ElementType.Unknown || type == RequestBuilder.ElementType.Item))
+                if (item == Consts.GhostEssenceItemName && (type == RequestBuilder.ElementType.Unknown || type == RequestBuilder.ElementType.Item))
+                {
+                    gb = rb.GetGroupFor(ItemNames.Boss_Essence_Xero);
+                    return true;
+                }
+                else if (item.StartsWith("Ghost_Essence-") && (type == RequestBuilder.ElementType.Unknown || type == RequestBuilder.ElementType.Location))
                 {
                     gb = rb.GetGroupFor(ItemNames.Boss_Essence_Xero);
                     return true;

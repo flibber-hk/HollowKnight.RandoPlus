@@ -52,6 +52,7 @@ namespace RandoPlus
             || FullFlexibleCount
             || NailUpgrades
             || TwoDupePaleOre
+            || GhostEssence
             || DisperseGroups
             || EnforceAllConstraints;
 
