@@ -21,7 +21,7 @@ namespace RandoPlus.NailUpgrades
         private static void AddOreTolerance(LogicManager lm, GenerationSettings gs, ProgressionInitializer pi)
         {
 
-            if (!RandoPlus.GS.NailUpgrades && !RandoPlus.GS.TwoDupePaleOre) return;
+            if (!RandoPlus.GS.NailUpgrades || !RandoPlus.GS.TwoDupePaleOre) return;
 
             if (lm.GetTerm(PALEORE) is not Term oreTerm)
             {
