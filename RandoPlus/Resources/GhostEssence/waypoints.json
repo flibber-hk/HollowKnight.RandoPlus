@@ -1,0 +1,19 @@
+﻿[
+  {
+    "name": "Rescued_Cloth",
+    "logic": "*Pale_Ore-Basin + (LEFTDASH | LEFTSUPERDASH | WINGS | LEFTCLAW + AIRSTALL)",
+    "Stateless": true
+  },
+  {
+    "name": "Lower_Glade",
+    "logic": "RestingGrounds_08[left1] + (RIGHTSUPERDASH | RIGHTDASH + WINGS | SWIM)"
+  },
+  {
+    "name": "Middle_Glade",
+    "logic": "Lower_Glade + (WINGS | SWIM + LEFTCLAW | RIGHTCLAW + LEFTDASH | FULLCLAW)"
+  },
+  {
+    "name": "Upper_Glade",
+    "logic": "Middle_Glade + (LEFTCLAW | RIGHTCLAW + WINGS | FULLDASH + WINGS | RIGHTCLAW + RIGHTDASH + DIFFICULTSKIPS)"
+  }
+]

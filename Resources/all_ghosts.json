@@ -1,0 +1,166 @@
+{
+  "Name": "Ghosts",
+  "Priority": 1.0,
+  "IncludeItems": [
+    "Ghost_Essence",
+    "Ghost_Essence",
+    "Ghost_Essence",
+    "Ghost_Essence",
+    "Ghost_Essence",
+    "Ghost_Essence",
+    "Ghost_Essence",
+    "Ghost_Essence",
+    "Ghost_Essence",
+    "Ghost_Essence",
+    "Ghost_Essence",
+    "Ghost_Essence",
+    "Ghost_Essence",
+    "Ghost_Essence",
+    "Ghost_Essence",
+    "Ghost_Essence",
+    "Ghost_Essence",
+    "Ghost_Essence",
+    "Ghost_Essence",
+    "Ghost_Essence",
+    "Ghost_Essence",
+    "Ghost_Essence",
+    "Ghost_Essence",
+    "Ghost_Essence",
+    "Ghost_Essence",
+    "Ghost_Essence"
+  ],
+  "IncludeLocations": [
+    "Ghost_Essence-Gravedigger",
+    "Ghost_Essence-Vespa",
+    "Ghost_Essence-Joni",
+    "Ghost_Essence-Marissa",
+    "Ghost_Essence-Poggy_Thorax",
+    "Ghost_Essence-Caelif_Fera_Orthop",
+    "Ghost_Essence-Cloth",
+    "Ghost_Essence-Revek",
+    "Ghost_Essence-Millybug",
+    "Ghost_Essence-Caspian",
+    "Ghost_Essence-Atra",
+    "Ghost_Essence-Dr_Chagax",
+    "Ghost_Essence-Garro",
+    "Ghost_Essence-Kcin",
+    "Ghost_Essence-Karina",
+    "Ghost_Essence-Hundred_Nail_Warrior",
+    "Ghost_Essence-Grohac",
+    "Ghost_Essence-Perpetos_Noo",
+    "Ghost_Essence-Molten",
+    "Ghost_Essence-Magnus_Strong",
+    "Ghost_Essence-Waldie",
+    "Ghost_Essence-Wayner",
+    "Ghost_Essence-Wyatt",
+    "Ghost_Essence-Hex",
+    "Ghost_Essence-Thistlewind",
+    "Ghost_Essence-Boss"
+  ],
+  "ExcludeVanilla": [
+    {
+      "item": "Ghost_Essence",
+      "location": "Ghost_Essence-Gravedigger"
+    },
+    {
+      "item": "Ghost_Essence",
+      "location": "Ghost_Essence-Vespa"
+    },
+    {
+      "item": "Ghost_Essence",
+      "location": "Ghost_Essence-Joni"
+    },
+    {
+      "item": "Ghost_Essence",
+      "location": "Ghost_Essence-Marissa"
+    },
+    {
+      "item": "Ghost_Essence",
+      "location": "Ghost_Essence-Poggy_Thorax"
+    },
+    {
+      "item": "Ghost_Essence",
+      "location": "Ghost_Essence-Caelif_Fera_Orthop"
+    },
+    {
+      "item": "Ghost_Essence",
+      "location": "Ghost_Essence-Cloth"
+    },
+    {
+      "item": "Ghost_Essence",
+      "location": "Ghost_Essence-Revek"
+    },
+    {
+      "item": "Ghost_Essence",
+      "location": "Ghost_Essence-Millybug"
+    },
+    {
+      "item": "Ghost_Essence",
+      "location": "Ghost_Essence-Caspian"
+    },
+    {
+      "item": "Ghost_Essence",
+      "location": "Ghost_Essence-Atra"
+    },
+    {
+      "item": "Ghost_Essence",
+      "location": "Ghost_Essence-Dr_Chagax"
+    },
+    {
+      "item": "Ghost_Essence",
+      "location": "Ghost_Essence-Garro"
+    },
+    {
+      "item": "Ghost_Essence",
+      "location": "Ghost_Essence-Kcin"
+    },
+    {
+      "item": "Ghost_Essence",
+      "location": "Ghost_Essence-Karina"
+    },
+    {
+      "item": "Ghost_Essence",
+      "location": "Ghost_Essence-Hundred_Nail_Warrior"
+    },
+    {
+      "item": "Ghost_Essence",
+      "location": "Ghost_Essence-Grohac"
+    },
+    {
+      "item": "Ghost_Essence",
+      "location": "Ghost_Essence-Perpetos_Noo"
+    },
+    {
+      "item": "Ghost_Essence",
+      "location": "Ghost_Essence-Molten"
+    },
+    {
+      "item": "Ghost_Essence",
+      "location": "Ghost_Essence-Magnus_Strong"
+    },
+    {
+      "item": "Ghost_Essence",
+      "location": "Ghost_Essence-Waldie"
+    },
+    {
+      "item": "Ghost_Essence",
+      "location": "Ghost_Essence-Wayner"
+    },
+    {
+      "item": "Ghost_Essence",
+      "location": "Ghost_Essence-Wyatt"
+    },
+    {
+      "item": "Ghost_Essence",
+      "location": "Ghost_Essence-Hex"
+    },
+    {
+      "item": "Ghost_Essence",
+      "location": "Ghost_Essence-Thistlewind"
+    },
+    {
+      "item": "Ghost_Essence",
+      "location": "Ghost_Essence-Boss"
+    }
+  ]
+}

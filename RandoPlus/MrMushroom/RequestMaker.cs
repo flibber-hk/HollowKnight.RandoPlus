@@ -27,7 +27,7 @@ namespace RandoPlus.MrMushroom
             // Disable Mr Mushroom previews if they don't have 
             RequestBuilder.OnUpdate.Subscribe(30, ApplyMrMushroomPreviewSetting);
             // Add Items and Locations to the pool
-            RequestBuilder.OnUpdate.Subscribe(25, AddMrMushroom);
+            RequestBuilder.OnUpdate.Subscribe(0.5f, AddMrMushroom);
             // Register the Deranged constraint
             RequestBuilder.OnUpdate.Subscribe(101, DerangeMrMushroom);
             // Set up OnGetGroupFor matcher and define infos for item and locations

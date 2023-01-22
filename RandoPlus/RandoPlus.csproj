@@ -11,6 +11,10 @@
   </PropertyGroup>
 
   <PropertyGroup>
+    <AdditionalFileItemNames>EmbeddedResource</AdditionalFileItemNames>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <HollowKnightRefs>..\API</HollowKnightRefs>
     <ExportDir>bin\Publish</ExportDir>
   </PropertyGroup>
@@ -26,6 +30,9 @@
     <EmbeddedResource Include="Resources\**\*.png" />
     <EmbeddedResource Include="Resources\**\*.json" />
     <EmbeddedResource Include="Resources\**\*.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="RandoConstantGenerators" Version="1.2.0" />
   </ItemGroup>
 
   <ItemGroup>

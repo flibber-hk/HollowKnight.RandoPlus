@@ -9,8 +9,17 @@ Achieving Mr Mushroom level 8 unlocks the ending cutscene.
 - Add the seven Mr Mushroom locations to the randomization pool; location n requires Mr Mushroom level at least n (as well as Spore Shroom equipped).
 - Talking to Mr Mushroom without Spore Shroom equipped will give a preview of the item(s) there.
 If the Lore Tablet Previews setting is disabled in rando, then this preview will not be shown.
-- For the purposes of split item groups, Mr Mushroom locations are considered by default to be in the same group as Lore Tablets - specifically the Kingdom's 
+- For the purposes of split item groups, Mr Mushroom items and locations are considered by default to be in the same group as Lore Tablets - specifically the Kingdom's 
 Edge Lore Tablet - (even if tablets are not randomized).
+
+### Ghost Essence rando
+- Adds 26 Ghost Essence locations (including all 19 in Spirits' Glade) to the randomization pool, and 26 items that give 1 essence.
+- For the purposes of split item groups, Ghost Essence items and locations are considered by default to be in the same group as Boss Essence - specifically Xero 
+(even if Boss Essence, or dream warriors, are not randomized).
+- A template file for use with the CustomPoolInjector mod (to customize the set of ghosts randomized) is provided
+[here](https://github.com/flibber-hk/HollowKnight.RandoPlus/blob/main/Resources/all_ghosts.json). To randomize a subset of the ghosts, make sure that DefineRefs is enabled
+in the RandoPlus settings (and *not* Ghost Essence) and delete an entry from the IncludeItems, IncludeLocations and ExcludeVanilla for each ghost
+that should not be randomized.
 
 ### No Tear, Swim, Lantern
 Options to remove the tear, swim and lantern items from the game.
