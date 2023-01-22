@@ -1,5 +1,6 @@
 ﻿using ItemChanger;
 using ItemChanger.Items;
+using ItemChanger.Tags;
 using ItemChanger.UIDefs;
 using Newtonsoft.Json;
 using RandoPlus.GhostEssence.Locations;
@@ -15,6 +16,9 @@ namespace RandoPlus.GhostEssence
             public string Name { get; set; }
             public string SceneName { get; set; }
             public string ObjectName { get; set; }
+
+            public float X { get; set; }
+            public float Y { get; set; }
         }
 
         public static List<GhostInfo> GhostInfos;
@@ -32,7 +36,18 @@ namespace RandoPlus.GhostEssence
             ghostLocation.flingType = FlingType.DirectDeposit;
             ghostLocation.sceneName = info.SceneName;
             ghostLocation.Revek = info.Name == GhostNames.Ghost_Essence_Revek;
-            SupplementalMetadataTagFactory.AddTagToLocation(ghostLocation, poolGroup: Consts.GhostPoolGroup, vanillaItem: ghostLocation.name);
+            
+            InteropTag tag = SupplementalMetadataTagFactory.AddTagToLocation(
+                ghostLocation, 
+                poolGroup: Consts.GhostPoolGroup, 
+                vanillaItem: Consts.GhostEssenceItemName
+            );
+            tag.Properties["WorldMapLocations"] = new (string, float, float)[]
+            {
+                (info.SceneName, info.X, info.Y)
+            };
+            tag.Properties["PinSprite"] = new EmbeddedSprite("GhostEssence.EssenceBossPin");
+
 
             return ghostLocation;
         }
@@ -47,7 +62,10 @@ namespace RandoPlus.GhostEssence
         {
             EssenceItem oneEssence = EssenceItem.MakeEssenceItem(1);
             oneEssence.name = Consts.GhostEssenceItemName;
-            SupplementalMetadataTagFactory.AddTagToItem(oneEssence, poolGroup: Consts.GhostPoolGroup);
+            
+            InteropTag tag = SupplementalMetadataTagFactory.AddTagToItem(oneEssence, poolGroup: Consts.GhostPoolGroup);
+            tag.Properties["PinSprite"] = new EmbeddedSprite("GhostEssence.EssenceBossPin");
+            
             Finder.DefineCustomItem(oneEssence);
         }
 
