@@ -107,7 +107,7 @@ namespace RandoPlus.GhostEssence
             {
                 foreach (string ghost in GhostNames.ToArray())
                 {
-                    rb.AddToVanilla(ghost, ghost);
+                    rb.AddToVanilla(Consts.GhostEssenceItemName, ghost);
                 }
             }
         }
