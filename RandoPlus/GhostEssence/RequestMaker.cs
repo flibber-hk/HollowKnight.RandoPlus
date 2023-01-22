@@ -15,7 +15,7 @@ namespace RandoPlus.GhostEssence
         public static void Hook()
         {
             // Add Items and Locations to the pool
-            RequestBuilder.OnUpdate.Subscribe(25, AddGhosts);
+            RequestBuilder.OnUpdate.Subscribe(0.5f, AddGhosts);
             // Register the Deranged constraint
             RequestBuilder.OnUpdate.Subscribe(101, DerangeGhostEssence);
             // Set up OnGetGroupFor matcher and define infos for item and locations
