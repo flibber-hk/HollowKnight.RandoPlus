@@ -1,132 +1,184 @@
-﻿[
+[
   {
     "Name": "Ghost_Essence-Gravedigger",
     "SceneName": "Town",
-    "ObjectName": "Gravedigger NPC"
+    "ObjectName": "Gravedigger NPC",
+    "X": 211.6,
+    "Y": 8.3
   },
   {
     "Name": "Ghost_Essence-Vespa",
     "SceneName": "Hive_05",
-    "ObjectName": "Vespa NPC"
+    "ObjectName": "Vespa NPC",
+    "X": 69.7,
+    "Y": 27.4
   },
   {
     "Name": "Ghost_Essence-Joni",
     "SceneName": "Cliffs_05",
-    "ObjectName": "Ghost NPC Joni"
+    "ObjectName": "Ghost NPC Joni",
+    "X": 68.1,
+    "Y": 7.2
   },
   {
     "Name": "Ghost_Essence-Marissa",
     "SceneName": "Ruins_Bathhouse",
-    "ObjectName": "Ghost NPC"
+    "ObjectName": "Ghost NPC",
+    "X": 63.7,
+    "Y": 7.3
   },
   {
     "Name": "Ghost_Essence-Poggy_Thorax",
     "SceneName": "Ruins_Elevator",
-    "ObjectName": "Ghost NPC"
+    "ObjectName": "Ghost NPC",
+    "X": 80.5,
+    "Y": 96.3
   },
   {
     "Name": "Ghost_Essence-Caelif_Fera_Orthop",
     "SceneName": "Fungus1_24",
-    "ObjectName": "Ghost NPC"
+    "ObjectName": "Ghost NPC",
+    "X": 84.9,
+    "Y": 22.3
   },
   {
     "Name": "Ghost_Essence-Cloth",
     "SceneName": "Fungus3_23",
-    "ObjectName": "Cloth Ghost NPC"
+    "ObjectName": "Cloth Ghost NPC",
+    "X": 29.3,
+    "Y": 29.3
   },
   {
     "Name": "Ghost_Essence-Revek",
     "SceneName": "RestingGrounds_08",
-    "ObjectName": "Ghost revek"
+    "ObjectName": "Ghost revek",
+    "X": 67.5,
+    "Y": 5.3
   },
   {
     "Name": "Ghost_Essence-Millybug",
     "SceneName": "RestingGrounds_08",
-    "ObjectName": "Ghost milly"
+    "ObjectName": "Ghost milly",
+    "X": 83.3,
+    "Y": 5.4
   },
   {
     "Name": "Ghost_Essence-Caspian",
     "SceneName": "RestingGrounds_08",
-    "ObjectName": "Ghost caspian"
+    "ObjectName": "Ghost caspian",
+    "X": 96.4,
+    "Y": 5.3
   },
   {
     "Name": "Ghost_Essence-Atra",
     "SceneName": "RestingGrounds_08",
-    "ObjectName": "Ghost atra"
+    "ObjectName": "Ghost atra",
+    "X": 89.0,
+    "Y": 17.3
   },
   {
     "Name": "Ghost_Essence-Dr_Chagax",
     "SceneName": "RestingGrounds_08",
-    "ObjectName": "Ghost chagax"
+    "ObjectName": "Ghost chagax",
+    "X": 100.9,
+    "Y": 17.4
   },
   {
     "Name": "Ghost_Essence-Garro",
     "SceneName": "RestingGrounds_08",
-    "ObjectName": "Ghost garro"
+    "ObjectName": "Ghost garro",
+    "X": 92.6,
+    "Y": 28.4
   },
   {
     "Name": "Ghost_Essence-Kcin",
     "SceneName": "RestingGrounds_08",
-    "ObjectName": "Ghost kcin"
+    "ObjectName": "Ghost kcin",
+    "X": 101.4,
+    "Y": 28.2
   },
   {
     "Name": "Ghost_Essence-Karina",
     "SceneName": "RestingGrounds_08",
-    "ObjectName": "karina"
+    "ObjectName": "karina",
+    "X": 28.0,
+    "Y": 33.3
   },
   {
     "Name": "Ghost_Essence-Hundred_Nail_Warrior",
     "SceneName": "RestingGrounds_08",
-    "ObjectName": "Ghost NPC 100 nail"
+    "ObjectName": "Ghost NPC 100 nail",
+    "X": 37.8,
+    "Y": 33.3
   },
   {
     "Name": "Ghost_Essence-Grohac",
     "SceneName": "RestingGrounds_08",
-    "ObjectName": "Ghost grohac"
+    "ObjectName": "Ghost grohac",
+    "X": 66.6,
+    "Y": 33.4
   },
   {
     "Name": "Ghost_Essence-Perpetos_Noo",
     "SceneName": "RestingGrounds_08",
-    "ObjectName": "Ghost perpetos"
+    "ObjectName": "Ghost perpetos",
+    "X": 7.7,
+    "Y": 58.5
   },
   {
     "Name": "Ghost_Essence-Molten",
     "SceneName": "RestingGrounds_08",
-    "ObjectName": "Ghost molten"
+    "ObjectName": "Ghost molten",
+    "X": 32.0,
+    "Y": 58.4
   },
   {
     "Name": "Ghost_Essence-Magnus_Strong",
     "SceneName": "RestingGrounds_08",
-    "ObjectName": "Ghost magnus"
+    "ObjectName": "Ghost magnus",
+    "X": 40.1,
+    "Y": 58.3
   },
   {
     "Name": "Ghost_Essence-Waldie",
     "SceneName": "RestingGrounds_08",
-    "ObjectName": "Ghost waldie"
+    "ObjectName": "Ghost waldie",
+    "X": 62.4,
+    "Y": 56.3
   },
   {
     "Name": "Ghost_Essence-Wayner",
     "SceneName": "RestingGrounds_08",
-    "ObjectName": "Ghost wayner"
+    "ObjectName": "Ghost wayner",
+    "X": 70.2,
+    "Y": 56.3
   },
   {
     "Name": "Ghost_Essence-Wyatt",
     "SceneName": "RestingGrounds_08",
-    "ObjectName": "Ghost wyatt"
+    "ObjectName": "Ghost wyatt",
+    "X": 79.0,
+    "Y": 56.2
   },
   {
     "Name": "Ghost_Essence-Hex",
     "SceneName": "RestingGrounds_08",
-    "ObjectName": "Ghost hex"
+    "ObjectName": "Ghost hex",
+    "X": 84.8,
+    "Y": 56.3
   },
   {
     "Name": "Ghost_Essence-Thistlewind",
     "SceneName": "RestingGrounds_08",
-    "ObjectName": "Ghost thistlewind"
+    "ObjectName": "Ghost thistlewind",
+    "X": 94.4,
+    "Y": 56.3
   },
   {
     "Name": "Ghost_Essence-Boss",
     "SceneName": "RestingGrounds_08",
-    "ObjectName": "Ghost boss"
+    "ObjectName": "Ghost boss",
+    "X": 104.7,
+    "Y": 56.5
   }
 ]
