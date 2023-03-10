@@ -10,6 +10,7 @@ namespace RandoPlus.NailUpgrades
     class LogicAdder
     {
         private const string PALEORE = "PALEORE";
+        private const string LISTEN = "(LISTEN ? ANY)";
 
         public static void Hook()
         {
@@ -37,9 +38,9 @@ namespace RandoPlus.NailUpgrades
             if (!RandoPlus.GS.Any) return;
 
             lmb.AddLogicDef(new RawLogicDef(Consts.NailsmithLocationPrefix + "1", $"{SceneNames.Room_nailsmith}[left1]"));
-            lmb.AddLogicDef(new RawLogicDef(Consts.NailsmithLocationPrefix + "2", $"{SceneNames.Room_nailsmith}[left1] + {PALEORE} > 0"));
-            lmb.AddLogicDef(new RawLogicDef(Consts.NailsmithLocationPrefix + "3", $"{SceneNames.Room_nailsmith}[left1] + {PALEORE} > 2"));
-            lmb.AddLogicDef(new RawLogicDef(Consts.NailsmithLocationPrefix + "4", $"{SceneNames.Room_nailsmith}[left1] + {PALEORE} > 5"));
+            lmb.AddLogicDef(new RawLogicDef(Consts.NailsmithLocationPrefix + "2", $"{SceneNames.Room_nailsmith}[left1] + {PALEORE} > 0 + {LISTEN}"));
+            lmb.AddLogicDef(new RawLogicDef(Consts.NailsmithLocationPrefix + "3", $"{SceneNames.Room_nailsmith}[left1] + {PALEORE} > 2 + {LISTEN}"));
+            lmb.AddLogicDef(new RawLogicDef(Consts.NailsmithLocationPrefix + "4", $"{SceneNames.Room_nailsmith}[left1] + {PALEORE} > 5 + {LISTEN}"));
         }
 
         private static void DefineTermsAndItems(GenerationSettings gs, LogicManagerBuilder lmb)
