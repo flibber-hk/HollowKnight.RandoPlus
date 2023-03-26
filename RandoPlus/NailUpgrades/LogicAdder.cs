@@ -10,7 +10,7 @@ namespace RandoPlus.NailUpgrades
     class LogicAdder
     {
         private const string PALEORE = "PALEORE";
-        private const string LISTEN = "(LISTEN ? ANY)";
+        private const string LISTEN = "(LISTEN ? TRUE)";
 
         public static void Hook()
         {
