@@ -112,7 +112,8 @@ namespace RandoPlus.RemoveUsefulItems
             if (!RandoPlus.GS.AnyUsefulItemsRemoved) return;
 
             Term noLanternTerm = lmb.GetOrAddTerm("NOLANTERN");
-            lmb.AddItem(new CappedItem(Consts.NoLantern, new TermValue[] { new(noLanternTerm, 1) }, new(noLanternTerm, 1)));
+            Term lanternTerm = lmb.GetTerm("LANTERN");
+            lmb.AddItem(new CappedItem(Consts.NoLantern, new TermValue[] { new(noLanternTerm, 1), new(lanternTerm, 1) }, new(noLanternTerm, 1)));
             Term noTearTerm = lmb.GetOrAddTerm("NOACID");
             lmb.AddItem(new CappedItem(Consts.NoTear, new TermValue[] { new(noTearTerm, 1) }, new(noTearTerm, 1)));
             Term noSwimTerm = lmb.GetOrAddTerm("NOSWIM");
