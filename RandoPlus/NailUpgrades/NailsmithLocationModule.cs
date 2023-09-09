@@ -105,6 +105,21 @@ namespace RandoPlus.NailUpgrades
                 fsm.FsmVariables.GetFsmInt("Current Slot RP").Value = NextSlot;
             }));
 
+            FsmState complete4 = fsm.GetState("Complete 4");
+            offerType.AddTransition("NO UPGRADES REMAINING", complete4);
+
+            offerType.AddLastAction(new Lambda(() =>
+            {
+                int val = fsm.FsmVariables.GetFsmInt("Upgrades Completed").Value;
+                if (val < 4)
+                {
+                    // If val = 0..3 then should have gone one of the other routes
+                    RandoPlus.instance.LogError($"Upgrades Completed value {val}; should not reach this point");
+                }
+                // If they've checked 4 already then go straight to banish the nailsmith
+                fsm.SendEvent("NO UPGRADES REMAINING");
+            }));
+
             FsmState YNVanilla = fsm.GetState("Box Up YN");
             YNVanilla.AddFirstAction(new DelegateBoolTest(() => ShouldGoModdedPath, "DIALOGUE MODDED", null));
 
@@ -160,7 +175,7 @@ namespace RandoPlus.NailUpgrades
             fsm.GetState("Complete Convo").Actions[2] = new Lambda(() =>
             {
                 // Used to decide which convo to show
-                fsm.FsmVariables.GetFsmInt("Upgrades Completed").Value = SlotsBought.Count;
+                fsm.FsmVariables.GetFsmInt("Upgrades Completed").Value = NextSlot - 1;
             });
 
         }
