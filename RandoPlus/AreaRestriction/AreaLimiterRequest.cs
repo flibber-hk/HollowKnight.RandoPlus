@@ -4,8 +4,10 @@ using System.Linq;
 using ConnectionMetadataInjector;
 using ItemChanger;
 using RandomizerCore.Extensions;
+using RandomizerMod.Menu;
 using RandomizerMod.RandomizerData;
 using RandomizerMod.RC;
+using StartDef = RandomizerMod.RandomizerData.StartDef;
 
 namespace RandoPlus.AreaRestriction
 {
@@ -73,8 +75,28 @@ namespace RandoPlus.AreaRestriction
             
             PlaceArea("Dirtmouth");
 
-            string startScene = Data.GetStartDef(rb.gs.StartLocationSettings.StartLocation).SceneName;
-            PlaceArea(Data.GetRoomDef(startScene).MapArea);
+            string startLocation = rb.gs.StartLocationSettings.StartLocation;
+            string[] startLocationNames;
+            if (!startLocation.Contains("|"))
+            {
+                startLocationNames = new[] { startLocation };
+            }
+            else
+            {
+                string[] startsPlusEnds = startLocation.Split('|');
+                startLocationNames = new string[startsPlusEnds.Length - 2];
+                for (int i = 0; i < startLocationNames.Length; i++)
+                {
+                    startLocationNames[i] = startsPlusEnds[i + 1];
+                }
+            }
+
+            Dictionary<string, StartDef> startDict = RandomizerMenuAPI.GenerateStartLocationDict();
+            foreach (string startLocationName in startLocationNames)
+            {
+                string startScene = startDict[startLocationName].SceneName;
+                PlaceArea(Data.GetRoomDef(startScene).MapArea);
+            }
 
             while (AreaRestriction.PlacedAreas.Count < AreaRestriction.AreaCount)
             {
