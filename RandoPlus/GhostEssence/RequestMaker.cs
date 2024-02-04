@@ -40,7 +40,10 @@ namespace RandoPlus.GhostEssence
             {
                 if (gb.strategy is DefaultGroupPlacementStrategy dgps)
                 {
-                    dgps.Constraints += NotVanillaGhost;
+                    dgps.ConstraintList.Add(new DefaultGroupPlacementStrategy.Constraint(
+                        NotVanillaGhost,
+                        Label: "Derange Ghosts"
+                        ));
                 }
             }
         }

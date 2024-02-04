@@ -82,7 +82,9 @@ namespace RandoPlus.MrMushroom
             {
                 if (gb.strategy is DefaultGroupPlacementStrategy dgps)
                 {
-                    dgps.Constraints += NotVanillaMushroom;
+                    dgps.ConstraintList.Add(new DefaultGroupPlacementStrategy.Constraint(
+                        NotVanillaMushroom,
+                        Label: "Derange Mushroom"));
                 }
             }
         }

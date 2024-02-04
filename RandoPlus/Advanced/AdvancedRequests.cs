@@ -35,12 +35,15 @@ namespace RandoPlus.Advanced
 
                 if (gb.strategy is DefaultGroupPlacementStrategy dgps)
                 {
+                    // This event applies to all constraints so we have to use it here
+#pragma warning disable CS0618 // Type or member is obsolete
                     dgps.OnConstraintViolated += (item, loc) =>
                     {
                         _logger.Log($"Constraint violated for group {groupLabel}: {item.Name} @ {loc.Name}");
                         LogConstraintViolationInfo(dgps, item, loc);
                         throw new OutOfLocationsException();
                     };
+#pragma warning restore CS0618 // Type or member is obsolete
                 }
             }
         }

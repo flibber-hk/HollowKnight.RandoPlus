@@ -146,7 +146,10 @@ namespace RandoPlus.NailUpgrades
             {
                 if (gb.strategy is DefaultGroupPlacementStrategy dgps)
                 {
-                    dgps.Constraints += NotVanillaNail;
+                    dgps.ConstraintList.Add(new DefaultGroupPlacementStrategy.Constraint(
+                        NotVanillaNail,
+                        Label: "Derange Nail Upgrades"
+                        ));
                 }
             }
         }
