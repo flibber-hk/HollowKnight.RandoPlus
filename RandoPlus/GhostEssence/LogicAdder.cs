@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using ItemChanger;
 using RandomizerCore;
+using RandomizerCore.Json;
 using RandomizerCore.Logic;
 using RandomizerCore.LogicItems;
 using RandomizerCore.StringLogic;
@@ -24,11 +25,13 @@ namespace RandoPlus.GhostEssence
         {
             if (!RandoPlus.GS.Any) return;
 
+            JsonLogicFormat fmt = new();
+
             using Stream wpStream = typeof(LogicAdder).Assembly.GetManifestResourceStream("RandoPlus.Resources.GhostEssence.waypoints.json");
-            lmb.DeserializeJson(LogicManagerBuilder.JsonType.Waypoints, wpStream);
+            lmb.DeserializeFile(LogicFileType.Waypoints, fmt, wpStream);
 
             using Stream locStream = typeof(LogicAdder).Assembly.GetManifestResourceStream("RandoPlus.Resources.GhostEssence.locations.json");
-            lmb.DeserializeJson(LogicManagerBuilder.JsonType.Locations, locStream);
+            lmb.DeserializeFile(LogicFileType.Locations, fmt, locStream);
         }
 
         private static void DefineTermsAndItems(GenerationSettings gs, LogicManagerBuilder lmb)

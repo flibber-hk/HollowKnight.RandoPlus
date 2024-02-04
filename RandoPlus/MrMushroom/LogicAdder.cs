@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using ItemChanger;
 using RandomizerCore;
+using RandomizerCore.Json;
 using RandomizerCore.Logic;
 using RandomizerCore.LogicItems;
 using RandomizerCore.StringLogic;
@@ -24,8 +25,10 @@ namespace RandoPlus.MrMushroom
         {
             if (!RandoPlus.GS.Any) return;
 
+            JsonLogicFormat fmt = new();
+
             using Stream s = typeof(LogicAdder).Assembly.GetManifestResourceStream("RandoPlus.Resources.MrMushroom.logic.json");
-            lmb.DeserializeJson(LogicManagerBuilder.JsonType.Locations, s);
+            lmb.DeserializeFile(LogicFileType.Locations, fmt, s);
         }
 
         private static void DefineTermsAndItems(GenerationSettings gs, LogicManagerBuilder lmb)
