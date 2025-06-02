@@ -4,6 +4,8 @@ using RandomizerMod.RandomizerData;
 using RandomizerMod.RC;
 using RandoPlus.Imports;
 using System.Linq;
+using System;
+using RandomizerMod.IC;
 
 namespace RandoPlus.NailUpgrades
 {
@@ -45,6 +47,7 @@ namespace RandoPlus.NailUpgrades
             if (RandoPlus.GS.NailUpgrades && RandoPlus.GS.GiveNailUpgradesOnPickup)
             {
                 ItemChangerMod.Modules.GetOrAdd<DelayedNailUpgradeModule>().GiveNailUpgradesOnPickup = true;
+                ItemChangerMod.Modules.Remove<NailUpgradeWarningModule>();
             }
         }
     }
