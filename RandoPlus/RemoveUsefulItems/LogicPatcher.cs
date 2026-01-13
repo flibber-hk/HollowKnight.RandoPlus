@@ -7,6 +7,7 @@ using RandomizerCore;
 using RandomizerCore.Logic;
 using RandomizerCore.LogicItems;
 using RandomizerCore.StringLogic;
+using RandomizerCore.StringParsing;
 using RandomizerMod.RC;
 using RandomizerMod.Settings;
 
@@ -37,9 +38,9 @@ namespace RandoPlus.RemoveUsefulItems
         {
             if (!RandoPlus.GS.AnyUsefulItemsRemoved) return;
 
-            TermToken acidSkips = lmb.LP.GetTermToken("ACIDSKIPS");
-            TermToken swim = lmb.LP.GetTermToken("SWIM");
-            TermToken acid = lmb.LP.GetTermToken("ACID");
+            LogicClause acidSkips = new("ACIDSKIPS");
+            LogicClause swim = new("SWIM");
+            LogicClause acid = new("ACID");
 
             CreateMacros("SKIPACID");
             CreateMacros("LEFTSKIPACID");
@@ -48,20 +49,20 @@ namespace RandoPlus.RemoveUsefulItems
 
             void CreateMacros(string orig)
             {
-                LogicClauseBuilder waterLcb = new(lmb.LP.GetMacro(orig));
-                waterLcb.Subst(acidSkips, lmb.LP.ParseInfixToClause("ACIDSKIPS | NOSWIM"));
-                lmb.LP.SetMacro("WATER_" + orig, new LogicClause(waterLcb));
+                LogicClauseBuilder waterLcb = new(lmb.MacroLookup[orig]);
+                waterLcb.Subst(acidSkips, new("ACIDSKIPS | NOSWIM"));
+                lmb.MacroLookup["WATER_" + orig] = new(waterLcb);
 
-                LogicClauseBuilder acidLcb = new(lmb.LP.GetMacro(orig));
-                acidLcb.Subst(acidSkips, lmb.LP.ParseInfixToClause("ACIDSKIPS | NOACID"));
-                lmb.LP.SetMacro("ACID_" + orig, new LogicClause(acidLcb));
+                LogicClauseBuilder acidLcb = new(lmb.MacroLookup[orig]);
+                acidLcb.Subst(acidSkips, new("ACIDSKIPS | NOACID"));
+                lmb.MacroLookup["ACID_" + orig] = new(acidLcb);
             }
 
             List<string> AllLogic = lmb.LogicLookup.Keys.ToList();
 
             foreach (string key in AllLogic)
             {
-                if (lmb.LogicLookup[key].Tokens.Contains(swim))
+                if (lmb.LogicLookup[key].Expr.Contains(swim.Expr))
                 {
                     lmb.DoSubst(new(key, "SKIPACID", "WATER_SKIPACID"));
                     lmb.DoSubst(new(key, "LEFTSKIPACID", "WATER_LEFTSKIPACID"));
@@ -69,7 +70,7 @@ namespace RandoPlus.RemoveUsefulItems
                     lmb.DoSubst(new(key, "FULLSKIPACID", "WATER_FULLSKIPACID"));
                     lmb.DoSubst(new(key, "ACIDSKIPS", "ACIDSKIPS | NOSWIM"));
                 }
-                else if (lmb.LogicLookup[key].Tokens.Contains(acid))
+                else if (lmb.LogicLookup[key].Expr.Contains(acid.Expr))
                 {
                     lmb.DoSubst(new(key, "SKIPACID", "ACID_SKIPACID"));
                     lmb.DoSubst(new(key, "LEFTSKIPACID", "ACID_LEFTSKIPACID"));
