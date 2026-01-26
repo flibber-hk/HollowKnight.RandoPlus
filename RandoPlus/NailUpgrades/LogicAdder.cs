@@ -35,7 +35,7 @@ namespace RandoPlus.NailUpgrades
 
         private static void ApplyLogic(GenerationSettings gs, LogicManagerBuilder lmb)
         {
-            if (!RandoPlus.GS.Any) return;
+            if (!RandoPlus.GS.NailUpgrades || !RandoPlus.GS.DefineRefs) return;
 
             lmb.AddLogicDef(new RawLogicDef(Consts.NailsmithLocationPrefix + "1", $"{SceneNames.Room_nailsmith}[left1] + {LISTEN}"));
             lmb.AddLogicDef(new RawLogicDef(Consts.NailsmithLocationPrefix + "2", $"{SceneNames.Room_nailsmith}[left1] + {LISTEN} + {PALEORE} > 0"));
@@ -45,7 +45,7 @@ namespace RandoPlus.NailUpgrades
 
         private static void DefineTermsAndItems(GenerationSettings gs, LogicManagerBuilder lmb)
         {
-            if (!RandoPlus.GS.Any) return;
+            if (!RandoPlus.GS.NailUpgrades || !RandoPlus.GS.DefineRefs) return;
 
             Term nailupTerm = lmb.GetOrAddTerm("NAILUPGRADE");
             lmb.AddItem(new SingleItem(Consts.NailUpgrade, new TermValue(nailupTerm, 1)));
